@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import {Test_Array}  from "./component/Test";
 import { useState , useRef } from 'react';
+import { InputText } from "./component/InputGroup";
 
 function App() {
   // create a array of object and pass it to Test_Array component
@@ -17,8 +17,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Test_Array names={names}/>
-        <button onClick={() => setCount(count + 1)} className="underline text-sky-400/100">
+        <InputText label="Testing" prefix="$" placeholder="Money" dropdown_list={["USD" , "HKD" , "JPD"]}/>
+        <button onClick={() => setCount(count + 1)} className="underline ">
           Click Me (useState)
         </button>
         <span className="text-red-400/100"> {count}</span>
