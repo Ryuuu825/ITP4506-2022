@@ -10,13 +10,8 @@ import { Success, Warning , Error} from "./component/feedback";
 import { ButtonBadge, TextBadge, Pills } from "./component/Badge";
 import { Button, Floating } from "./component/Button";
 import { Download } from "./component/SVGPath";
-function Test() {
-    return (
-        <div>
-            <h1>Test</h1>
-        </div>
-    );
-}
+import SingIn, { SignUp } from "./pages/LoginPage";
+
 function Main() {
     const [count, setCount] = useState(0); // useState will cause re-render
 
@@ -54,17 +49,17 @@ function Main() {
 
 function App() {
     const location = useLocation();
-    console.log(location);
     return (
         <>
-            <Nav />
             <Routes>
                 <Route
                     path="/"
-                    element={<LoadPage page={<Main />} loading_time={1} />}
+                    element={<Main />}
                 />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/NotAllow" element={<NotAllowed />} />
+                <Route path="/login" element={<SingIn />} />
+                <Route path="/create-account" element={<SignUp />} />
             </Routes>
         </>
     );
