@@ -33,7 +33,7 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<ForgotPassword />}
+                    element={<Main />}
                 />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/NotAllow" element={<NotAllowed />} />
