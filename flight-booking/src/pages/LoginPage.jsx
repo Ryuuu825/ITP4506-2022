@@ -219,7 +219,7 @@ export function SignUp() {
                 className="bg-white rounded-lg p-8 shadow-xl m-auto justify-center align-middle"
                 style={{ width: "34rem" }}
             >
-                {sucess ? (
+                {!sucess ? (
                     <>
                         <Header />
                         <div className="flex flex-col justify-center m-auto">
