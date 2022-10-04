@@ -22,6 +22,10 @@ module.exports = {
         DEFAULT: "#3058D2",
         dark: "#1E3A8A"
       } ,
+      success : colors.green,
+      danger : colors.red,
+      warning : colors.yellow,
+      info : colors.blue,
       current: 'currentColor',
       black: colors.black,
       white: colors.white,
