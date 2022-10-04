@@ -10,56 +10,34 @@ import { Success, Warning , Error} from "./component/feedback";
 import { ButtonBadge, TextBadge, Pills } from "./component/Badge";
 import { Button, Floating } from "./component/Button";
 import { Download } from "./component/SVGPath";
-import SingIn, { SignUp } from "./pages/LoginPage";
+import SingIn, { ForgotPassword, SignUp } from "./pages/LoginPage";
+import { Link } from "react-router-dom";
 
 function Main() {
     const [count, setCount] = useState(0); // useState will cause re-render
 
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <button
-                    onClick={() => setCount(count + 1)}
-                    className="underline "
-                >
-                    Click Me (useState)
-                </button>
-                <span className="text-red-400/100"> {count}</span>
-                <Success message={"Hello"} dismissable description={["Your password should be 8 len" , "Your password should be 8 len"]}/>
-
-                <ButtonBadge context="You are shit" number={count} />
-
-                <Floating
-                    color="red"
-                    path={
-                        <Download />
-                    }
-                />
-
-                <h2>
-                    dkjfsfsdf
-                    <TextBadge context="New" color="blue" />
-                    <Pills context="New" color="blue" />
-                </h2>
-            </header>
+           <ul>
+                <li><Link to="/login">Login</Link></li>
+           </ul>
         </div>
     );
 }
 
 function App() {
-    const location = useLocation();
     return (
         <>
             <Routes>
                 <Route
                     path="/"
-                    element={<Main />}
+                    element={<ForgotPassword />}
                 />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/NotAllow" element={<NotAllowed />} />
                 <Route path="/login" element={<SingIn />} />
                 <Route path="/create-account" element={<SignUp />} />
+                <Route path="/forgot-pw" element={<ForgotPassword />} />
             </Routes>
         </>
     );

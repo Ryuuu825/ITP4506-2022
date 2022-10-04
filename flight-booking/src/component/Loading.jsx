@@ -1,6 +1,6 @@
 import { useState , useRef , useEffect } from 'react';
 
-function Spin({size_}) 
+function Spin({size_  }) 
 {
     if (size_)
     {
@@ -14,9 +14,9 @@ function Spin({size_})
         else if (size_ == "xl")
             size_num = [32,52]
     
-        const className_with_size = "animate-spin rounded-full border-b-2 border-white-900" + " w-" + size_num[0] + " h-" + size_num[1] ; 
+        const className_with_size = "animate-spisn rounded-full border-b-3 border-black-900" + " w-" + size_num[0] + " h-" + size_num[1] ; 
         return (
-            <div className="flex justify-center items-center bg-black ">
+            <div className="flex justify-center items-center bg-white ">
                 <svg className={className_with_size} viewBox="0 0 24 24"></svg>
             </div>
         )
@@ -24,16 +24,21 @@ function Spin({size_})
     else 
     {
         return (
-            <div className="flex justify-center items-center h-screen bg-black">
-                {/* A screen size spinner */}
-                <div className="animate-spin rounded-full border-b-2 border-white-900 h-32 w-32"></div>
-            </div>
+            <>
+                <div className="flex justify-center items-center bg-white">
+                    {/* A screen size spinner */}
+                    <div className=" m-40 ">
+                        <div className="animate-spin rounded-full  border-l-4  border-black h-32 w-32">
+                        </div>
+                    </div>
+                </div>
+            </>
         )
     }
     
 }
 
-export function Spinner({element , loading_time , size}) {
+export function Spinner({element , loading_time , size }) {
     const [loading , setLoading] = useState(true);
     const time = useRef(null);
     const timer = useRef(null);
@@ -52,12 +57,12 @@ export function Spinner({element , loading_time , size}) {
 
     return (
         <div>
-            { loading ? <Spin size_={size}/> : element }
+            { loading ? <Spin size_={size}  /> : element }
         </div>
     )
 }
 
-export function LoadPage({page, loading_time})
+export function LoadPage({page, loading_time , Preloaded})
 {
     const [loading , setLoading] = useState(true);
     const time = useRef(null);
@@ -77,7 +82,13 @@ export function LoadPage({page, loading_time})
 
     return (    
         <div>
-            { loading ? <Spin/> : page }
+            { loading ? 
+                <>
+                    {Preloaded}
+                    <Spin />
+                </>
+            
+            : page }
         </div>
     )
 }
