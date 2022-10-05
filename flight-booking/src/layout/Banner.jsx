@@ -48,17 +48,14 @@ export function HeroBanner() {
 export function Banner() {
     const [top , setTop] = useState(0);
     const contentRef = useRef(null);
-
-    // animate-fixed-up
-
     return (
         <div className="" >
-            <div className="container  mx-auto">
-            <section className="">
-                <div ref={contentRef} className="bg-blue-600 fixed right-0 left-0 z-[1030] w-full py-3 px-6 text-white md:flex justify-between items-center text-center md:text-left"
-                    style={{top: `${top}px`}}
+            <div className="container mx-auto ">
+            <section className="xs">
+                <div ref={contentRef} className="bg-blue-600 fixed right-0 left-0 z-[1030] w-full py-3 px-6 text-white md:flex justify-between items-center text-center md:text-left animate-fixed-up"
+                    style={{bottom: `${top}px`}}
                 >
-                    <div className="mb-4 md:mb-0 flex items-center flex-wrap justify-center md:justify-start">
+                    <div className="mb-4 md:mb-0 flex items-center flex-wrap justify-center md:justify-start ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 384 512"
@@ -82,8 +79,13 @@ export function Banner() {
                         <div
                             className="text-white"
                             onClick={() => {
-                                contentRef.current.classList.add("animate-fixed-up");
-                                setTop(-100);
+                                contentRef.current.classList.add("animate-fixed-down");
+                                contentRef.current.classList.remove("animate-fixed-up");
+                                
+                                setTimeout(() => {
+                                    setTop(-100);
+                                } , 1000);
+                                
                             }}
                             style={{cursor:"pointer"}}
                         >

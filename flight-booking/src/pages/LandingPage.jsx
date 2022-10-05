@@ -2,6 +2,7 @@ import { HeroBanner, Banner } from "../layout/Banner";
 import { Link } from "react-router-dom";
 import Accordion from "../component/Accordion";
 import { Paragraph } from "../component/Text";
+import Nav from "../layout/Nav";
 function Box({ name }) {
     return (
         <div
@@ -95,6 +96,7 @@ function ListBox(props) {
 export function LandingPage() {
     return (
         <div>
+            <Nav />
             <Banner />
             <HeroBanner />
             <div className="w-11/12 mx-auto 2xl:w-6/12">
@@ -241,9 +243,9 @@ export function LandingPage() {
             </div>
 
             <div className="w-11/12 mx-auto 2xl:w-6/12 mt-10">
-                <h1 className="text-3xl font-bold mb-10">
+                <div className="text-3xl font-bold mb-10">
                     Frequently asked questions
-                </h1>
+                </div>
                 <Accordion
                     title={"Why book with us?"}
                     content={

@@ -11,11 +11,16 @@ module.exports = {
       },
       animation: {
         'fixed-up': 'fixed-up 1s ease-out',
+        'fixed-down': 'fixed-down 1s ease-out',
       },
       keyframes: theme => ({
         'fixed-up': {
           '0%': { transform: 'translateY(100%)' },
           '100%': { transform: 'translateY(0%)' },
+        },
+        'fixed-down': {
+          '0%': { transform: 'translateY(0%)' },
+          '100%': { transform: 'translateY(100%)' },
         },
         
       }),
