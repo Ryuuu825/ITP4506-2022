@@ -77,7 +77,7 @@ export default function Footor() {
                     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                         © 2022{" "}
                         <a href="https://flowbite.com/" class="hover:underline">
-                            Flowbite™
+                            IVE airline™
                         </a>
                         . All Rights Reserved.
                     </span>
