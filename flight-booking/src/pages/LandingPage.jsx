@@ -109,7 +109,7 @@ export function LandingPage() {
                     <ListBoxHor>
                         <Box name="Japan" />
                         <Box name="Taiwan" />
-                        <Box name="China" />
+                        <Box name="Germany" />
                         <Box name="United Kingdom" />
                     </ListBoxHor>
                 </div>
@@ -124,14 +124,14 @@ export function LandingPage() {
                         <ListItem
                             dest="Tokyo"
                             dest_code="NRT"
-                            price="5999"
+                            price="5,999"
                             date="07-DEC-2022"
                             flight_class="Economy"
                         />
                         <ListItem
                             dest="TaiWan"
                             dest_code="TPE"
-                            price="3049"
+                            price="3,049"
                             date="14-DEC-2022"
                             flight_class="Economy"
                         />
@@ -141,14 +141,14 @@ export function LandingPage() {
                         <ListItem
                             dest="BangKok"
                             dest_code="BKK"
-                            price="2914"
+                            price="2,914"
                             date="07-DEC-2022"
                             flight_class="Economy"
                         />
                         <ListItem
                             dest="Incheon"
                             dest_code="ICN"
-                            price="4292"
+                            price="4,292"
                             date="07-DEC-2022"
                             flight_class="Economy"
                         />
