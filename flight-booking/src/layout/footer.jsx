@@ -5,10 +5,10 @@ import { useApp } from "../hook/Main";
 export default function Footor() {
     const app = useApp();
     if (app.disableFooter) {
-        return <></>;
+        return null;
     } else {
         return (
-            <footer class="sbg-white sm:p-6 dark:bg-gray-900 w-screen bottom-0 overflow-hidden">
+            <footer class="bg-white sm:p-6 dark:bg-gray-900 bottom-0 overflow-hidden">
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0">
                         <a
