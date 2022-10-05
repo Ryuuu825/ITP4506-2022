@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo.svg";
 import { CheckBox, FloatingLabel } from "../component/Form";
 import { Button } from "../component/Button";
 import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
+import { useApp } from "../hook/Main";
 
 function Header({ noback }) {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Header({ noback }) {
         </>
     );
 }
-export default function SingIn() {
+export function SingIn() {
     const navigate = useNavigate();
     // get the previous page
 
@@ -60,6 +61,8 @@ export default function SingIn() {
     const _password = "TKkxNHrGs&!$t6+&";
 
     const [inputed_all, set_inputed_all] = useState(false);
+
+    const app = useApp();
 
     return (
         <div className="h-screen flex">
@@ -147,6 +150,9 @@ export default function SingIn() {
                             ) {
                                 setEmailError(false);
                                 setEmailErrorMsg("");
+                                app.setLogin(true);
+                                navigate("/");
+
                             } else if (!/\S+@\S+\.\S+/.test(email.current)) {
                                 setEmailError(true);
                                 setEmailErrorMsg("Email format is not valid");

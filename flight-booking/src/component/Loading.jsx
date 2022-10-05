@@ -1,7 +1,10 @@
 import { useState , useRef , useEffect } from 'react';
+import { useApp } from '../hook/Main';
+
 
 function Spin({size_  }) 
 {
+
     if (size_)
     {
         let size_num = [12,12]

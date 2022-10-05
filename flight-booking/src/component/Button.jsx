@@ -1,6 +1,6 @@
 export function Button( { content, onClick, color , hovercolor , disable , style , id } ) {
     if (!color) color = "primary";
-    let className = "p-3 rounded-lg text-white font-normal my-5 bg-primary hover:bg-primary";
+    let className = "p-3 rounded-lg text-white font-normal my-5 bg-primary hover:bg-primary-800";
     className = className.concat(" ", style);
     if ( disable ) {
         className = className.concat(" disabled:opacity-50 disabled:cursor-not-allowed");

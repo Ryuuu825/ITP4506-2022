@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Accordion from "../component/Accordion";
 import { Paragraph } from "../component/Text";
 import Nav from "../layout/Nav";
+import { useApp } from "../hook/Main";
 function Box({ name }) {
     return (
         <div
@@ -35,7 +36,7 @@ function ListItem({ dest, dest_code, price, date, flight_class }) {
     return (
         <Link
             to="/booking"
-            class="text-black px-4 py-2 flex flex-row justify-between items-center border p-3 rounded-lg mt-1 mb-2 relative mx-1 hover:scale-105"
+            class="text-black px-4 py-2 flex flex-row justify-between items-center border p-3 rounded-lg mt-1 mb-2 relative mx-1 hover:scale-105 transition"
             style={{ width: "47%" }}
         >
             <div class="flex flex-row items-center">
@@ -94,6 +95,8 @@ function ListBox(props) {
 }
 
 export function LandingPage() {
+    const app = useApp();
+    
     return (
         <div>
             <Nav />
