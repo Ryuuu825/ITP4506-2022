@@ -177,8 +177,8 @@ export function InputBox({
     
     const isArray = Array.isArray(error_message);
 
-    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
-    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
+    const invalid_class_name = `block px-2.5 py-3 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
+    const valid_class_name = `block px-2.5 py-3 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
     return (
         <div className="mb-2">
             <div class="relative mt-5">
@@ -256,7 +256,7 @@ export function DatePicker({ id , handler, props }) {
             <input
                 type="date"
                 id={id}
-                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300"
+                class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300"
                 onChange={handler}
                 {...props}
             />
