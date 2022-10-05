@@ -4,10 +4,10 @@ import { useState , useRef } from "react";
 
 export function HeroBanner() {
     return (
-        <div className=" w-11/12 mx-auto mb-10 2xl:w-full">
+        <div className="mx-auto mb-10 w-full">
             <section class="">
                 <div
-                    class="relative overflow-hidden bg-no-repeat bg-cover rounded-lg"
+                    class="relative overflow-hidden bg-no-repeat bg-cover "
                     style={{
                         backgroundPosition: "50%",
                         backgroundImage:

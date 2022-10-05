@@ -7,7 +7,7 @@ export default function Nav({ name }) {
     const app = useApp();
     console.log(app.login)
     return (
-        <div className="bg-white-800 h-24 border-b-2 mb-3">
+        <div className="bg-white-800 h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3">
                 <div className="flex items-center justify-center ">
                     <img src={logo} className="w-16 h-16" alt="logo" />

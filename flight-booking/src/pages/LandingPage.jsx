@@ -105,7 +105,7 @@ export function LandingPage() {
             <Nav />
             <Banner />
             <HeroBanner />
-            <div className="w-11/12 mx-auto 2xl:w-6/12">
+            <div className="w-10/12 mx-auto 2xl:w-8/12">
                 <div className="p-dest">
                     <div className="w-1/2">
                         <h1 className="text-3xl font-bold">
