@@ -17,14 +17,13 @@ export default function Accordion({ title, content, alwaysOpen }) {
         setOpen(!open);
     };
 
-    const isContentHtml = typeof content === "string";
     return (
-        <div className="w-full">
+        <div className="w-full ">
             <button
                 className={"w-full flex flex-row py-3 "}
                 onClick={toggleAccordion}
             >
-                <p className="text-3xl font-semibold mx-auto mt-3">{title}</p>
+                <p className="text-2xl font-semibold mx-auto mt-3">{title}</p>
                 <span className="mr-3">
                     {!open ? (
                         <svg

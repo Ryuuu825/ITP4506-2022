@@ -233,7 +233,10 @@ export function LandingPage() {
                 </div>
             </div>
 
-            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-5">
+            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-10">
+                <h1 className="text-3xl font-bold mb-10">
+                    Frequently asked questions
+                </h1>
                 <Accordion
                     title={"Why book with us?"}
                     content={
