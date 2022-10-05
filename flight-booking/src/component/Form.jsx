@@ -55,9 +55,11 @@ export function FloatingLabel({
     const [show, setShow] = useState(false);
     const valid = validate
 
+    // clear the input when error
+    
     const isArray = Array.isArray(error_message);
 
-    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-red-500 border-red-300`;
+    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
     const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
     return (
         <div className="mb-2">
@@ -75,11 +77,11 @@ export function FloatingLabel({
                     :
                     (
                         <input
-                        type={type}
-                        id={id}
-                        class={invalid_class_name}
-                        placeholder=" "
-                        onChange={handler}
+                            type={type}
+                            id={id}
+                            class={invalid_class_name}
+                            placeholder=" "
+                            onChange={handler}
                         />
                     )
                     }

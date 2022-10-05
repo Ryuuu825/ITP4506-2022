@@ -14,7 +14,7 @@ function Header({ noback }) {
             <div className="flex flex-rows justify-center align-middles">
                 {noback ? null : (
                     <button
-                        className="inline-block mt-1"
+                        className="inline-block"
                         onClick={() => {
                             navigate(-1);
                         }}
@@ -53,10 +53,11 @@ export default function SingIn() {
     const password = useRef("");
 
     const [emailError, setEmailError] = useState(false);
+    const [pwError, setPwError] = useState(false);
     const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
-    const _email = "admin@domain.com";
-    const _password = "admin";
+    const _email = "210123456@stu.vtc.edu.hk";
+    const _password = "TKkxNHrGs&!$t6+&";
 
     const [inputed_all, set_inputed_all] = useState(false);
 
@@ -80,6 +81,7 @@ export default function SingIn() {
                         type="email"
                         id={"r_email"}
                         handler={(e) => {
+                            setPwError(false)
                             email.current = e.target.value;
                             if (
                                 email.current !== "" &&
@@ -148,11 +150,13 @@ export default function SingIn() {
                             } else if (!/\S+@\S+\.\S+/.test(email.current)) {
                                 setEmailError(true);
                                 setEmailErrorMsg("Email format is not valid");
+                                document.getElementById("s_password").value = "";
                             } else {
                                 setEmailError(true);
                                 setEmailErrorMsg(
                                     "Email or password is incorrect"
                                 );
+                                document.getElementById("s_password").value = "";
                             }
                         }}
                         content="Sign in"
@@ -435,8 +439,10 @@ export function ForgotPassword() {
     const navigate = useNavigate();
     return (
         <div className="flex justify-center items-center h-screen">
+            <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
+
             {!sucess ? (
-                <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
+                    <>
                     <div className="flex justify-center align-middle flex-row mb-3">
                         <button
                             className="inline-block"
@@ -500,18 +506,15 @@ export function ForgotPassword() {
                     >
                         Sign in
                     </Button>
-
-                    <div className="flex justify-center mt-5 text-center align-middle">
-                        <span className="text-sm text-black-500">
-                            Already have an account?
-                        </span>
-                        <a href="#" className="text-blue-600 ml-1 text-sm">
-                            <Link to="/login">Sign In</Link>
-                        </a>
-                    </div>
-                    <div className="mb-5"></div>
-                </div>
-            ) : null}
+                    </>
+            ) : ( 
+                <LoadPage
+                    page={<ResetPwSuccess />}
+                    Preloaded={<Header noback/>}
+                    loading_time={3}
+                    />
+            )}
+            </div>
         </div>
     );
 }
@@ -529,6 +532,26 @@ function RegisterSuccess({ name }) {
             </div>
 
             <div className="text-s text-black mt-5 text-center">
+                Click{" "}
+                <Link to="/login">
+                    <span className="text-primary font-semibold">HERE</span>
+                </Link>{" "}
+                to sign in.
+            </div>
+        </div>
+    );
+}
+
+
+function ResetPwSuccess() {
+    return (
+        <div className="flex flex-col justify-center sm-auto mt-10">
+            <Header noback />
+            <h1 className="font-semibold text-3xl mt-5">Password Reset</h1>
+            <div className="text-sm text-black-500 mt-5">
+                Your password has been reset 
+                <span className="font-semibold"> successfully</span>.
+                <br />
                 Click{" "}
                 <Link to="/login">
                     <span className="text-primary font-semibold">HERE</span>
