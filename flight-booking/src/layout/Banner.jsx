@@ -1,5 +1,5 @@
 import { Button } from "../component/Button";
-import { FloatingLabel, InputBox } from "../component/Form";
+import { DatePicker, FloatingLabel, InputBox } from "../component/Form";
 import { useState , useRef } from "react";
 
 export function HeroBanner() {
@@ -27,12 +27,19 @@ export function HeroBanner() {
                                     </span>
                                 </h1>
                                 <div className="flex justify-center flex-row align-middle">
-                                    <div className=" w-9/12 mr-10">
-                                        <InputBox
-                                            type="text"
-                                            placeholder="Enter your destination"
-                                            validate={true}
-                                        />
+                                    <div className="w-9/12 mr-10">
+                                        <div className="flex flex-row align-middle ">
+                                            <div className="w-8/12 mr-auto">
+                                                <InputBox
+                                                    type="text"
+                                                    placeholder="Enter your destination"
+                                                    validate={true}
+                                                />
+                                            </div >
+                                            <div className="w-4/12 mr-auto">
+                                                <DatePicker />
+                                            </div>
+                                        </div>
                                     </div>
                                     <Button content="Search" />
                                 </div>

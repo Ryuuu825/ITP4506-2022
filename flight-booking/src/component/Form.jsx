@@ -167,7 +167,8 @@ export function InputBox({
     handler,
     error_message,
     normal_message,
-    validate
+    validate,
+    props
 }) {
     const [show, setShow] = useState(false);
     const valid = validate
@@ -189,6 +190,7 @@ export function InputBox({
                             class={valid_class_name}
                             placeholder={placeholder}
                             onChange={handler}
+                            {...props}
                         />
                     )
                     :
@@ -199,12 +201,14 @@ export function InputBox({
                             class={invalid_class_name}
                             placeholder={placeholder}
                             onChange={handler}
+                            {...props}
                         />
                     )
                     }
                 {type === "password" ? (
                     <button
                         class="absolute right-2 top-3.5"
+                        {...props}
                         onClick={() => {
                             let input = document.getElementById(id);
                             if (input.type === "password") {
@@ -242,6 +246,20 @@ export function InputBox({
                 </div>
             )}
 
+        </div>
+    );
+}
+
+export function DatePicker({ id , handler, props }) {
+    return (
+        <div class="relative mt-5">
+            <input
+                type="date"
+                id={id}
+                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300"
+                onChange={handler}
+                {...props}
+            />
         </div>
     );
 }
