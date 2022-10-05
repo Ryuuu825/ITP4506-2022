@@ -8,7 +8,17 @@ module.exports = {
     extend: {
       transitionProperty: {
         'height': 'height'
-      }
+      },
+      animation: {
+        'fixed-up': 'fixed-up 1s ease-out',
+      },
+      keyframes: theme => ({
+        'fixed-up': {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+        
+      }),
     },
     colors: {
       transparent: "transparent",

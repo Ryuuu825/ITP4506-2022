@@ -1,4 +1,4 @@
-import HeroBanner from "../layout/HeroBanner";
+import { HeroBanner, Banner } from "../layout/Banner";
 import { Link } from "react-router-dom";
 import Accordion from "../component/Accordion";
 import { Paragraph } from "../component/Text";
@@ -32,7 +32,11 @@ function Box({ name }) {
 
 function ListItem({ dest, dest_code, price, date, flight_class }) {
     return (
-        <div class="flex flex-row justify-between items-center border p-3 rounded-lg mt-1 mb-2 relative  w-3/6 mx-1 ">
+        <Link
+            to="/booking"
+            class="text-black px-4 py-2 flex flex-row justify-between items-center border p-3 rounded-lg mt-1 mb-2 relative mx-1 hover:scale-105"
+            style={{ width: "47%" }}
+        >
             <div class="flex flex-row items-center">
                 <div class="flex flex-col ml-4">
                     <p>
@@ -53,29 +57,31 @@ function ListItem({ dest, dest_code, price, date, flight_class }) {
                 </div>
             </div>
             <div>
-                <Link to="/booking" class="text-black px-4 py-2">
-                    <svg
-                        class="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        ></path>
-                    </svg>
-                </Link>
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    ></path>
+                </svg>
             </div>
-        </div>
+        </Link>
     );
 }
 
 function ListBoxHor(props) {
-    return <div className="flex mt-4 flex-nowrap">{props.children}</div>;
+    return (
+        <div className="flex mt-4 flex-nowrap justify-around">
+            {props.children}
+        </div>
+    );
 }
 
 function ListBox(props) {
@@ -89,6 +95,7 @@ function ListBox(props) {
 export function LandingPage() {
     return (
         <div>
+            <Banner />
             <HeroBanner />
             <div className="w-11/12 mx-auto 2xl:w-6/12">
                 <div className="p-dest">
@@ -294,12 +301,17 @@ export function LandingPage() {
                             <Paragraph>
                                 According to the current
                                 <span className="text-primary">
-                                    <a href="https://www.hongkongairport.com/en/COVID19.page" target="_blank">  regulations </a>
+                                    <a
+                                        href="https://www.hongkongairport.com/en/COVID19.page"
+                                        target="_blank"
+                                    >
+                                        {" "}
+                                        regulations{" "}
+                                    </a>
                                 </span>
-                                , all
-                                passengers must fulfilled vaccination requirements,
-                                and must have a negative COVID-19 test result within
-                                72 hours before departure.
+                                , all passengers must fulfilled vaccination
+                                requirements, and must have a negative COVID-19
+                                test result within 72 hours before departure.
                             </Paragraph>
                         </>
                     }

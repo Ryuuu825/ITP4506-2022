@@ -14,7 +14,7 @@ function Spin({size_  })
         else if (size_ == "xl")
             size_num = [32,52]
     
-        const className_with_size = "animate-spisn rounded-full border-b-3 border-black-900" + " w-" + size_num[0] + " h-" + size_num[1] ; 
+        const className_with_size = "animate-spin rounded-full border-b-3 border-black-900" + " w-" + size_num[0] + " h-" + size_num[1] ; 
         return (
             <div className="flex justify-center items-center bg-white ">
                 <svg className={className_with_size} viewBox="0 0 24 24"></svg>
@@ -44,7 +44,7 @@ export function Spinner({element , loading_time , size }) {
     const timer = useRef(null);
 
     // load the element now
-    
+
 
     useEffect(() => {
        // change the spinner to the element after loading_time
