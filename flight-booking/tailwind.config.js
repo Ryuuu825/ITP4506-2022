@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        'height': 'height'
+      }
+    },
     colors: {
       transparent: "transparent",
       primary : {

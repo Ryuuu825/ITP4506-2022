@@ -59,8 +59,8 @@ export function FloatingLabel({
     
     const isArray = Array.isArray(error_message);
 
-    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
-    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
+    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
+    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
     return (
         <div className="mb-2">
             <div class="relative mt-5">
@@ -152,6 +152,93 @@ export function CheckBox({ id, context }) {
             >
                 {context}
             </label>
+        </div>
+    );
+}
+
+
+export function InputBox({
+    placeholder,
+    type,
+    id,
+    handler,
+    error_message,
+    normal_message,
+    validate
+}) {
+    const [show, setShow] = useState(false);
+    const valid = validate
+
+    // clear the input when error
+    
+    const isArray = Array.isArray(error_message);
+
+    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300`;
+    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300`;
+    return (
+        <div className="mb-2">
+            <div class="relative mt-5">
+                { valid ?
+                    (
+                        <input
+                            type={type}
+                            id={id}
+                            class={valid_class_name}
+                            placeholder={placeholder}
+                            onChange={handler}
+                        />
+                    )
+                    :
+                    (
+                        <input
+                            type={type}
+                            id={id}
+                            class={invalid_class_name}
+                            placeholder={placeholder}
+                            onChange={handler}
+                        />
+                    )
+                    }
+                {type === "password" ? (
+                    <button
+                        class="absolute right-2 top-3.5"
+                        onClick={() => {
+                            let input = document.getElementById(id);
+                            if (input.type === "password") {
+                                input.type = "text";
+                                setShow(true);
+                            } else {
+                                input.type = "password";
+                                setShow(false);
+                            }
+                        }}
+                    >
+                        {show ? <Eye /> : <EyeOff />}
+                    </button>
+                ) : null}
+            
+            </div>
+
+            {validate ? (
+                <div class="pl-3 w-full mt-1">
+                    <p class={`text-sm text-green-500`}>{normal_message}</p>
+                </div>
+            ) : (
+                <div class="pl-3 w-full mt-1">
+
+                    {isArray ? (
+                        error_message.map((message) => (
+                            <p class={`text-sm text-red-500`}>{message}</p>
+                        )))
+                    : 
+                    (
+                        <p class={`text-sm text-red-500`}>{error_message}</p>
+                    )
+                    }
+                    
+                </div>
+            )}
+
         </div>
     );
 }

@@ -12,6 +12,7 @@ import { Button, Floating } from "./component/Button";
 import { Download } from "./component/SVGPath";
 import SingIn, { ForgotPassword, SignUp } from "./pages/LoginPage";
 import { Link } from "react-router-dom";
+import { LandingPage } from "./pages/LandingPage";
 
 function Main() {
     const [count, setCount] = useState(0); // useState will cause re-render
@@ -33,7 +34,7 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<Main />}
+                    element={<LandingPage />}
                 />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/NotAllow" element={<NotAllowed />} />

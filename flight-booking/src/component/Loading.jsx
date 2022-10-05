@@ -43,6 +43,9 @@ export function Spinner({element , loading_time , size }) {
     const time = useRef(null);
     const timer = useRef(null);
 
+    // load the element now
+    
+
     useEffect(() => {
        // change the spinner to the element after loading_time
          timer.current = setInterval(() => {    
