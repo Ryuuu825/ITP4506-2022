@@ -80,6 +80,8 @@ export default function Nav({ name }) {
                                         <DropDownListItem context={"Logout"}
                                             handler={() => {
                                                 app.setLogin(false);
+                                                // reload page
+                                                window.location.reload();
                                             }}
                                         />
                                     </DropDownList>

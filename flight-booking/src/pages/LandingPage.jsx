@@ -88,14 +88,6 @@ function ListBoxHor(props) {
     );
 }
 
-function ListBox(props) {
-    return (
-        <div className="flex mt-4 flex-col justify-between">
-            {props.children}
-        </div>
-    );
-}
-
 export function LandingPage() {
     const app = useApp();
     app.setDisableFooter(false);
