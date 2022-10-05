@@ -4,6 +4,8 @@ import Accordion from "../component/Accordion";
 import { Paragraph } from "../component/Text";
 import Nav from "../layout/Nav";
 import { useApp } from "../hook/Main";
+import LogoClouds from "../layout/LogoClouds";
+
 function Box({ name }) {
     return (
         <div
@@ -96,6 +98,7 @@ function ListBox(props) {
 
 export function LandingPage() {
     const app = useApp();
+    app.setDisableFooter(false);
     
     return (
         <div>
@@ -165,7 +168,7 @@ export function LandingPage() {
                 </div>
             </div>
 
-            <div className="divider mb-5 ">
+            <div className="divider mb-5 pt-10">
                 <div className="mt-10 bg-gray-200 ">
                     <div className="flex flex-row justify-between px-12 py-8 2xl:w-6/12 2xl:mx-auto">
                         <div className="flex flex-col justify-center p-3 text-center">
@@ -185,7 +188,7 @@ export function LandingPage() {
                                     ></path>
                                 </svg>
                             </div>
-                            <div className="text-3xl font-bold">
+                            <div className="text-3xl font-bold pt-3">
                                 Huge selection
                             </div>
                             <div className="mt-3">
@@ -194,22 +197,9 @@ export function LandingPage() {
                         </div>
                         <div className="flex flex-col justify-center p-3 text-center">
                             <div className="mx-auto">
-                                <svg
-                                    class="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                                    ></path>
-                                </svg>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </div>
-                            <div className="text-3xl font-bold">
+                            <div className="text-3xl font-bold pt-3">
                                 Best price guarantee
                             </div>
                             <div className="mt-3">
@@ -234,7 +224,7 @@ export function LandingPage() {
                                     ></path>
                                 </svg>
                             </div>
-                            <div className="text-3xl font-bold">
+                            <div className="text-3xl font-bold pt-3">
                                 No hidden fees
                             </div>
                             <div className="mt-3">
@@ -245,7 +235,10 @@ export function LandingPage() {
                 </div>
             </div>
 
-            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-10">
+            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-24">
+                <LogoClouds />
+            </div>
+            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-24">
                 <div className="text-3xl font-bold mb-10">
                     Frequently asked questions
                 </div>

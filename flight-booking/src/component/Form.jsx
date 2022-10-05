@@ -50,7 +50,8 @@ export function FloatingLabel({
     handler,
     error_message,
     normal_message,
-    validate
+    validate,
+    preventCopy
 }) {
     const [show, setShow] = useState(false);
     const valid = validate
@@ -72,6 +73,7 @@ export function FloatingLabel({
                             class={valid_class_name}
                             placeholder=" "
                             onChange={handler}
+                            onCopy={preventCopy ? (e) => e.preventDefault() : null}
                         />
                     )
                     :
@@ -82,6 +84,7 @@ export function FloatingLabel({
                             class={invalid_class_name}
                             placeholder=" "
                             onChange={handler}
+                            onCopy={preventCopy ? (e) => e.preventDefault() : null}
                         />
                     )
                     }

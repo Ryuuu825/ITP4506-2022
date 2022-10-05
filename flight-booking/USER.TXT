@@ -1,2 +1,11 @@
+Normal User:
 210123456@stu.vtc.edu.hk    
+TKkxNHrGs&!$t6+&
+
+Admin User:
+Admin@ive-airline.org
+TKkxNHrGs&!$t6+&
+
+Operator User:
+staff-1@ive-airline.org 
 TKkxNHrGs&!$t6+&

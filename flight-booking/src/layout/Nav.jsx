@@ -1,9 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
+import { DropDown, DropDownItemDivider, DropDownList, DropDownListItem } from "../component/DropDown";
 import { useApp } from "../hook/Main";
 import logo from "../logo.svg";
 
 export default function Nav({ name }) {
     const app = useApp();
+    console.log(app.login)
     return (
         <div className="bg-white-800 h-24 border-b-2 mb-3">
             <div className="flex flex-row justify-between align-middle p-3">
@@ -55,8 +57,8 @@ export default function Nav({ name }) {
                             </NavLink>
                         </li>
                         <li className="mx-3 w-24">
-                            {app.login ? (
-                                <NavLink className="text-xl text-gray-800 relative">
+                            { app.login ? (
+                                <DropDown>
                                     <svg
                                         class="w-6 h-6 mx-auto"
                                         fill="none"
@@ -64,14 +66,26 @@ export default function Nav({ name }) {
                                         viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/20s00/svg"
                                     >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
-                                </svg>
-                                </NavLink>
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+
+                                    <DropDownList target>
+                                        <DropDownListItem context={"List of Saved flightss"} />
+                                        <DropDownItemDivider />
+                                        <DropDownListItem context={"Logout"}
+                                            handler={() => {
+                                                app.setLogin(false);
+                                            }}
+                                        />
+                                    </DropDownList>
+
+
+                                </DropDown>
                             ) : (
                                     <NavLink
                                         className="text-xl text-gray-800 relative"

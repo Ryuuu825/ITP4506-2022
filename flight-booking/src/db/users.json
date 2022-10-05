@@ -1,0 +1,17 @@
+[
+    {
+        "name" : "admin",
+        "email" : "Admin@ive-airline.org" ,
+        "password" : "TKkxNHrGs&!$t6+&"
+    },
+    {
+        "name" : "normal",
+        "email" : "210123456@stu.vtc.edu.hk",
+        "password" : "TKkxNHrGs&!$t6+&"
+    },
+    {
+        "name" : "operator",
+        "email" : "staff-1@ive-airline.org",
+        "password" : "TKkxNHrGs&!$t6+&"
+    }
+]

@@ -23,7 +23,7 @@ export default function Accordion({ title, content, alwaysOpen }) {
                 className={"w-full flex flex-row py-3 "}
                 onClick={toggleAccordion}
             >
-                <p className="text-2xl font-semibold mx-auto mt-3">{title}</p>
+                <p className="text-2xl font-semibold mt-3 text-left mr-auto">{title}</p>
                 <span className="mr-3">
                     {!open ? (
                         <svg

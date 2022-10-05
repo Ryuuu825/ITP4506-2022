@@ -6,6 +6,31 @@ import { Button } from "../component/Button";
 import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
 import { useApp } from "../hook/Main";
+import UserAccount from "../db/users.json";
+
+const validatePassword = (password) => {
+    let pw_err_msg = [];
+    if (password === "") {
+        pw_err_msg.push("Password is required");
+    }
+    if (password.length < 8) {
+        pw_err_msg.push("Password must be at least 8 characters");
+    }
+    if (!/[A-Z]/.test(password)) {
+        pw_err_msg.push("Password must contain at least one uppercase letter");
+    }
+    if (!/[a-z]/.test(password)) {
+        pw_err_msg.push("Password must contain at least one lowercase letter");
+    }
+    if (!/[0-9]/.test(password)) {
+        pw_err_msg.push("Password must contain at least one number");
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+        pw_err_msg.push("Password must contain at least one special character");
+    }
+
+    return pw_err_msg;
+};
 
 function Header({ noback }) {
     const navigate = useNavigate();
@@ -57,12 +82,10 @@ export function SingIn() {
     const [pwError, setPwError] = useState(false);
     const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
-    const _email = "210123456@stu.vtc.edu.hk";
-    const _password = "TKkxNHrGs&!$t6+&";
-
     const [inputed_all, set_inputed_all] = useState(false);
 
     const app = useApp();
+    app.setDisableFooter(true);
 
     return (
         <div className="h-screen flex">
@@ -84,7 +107,7 @@ export function SingIn() {
                         type="email"
                         id={"r_email"}
                         handler={(e) => {
-                            setPwError(false)
+                            setPwError(false);
                             email.current = e.target.value;
                             if (
                                 email.current !== "" &&
@@ -144,25 +167,38 @@ export function SingIn() {
 
                     <Button
                         onClick={() => {
-                            if (
-                                email.current === _email &&
-                                password.current === _password
-                            ) {
-                                setEmailError(false);
-                                setEmailErrorMsg("");
-                                app.setLogin(true);
-                                navigate("/");
-
-                            } else if (!/\S+@\S+\.\S+/.test(email.current)) {
-                                setEmailError(true);
-                                setEmailErrorMsg("Email format is not valid");
-                                document.getElementById("s_password").value = "";
+                            const potential_user = UserAccount.find(
+                                (user) => user.email === email.current
+                            );
+                            if (potential_user) {
+                                if (
+                                    potential_user.password === password.current
+                                ) {
+                                    app.setLogin(true);
+                                    app.setUser(potential_user.name);
+                                    if (potential_user.name === "operator") {
+                                        navigate("/operator/reset-pw");
+                                    } else {
+                                        navigate("/index");
+                                    }
+                                } else {
+                                    setPwError(true);
+                                    document.getElementById(
+                                        "s_password"
+                                    ).value = "";
+                                }
                             } else {
                                 setEmailError(true);
-                                setEmailErrorMsg(
-                                    "Email or password is incorrect"
-                                );
-                                document.getElementById("s_password").value = "";
+                                setEmailErrorMsg("Email not found");
+                                document.getElementById("s_password").value =
+                                    "";
+                            }
+
+                            if (!/\S+@\S+\.\S+/.test(email.current)) {
+                                setEmailError(true);
+                                setEmailErrorMsg("Email format is not valid");
+                                document.getElementById("s_password").value =
+                                    "";
                             }
                         }}
                         content="Sign in"
@@ -213,6 +249,9 @@ export function SignUp() {
     const [sucess, set_sucess] = useState(false);
 
     const [inputed_all, set_inputed_all] = useState(false);
+
+    const app = useApp();
+    app.setDisableFooter(true);
 
     // when user press the "enter" key, system press the "Sign up" button
     useEffect(() => {
@@ -364,39 +403,10 @@ export function SignUp() {
                                         set_email_valid(true);
                                     }
 
-                                    const pw_err_msg = [];
-                                    if (password.current === "") {
-                                        pw_err_msg.push("Password is required");
-                                    }
-                                    if (password.current.length < 8) {
-                                        pw_err_msg.push(
-                                            "Password must be at least 8 characters"
-                                        );
-                                    }
-                                    if (!/[A-Z]/.test(password.current)) {
-                                        pw_err_msg.push(
-                                            "Password must contain at least one uppercase letter"
-                                        );
-                                    }
-                                    if (!/[a-z]/.test(password.current)) {
-                                        pw_err_msg.push(
-                                            "Password must contain at least one lowercase letter"
-                                        );
-                                    }
-                                    if (!/[0-9]/.test(password.current)) {
-                                        pw_err_msg.push(
-                                            "Password must contain at least one number"
-                                        );
-                                    }
-                                    if (
-                                        !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
-                                            password.current
-                                        )
-                                    ) {
-                                        pw_err_msg.push(
-                                            "Password must contain at least one special character"
-                                        );
-                                    }
+                                    const pw_err_msg = validatePassword(
+                                        password.current
+                                    );
+
                                     if (pw_err_msg.length > 0) {
                                         set_password_valid(false);
                                         set_password_error_msgs(pw_err_msg);
@@ -428,7 +438,7 @@ export function SignUp() {
                     <LoadPage
                         page={<RegisterSuccess name={fname.current} />}
                         loading_time={3}
-                        Preloaded={<Header noback/>}
+                        Preloaded={<Header noback />}
                     />
                 )}
             </div>
@@ -446,86 +456,102 @@ export function ForgotPassword() {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
-
-            {!sucess ? (
+                {!sucess ? (
                     <>
-                    <div className="flex justify-center align-middle flex-row mb-3">
-                        <button
-                            className="inline-block"
+                        <div className="flex justify-center align-middle flex-row mb-3">
+                            <button
+                                className="inline-block"
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                            >
+                                <svg
+                                    className="h-6 w6 text-black"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                                    />
+                                </svg>
+                            </button>
+                            <h1 className="text-2xl font-bold text-center mx-auto">
+                                Forgot Password
+                            </h1>
+                        </div>
+                        <span className="mt-3 text-start">
+                            Enter your email address and we will send you a link
+                            to reset your password.
+                        </span>
+
+                        <FloatingLabel
+                            placeholder={"Email"}
+                            type="email"
+                            id={"r_email"}
+                            handler={(e) => {
+                                set_email(e.target.value);
+                                if (email === "") {
+                                    set_inputed_all(false);
+                                } else {
+                                    set_inputed_all(true);
+                                }
+                            }}
+                            validate={email_valid}
+                            error_message="Email format is not valid"
+                        />
+
+                        <Button
+                            content="Continue"
+                            color={"primary"}
+                            disable={!inputed_all}
+                            style="w-full mt-5"
+                            id="sign_up_btn"
                             onClick={() => {
-                                navigate(-1);
+                                if (
+                                    email === "" ||
+                                    !/\S+@\S+\.\S+/.test(email)
+                                ) {
+                                    set_email_valid(false);
+                                } else {
+                                    set_email_valid(true);
+                                    set_sucess(true);
+                                }
                             }}
                         >
-                            <svg
-                                className="h-6 w6 text-black"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 16l-4-4m0 0l4-4m-4 4h18"
-                                />
-                            </svg>
-                        </button>
-                        <h1 className="text-2xl font-bold text-center mx-auto">
-                            Forgot Password
-                        </h1>
-                    </div>
-                    <span className="mt-3 text-start">
-                        Enter your email address and we will send you a link to
-                        reset your password.
-                    </span>
-
-                    <FloatingLabel
-                        placeholder={"Email"}
-                        type="email"
-                        id={"r_email"}
-                        handler={(e) => {
-                            set_email(e.target.value);
-                            if (email === "") {
-                                set_inputed_all(false);
-                            } else {
-                                set_inputed_all(true);
-                            }
-                        }}
-                        validate={email_valid}
-                        error_message="Email format is not valid"
-                    />
-
-                    <Button
-                        content="Continue"
-                        color={"primary"}
-                        disable={!inputed_all}
-                        style="w-full mt-5"
-                        id="sign_up_btn"
-                        onClick={() => {
-                            if (email === "" || !/\S+@\S+\.\S+/.test(email)) {
-                                set_email_valid(false);
-                            } else {
-                                set_email_valid(true);
-                                set_sucess(true);
-                            }
-                        }}
-                    >
-                        Sign in
-                    </Button>
+                            Sign in
+                        </Button>
                     </>
-            ) : ( 
-                <LoadPage
-                    page={<ResetPwSuccess />}
-                    Preloaded={<Header noback/>}
-                    loading_time={3}
+                ) : (
+                    <LoadPage
+                        page={<ResetPwSuccess />}
+                        Preloaded={<Header noback />}
+                        loading_time={1}
                     />
-            )}
+                )}
             </div>
         </div>
     );
 }
 
 function RegisterSuccess({ name }) {
+    const navigate = useNavigate();
+    const [time, set_time] = useState(5);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            set_time(time - 1);
+            if (time <= 0) {
+                navigate("/login");
+            }
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    });
+
     return (
         <div className="flex flex-col justify-center sm-auto mt-10">
             <Header noback />
@@ -542,28 +568,179 @@ function RegisterSuccess({ name }) {
                 <Link to="/login">
                     <span className="text-primary font-semibold">HERE</span>
                 </Link>{" "}
-                to sign in.
+                to sign in. {/* auto direct user in 5 sec */}
+                <span className="text-sm text-black-500">( {time} sec )</span>
             </div>
         </div>
     );
 }
 
-
 function ResetPwSuccess() {
+    const navigate = useNavigate();
+    const [time, set_time] = useState(5);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            set_time(time - 1);
+            if (time <= 0) {
+                navigate("/login");
+            }
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    });
+
     return (
         <div className="flex flex-col justify-center sm-auto mt-10">
             <Header noback />
             <h1 className="font-semibold text-3xl mt-5">Password Reset</h1>
             <div className="text-sm text-black-500 mt-5">
-                Your password has been reset 
+                Your password has been reset
                 <span className="font-semibold"> successfully</span>.
                 <br />
                 Click{" "}
                 <Link to="/login">
                     <span className="text-primary font-semibold">HERE</span>
                 </Link>{" "}
-                to sign in.
+                to sign in. {/* auto direct user in 5 sec */}
+                <span className="text-sm text-black-500">( {time} sec )</span>
             </div>
         </div>
     );
+}
+
+export function OperatorResetPw({ name = "Lee" }) {
+    const app = useApp();
+    app.setDisableFooter(true);
+
+    const [showForm, setShowForm] = useState(false);
+    const password = useRef();
+    const r_password = useRef();
+    const [pwValid, setPwValid] = useState(true);
+    const [r_pwValid, setR_PwValid] = useState(true);
+    const [password_error_msgs, set_password_error_msgs] = useState([]);
+    const [success, set_success] = useState(false);
+
+    const navigate = useNavigate();
+    if (!success) {
+        return (
+            <div>
+                <Header noback />
+                <div className="flex flex-col justify-center sm-auto mt-10 text-center h-screen">
+                    <h1 className="font-semibold text-5xl mt-5">
+                        Welcome, {name}
+                    </h1>
+                    <div className="text-black-500 mt-5 text-3xl pt-3">
+                        We noticed that this is your first time logging in.
+                        <br />
+                        Please click
+                        <div
+                            className="font-semibold text-primary cursor-pointer inline"
+                            onClick={() => {
+                                setShowForm(true);
+                            }}
+                        >
+                            {" "}
+                            HERE{" "}
+                        </div>
+                        reset your password.
+                    </div>
+
+                    {showForm ? (
+                        <div className="flex flex-col justify-center sm-auto mt-10 w-1/2 mx-auto">
+                            <div className="text-sm text-black-500 mt-5">
+                                Enter your new password below.
+                                <FloatingLabel
+                                    placeholder={"New Password"}
+                                    type="password"
+                                    id={"r_password"}
+                                    handler={(e) => {
+                                        password.current = e.target.value;
+                                        document.getElementById(
+                                            "r_confirm_password"
+                                        ).value = "";
+                                    }}
+                                    validate={pwValid}
+                                    error_message={password_error_msgs}
+                                    preventCopy
+                                />
+                                <FloatingLabel
+                                    placeholder={"Confirm Password"}
+                                    type="password"
+                                    id={"r_confirm_password"}
+                                    handler={(e) => {
+                                        r_password.current = e.target.value;
+                                    }}
+                                    validate={r_pwValid}
+                                    error_message="Password does not match"
+                                />
+                                <Button
+                                    content="Continue"
+                                    color={"primary"}
+                                    disable={false}
+                                    style="w-full mt-5"
+                                    id="sign_up_btn"
+                                    onClick={() => {
+                                        let haveError = false;
+
+                                        if (
+                                            password.current === undefined ||
+                                            password.current === ""
+                                        ) {
+                                            set_password_error_msgs([
+                                                "Bruh, you didn't even enter a character",
+                                            ]);
+                                            setPwValid(false);
+                                        } else {
+                                            setPwValid(true);
+                                        }
+
+                                        if (
+                                            r_password.current === "" ||
+                                            r_password.current !==
+                                                password.current
+                                        ) {
+                                            setR_PwValid(false);
+                                            haveError = true;
+                                        } else {
+                                            setR_PwValid(true);
+                                        }
+
+                                        const pw_err_msg = validatePassword(
+                                            password.current
+                                        );
+
+                                        console.log(pw_err_msg);
+
+                                        if (
+                                            pw_err_msg.length > 0 ||
+                                            haveError
+                                        ) {
+                                            set_password_error_msgs(pw_err_msg);
+                                            setPwValid(false);
+                                        } else {
+                                            // forward user to sign in page
+                                            set_success(true);
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    ) : null}
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
+                    <LoadPage
+                        page={<ResetPwSuccess />}
+                        Preloaded={<Header noback />}
+                        loading_time={1}
+                    />
+                </div>
+            </div>
+        )
+    }   
 }

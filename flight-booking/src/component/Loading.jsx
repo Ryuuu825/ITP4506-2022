@@ -98,3 +98,24 @@ export function LoadPage({page, loading_time , Preloaded})
         </div>
     )
 }
+
+export function Delay({time , element})
+{
+    const [loading , setLoading] = useState(true);
+    const timer = useRef(null);
+
+    useEffect(() => {
+       // change the spinner to the element after loading_time
+         timer.current = setInterval(() => {    
+            setLoading(false);
+            clearInterval(timer.current);
+        }
+        , time);
+    }, [loading]);
+
+    return (    
+        <div>
+            { loading ? <Spin /> : element }
+        </div>
+    )
+}
