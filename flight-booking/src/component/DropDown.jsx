@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export function DropDown({ children }) {
     const [show, setShow] = useState(false);
@@ -10,11 +10,27 @@ export function DropDown({ children }) {
     const t_children = React.Children.toArray(children).filter((child) => {
         return child.props.target !== undefined;
     });
-    console.log(t_children.length);
+
+    useEffect(() => {
+        // close dropdown when click outside
+        const closeDropdown = (e) => {
+            const all_dropdown = document.querySelectorAll(".dropdown");
+            all_dropdown.forEach((dropdown) => {
+                if (!dropdown.contains(e.target)) {
+                    setShow(false);
+                }
+            });
+        };
+        document.addEventListener("click", closeDropdown);
+        
+        return () => {
+            document.removeEventListener("click", closeDropdown);
+        };
+    }, [show]);
 
     return (
         <div
-            className="cursor-pointer"
+            className="cursor-pointer dropdown"
             onClick={() => {
                 setShow(!show);
             }}
