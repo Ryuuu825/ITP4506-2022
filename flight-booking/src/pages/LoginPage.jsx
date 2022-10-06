@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
 import { useApp } from "../hook/Main";
 import UserAccount from "../db/users.json";
+import PageLogo from "../component/Logo";
 
 const validatePassword = (password) => {
     let pw_err_msg = [];
@@ -61,10 +62,7 @@ function Header({ noback }) {
                     </button>
                 )}
                 <div className="flex items-center justify-center mt-3 mx-auto">
-                    <img src={logo} className="w-16 h-16" alt="logo" />
-                    <span className="text-3xl text-dark-800 font-semibold">
-                        IVE airline
-                    </span>
+                    <PageLogo />
                 </div>
             </div>
             <div className=" w-full border mt-1 mb-2"></div>
