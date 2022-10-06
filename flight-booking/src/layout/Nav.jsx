@@ -10,7 +10,7 @@ export default function Nav({ name }) {
         <div className="bg-white h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3">
                 <div className="flex items-center justify-center ">
-                    <img src={logo} className="h-20" alt="logo" />
+                    <img src={logo} className="h-16" alt="logo" />
                     <span className="text-3xl text-blue-700 font-semibold">
                         IVE AIRLINE
                     </span>

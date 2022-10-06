@@ -17,7 +17,7 @@ export default function Footor() {
                         >
                             <img
                                 src={logo}
-                                class="mr-3 h-16"
+                                class="mr-3 h-12"
                                 alt="IVE airline Logo"
                             />
                             <span class="self-center text-blue-700 text-2xl font-semibold whitespace-nowrap dark:text-white">
@@ -77,7 +77,7 @@ export default function Footor() {
                     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                         © 2022{" "}
                         <a href="https://flowbite.com/" class="hover:underline">
-                            IVE airline™
+                            IVE Airline™
                         </a>
                         . All Rights Reserved.
                     </span>
