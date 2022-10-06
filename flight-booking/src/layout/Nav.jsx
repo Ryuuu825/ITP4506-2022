@@ -10,9 +10,9 @@ export default function Nav({ name }) {
         <div className="bg-white h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3">
                 <div className="flex items-center justify-center ">
-                    <img src={logo} className="w-16 h-16" alt="logo" />
-                    <span className="text-3xl text-dark-800 font-semibold">
-                        IVE airline
+                    <img src={logo} className="h-20" alt="logo" />
+                    <span className="text-3xl text-blue-700 font-semibold">
+                        IVE AIRLINE
                     </span>
                 </div>
                 <div className="ml-auto">
@@ -24,7 +24,7 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive
                                         ? { color: "#3058D2" }
-                                        : {  };
+                                        : {};
                                 }}
                             >
                                 Home
@@ -36,7 +36,7 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive
                                         ? { color: "#3058D2" }
-                                        : {  };
+                                        : {};
                                 }}
                                 to="/about"
                             >
@@ -49,7 +49,7 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive
                                         ? { color: "#3058D2" }
-                                        : {  };
+                                        : {};
                                 }}
                                 to="/contact"
                             >
@@ -57,7 +57,7 @@ export default function Nav({ name }) {
                             </NavLink>
                         </li>
                         <li className="mx-3 w-24">
-                            { app.login ? (
+                            {app.login ? (
                                 <DropDown>
                                     <svg
                                         class="w-6 h-6 mx-auto"
@@ -89,14 +89,14 @@ export default function Nav({ name }) {
 
                                 </DropDown>
                             ) : (
-                                    <NavLink
-                                        className="text-xl text-gray-800 relative"
-                                        to="/login"
-                                    >
-                                        <div class="mx-auto text-center">
-                                            Login
-                                        </div>
-                                    </NavLink>
+                                <NavLink
+                                    className="text-xl text-gray-800 relative"
+                                    to="/login"
+                                >
+                                    <div class="mx-auto text-center">
+                                        Login
+                                    </div>
+                                </NavLink>
                             )}
                         </li>
 

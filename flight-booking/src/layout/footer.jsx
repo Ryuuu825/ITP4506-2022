@@ -17,11 +17,11 @@ export default function Footor() {
                         >
                             <img
                                 src={logo}
-                                class="mr-3 h-8"
+                                class="mr-3 h-16"
                                 alt="IVE airline Logo"
                             />
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                                IVE airline
+                            <span class="self-center text-blue-700 text-2xl font-semibold whitespace-nowrap dark:text-white">
+                                IVE AIRLINE
                             </span>
                         </a>
                     </div>
@@ -33,7 +33,7 @@ export default function Footor() {
                             <ul class="text-gray-600 dark:text-gray-400">
                                 <li class="mb-4">
                                     <Link to="/" class="hover:underline">
-                                        IVE airline
+                                        IVE Airline
                                     </Link>
                                 </li>
                             </ul>

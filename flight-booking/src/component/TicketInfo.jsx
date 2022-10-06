@@ -6,7 +6,7 @@ export default function TicketInfo() {
 			<div className="shadow-md flex flex-row w-full mb-2 border rounded-lg border-gray-200 bg-white">
 				<div className="flex flex-col flex-2 p-2 w-8/12">
 					<div className="flex flex-row items-center justify-center p-2 ">
-						<img src={logo} className="w-16 h-16" alt="logo" />
+						<img src={logo} className="w-12 h-12" alt="logo" />
 						<div className="flex flex-col p-2">
 							<p className="text-base font-bold">8:45 AM</p>
 							<p className="text-xs">HKG - Oct 8</p>
