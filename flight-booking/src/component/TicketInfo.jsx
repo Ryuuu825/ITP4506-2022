@@ -26,7 +26,7 @@ export default function TicketInfo() {
 				<div className="flex flex-col flex-1 p-4 items-end my-2 border-l">
 					<p className="text-xl font-bold">HKD4,511.74</p>
 					<p className="text-sm mb-4">Total price for all travelers</p>
-					<button className="w-full h-10 border border-blue-500 text-blue-500 rounded-lg">View Deal</button>
+					<button className="w-full h-10 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-100">View Deal</button>
 				</div>
 			</div>
 		</div>

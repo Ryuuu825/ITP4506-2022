@@ -142,7 +142,7 @@ export function FloatingLabel({
 
 export function CheckBox({ id, context }) {
     return (
-        <div class="flex items-center mb-4 mt-3">
+        <div class="flex items-center mb-2 mt-2">
             <input
                 id="default-checkbox"
                 type="checkbox"
