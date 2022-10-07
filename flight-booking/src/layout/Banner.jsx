@@ -1,14 +1,14 @@
 import { Button } from "../component/Button";
-import { DatePicker, FloatingLabel, InputBox } from "../component/Form";
+import { DatePicker, ExpandableInputText, FloatingLabel, InputBox } from "../component/Form";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 export function HeroBanner() {
     return (
-        <div className="mx-auto mb-10 w-full">
-            <section class="">
+        <div className="mx-auto mb-10 w-full " >
+            <section class="z-[999]">
                 <div
-                    class="relative overflow-hidden bg-no-repeat bg-cover "
+                    class="relative bg-no-repeat bg-cover "
                     style={{
                         backgroundPosition: "50%",
                         backgroundImage:
@@ -17,7 +17,7 @@ export function HeroBanner() {
                     }}
                 >
                     <div
-                        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+                        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full bg-fixed"
                         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
                     >
                         <div class="flex justify-center items-center h-full">
@@ -29,16 +29,40 @@ export function HeroBanner() {
                                 </h1>
                                 <div className="flex justify-center flex-row align-middle">
                                     <div className="w-9/12 mr-10">
-                                        <div className="flex flex-row align-middle ">
-                                            <div className="w-8/12 mr-auto">
-                                                <InputBox
+                                        <div className="flex flex-row align-middle">
+                                            <div className="w-8/12 mr-auto" style={{zIndex:"100"}}>
+                                                <ExpandableInputText
                                                     type="text"
                                                     placeholder="Enter your destination"
                                                     validate={true}
+                                                    id = "destination"
+                                                    dropdownlist={[
+                                                        "Hong Kong",
+                                                        "Singapore",
+                                                        "Malaysia",
+                                                        "Thailand",
+                                                        "Indonesia",
+                                                        "Vietnam",
+                                                        "Philippines",
+                                                        "Cambodia",
+                                                        "Laos",
+                                                        "Myanmar",
+                                                        "Japan",
+                                                        "South Korea",
+                                                        "Taiwan",
+                                                        "China",
+                                                        "India",
+                                                        "Nepal",
+                                                        "Sri Lanka"
+                                                    ]}
                                                 />
                                             </div >
                                             <div className="w-4/12 mr-auto">
-                                                <DatePicker />
+                                                <DatePicker
+                                                    style={{
+                                                        zIndex: 1,
+                                                    }}
+                                                 />
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +89,7 @@ export function Banner() {
         <div className="" >
             <div className="container mx-auto ">
                 <section className="xs">
-                    <div ref={contentRef} className="bg-blue-600 fixed right-0 left-0 z-[1030] w-full py-3 px-6 text-white md:flex justify-between items-center text-center md:text-left animate-fixed-up"
+                    <div ref={contentRef} className="bg-blue-600 fixed right-0 left-0 z-[123] w-full py-3 px-6 text-white md:flex justify-between items-center text-center md:text-left animate-fixed-up"
                         style={{ bottom: `${top}px` }}
                     >
                         <div className="mb-4 md:mb-0 flex items-center flex-wrap justify-center md:justify-start ">

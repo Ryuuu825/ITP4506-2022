@@ -5,6 +5,7 @@ import { Paragraph } from "../component/Text";
 import Nav from "../layout/Nav";
 import { useApp } from "../hook/Main";
 import LogoClouds from "../layout/LogoClouds";
+import { RandomFlight } from "../services/RandomFlight";
 
 function Box({ name }) {
     return (
@@ -91,13 +92,33 @@ function ListBoxHor(props) {
 export function LandingPage() {
     const app = useApp();
     app.setDisableFooter(false);
+
+    let places = [
+        "Japan",
+        "Korea",
+        "Taiwan",
+        "United Kingdom"
+    ]
+
+    // suffle the array
+    places = places.sort(() => Math.random() - 0.5);
+
+    const flights = [];
+    for (let i = 0; i < 4; i++) {
+        flights.push(RandomFlight());
+    }
+
     
     return (
         <div>
             <Nav />
             <Banner />
-            <HeroBanner />
-            <div className="w-10/12 mx-auto 2xl:w-8/12">
+            <div 
+                style={{zIndex: 999}}
+            >
+                <HeroBanner />
+            </div>
+            <div className="w-10/12 mx-auto 2xl:w-8/12" style={{zIndex: 1}}>
                 <div className="p-dest">
                     <div className="w-1/2">
                         <h1 className="text-3xl font-bold">
@@ -105,10 +126,9 @@ export function LandingPage() {
                         </h1>
                     </div>
                     <ListBoxHor>
-                        <Box name="Japan" />
-                        <Box name="Taiwan" />
-                        <Box name="Germany" />
-                        <Box name="United Kingdom" />
+                        {places.map((place) => (
+                            <Box name={place} />
+                        ))}
                     </ListBoxHor>
                 </div>
 
@@ -119,38 +139,35 @@ export function LandingPage() {
                         </h1>
                     </div>
                     <ListBoxHor>
-                        <ListItem
-                            dest="Tokyo"
-                            dest_code="NRT"
-                            price="5,999"
-                            date="07-DEC-2022"
-                            flight_class="Economy"
-                        />
-                        <ListItem
-                            dest="TaiWan"
-                            dest_code="TPE"
-                            price="3,049"
-                            date="14-DEC-2022"
-                            flight_class="Economy"
-                        />
+                        {
+                        
+                            flights.slice(0,2).map((flight) => (
+                                <ListItem
+
+                                    dest={flight.country}
+                                    dest_code={flight.code}
+                                    price={flight.price}
+                                    date={flight.date.toLocaleDateString()}
+                                    flight_class={flight.flight_class}
+                                />
+                        ))}
                     </ListBoxHor>
 
                     <ListBoxHor>
-                        <ListItem
-                            dest="BangKok"
-                            dest_code="BKK"
-                            price="2,914"
-                            date="07-DEC-2022"
-                            flight_class="Economy"
-                        />
-                        <ListItem
-                            dest="Incheon"
-                            dest_code="ICN"
-                            price="4,292"
-                            date="07-DEC-2022"
-                            flight_class="Economy"
-                        />
+                        {
+                        
+                            flights.slice(2,4).map((flight) => (
+                                <ListItem
+
+                                    dest={flight.country}
+                                    dest_code={flight.code}
+                                    price={flight.price}
+                                    date={flight.date.toLocaleDateString()}
+                                    flight_class={flight.flight_class}
+                                />
+                        ))}
                     </ListBoxHor>
+
                     <div>
                         <span className="text-gray-500 pl-3">
                             * The above prices are for reference only. Please

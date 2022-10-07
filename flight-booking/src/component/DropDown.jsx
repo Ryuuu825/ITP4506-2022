@@ -59,11 +59,11 @@ export function DropDownList({ children }) {
     );
 }
 
-export function DropDownListItem({ context, handler }) {
+export function DropDownListItem({  handler , context } , children) {
     return (
         <div
             onClick={() => {
-                handler(context);
+                handler( context );
             }}
             className="hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 rounded-md"
         >
@@ -74,4 +74,12 @@ export function DropDownListItem({ context, handler }) {
 
 export function DropDownItemDivider() {
     return <div className="border-t border-gray-100 mt-3" />;
+}
+
+export function DropDownListHeader({ children }) {
+    return (
+        <div className="px-4 py-2 text-sm text-gray-700 rounded-md">
+            {children}
+        </div>
+    );
 }

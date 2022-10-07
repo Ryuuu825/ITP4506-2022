@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { DropDown , DropDownList , DropDownListItem , DropDownItemDivider, DropDownListHeader } from "./DropDown";
+import { useApp } from "../hook/Main";
+
 function Eye() {
     return (
         <svg
@@ -260,6 +263,94 @@ export function DatePicker({ id , handler, props }) {
                 onChange={handler}
                 {...props}
             />
+        </div>
+    );
+}
+
+export function ExpandableInputText({ id, placeholder, type , props , dropdownlist }) {
+    const [show, setShow] = useState(false);
+    const [showList, setShowList] = useState(false);
+    const [list , setList] = useState(dropdownlist);
+
+    const [inputValue, setInputValue] = useState("");
+
+    const handleOnClickOtherLocation = (e) => {
+        if (e.target == document.getElementById(id) || e.target == document.querySelector(".dropdownlist") ) {
+            setShow(true);
+            document.getElementById(id).classList.add("scale-110");
+        }
+        else {
+            setShow(false);
+            document.getElementById(id).classList.remove("scale-110");
+        }
+    }
+    
+    useEffect(() => {
+        window.addEventListener('click', handleOnClickOtherLocation);
+
+        return () => {
+            window.removeEventListener('click', handleOnClickOtherLocation);
+        }
+    }, [])
+
+    const newOnChangeEvent = (e) => {
+        setInputValue(e.target.value);
+        if (e.target.value === "") {
+            setShowList(false);
+            setShow(true);
+        }
+        else {
+            setShowList(true);
+            setShow(true);
+        }
+
+        // filter the dropdown list
+        const filter = dropdownlist.filter((item) => {
+            return item.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+
+        // set the dropdown list
+        setList(filter);
+    }
+
+    return (
+        <div class="relative mt-5 expandable" >
+            <div className="flex flex-col">
+                <input
+                    type={type}
+                    id={id}
+                    class="block px-2.5 w-full py-3 text-sm text-gray-900 bg-white rounded-lg border-2  border-grey-300  focus:rounded-b-none focus:outline-none focus:ring-0 peer focus:border-grey-500 focus:border-b-0"
+                    placeholder={placeholder}
+                    onChange={newOnChangeEvent}
+                    {...props}
+                    autoComplete="off"
+                    value={inputValue}
+                />
+                    <DropDown className="relative">
+                { show ? (
+
+                        <div className="bg-white w-full absolute border-2 rounded-b-lg border-primary dropdownlist scale-110"  >
+                            { 
+                                showList && list.length != 0 ? (
+                                    list.map((item) => (
+                                        <DropDownListItem context={item} handler={(input) => { setInputValue(input) }} />
+                                    ))
+                                ) : 
+                                <DropDownListItem 
+                                        context={
+                                            <div className="flex flex-col p-3">
+                                                <p className="text-sm text-gray-500">Search by city or airport </p>
+                                            </div>
+                                        }
+                                />
+                            }
+                        </div>
+                        ) : 
+                            null
+                    }
+                    </DropDown>
+                
+            </div>
         </div>
     );
 }

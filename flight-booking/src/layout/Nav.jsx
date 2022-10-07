@@ -9,9 +9,9 @@ export default function Nav({ name }) {
     return (
         <div className="bg-white h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3">
-                <div className="flex items-center justify-center ">
+                <NavLink className="flex items-center justify-center " to="/">
                     <PageLogo />
-                </div>
+                </NavLink>
                 <div className="ml-auto">
                     <ul className="flex flex-row justify-around items-center pt-6">
                         <li className="mx-3">

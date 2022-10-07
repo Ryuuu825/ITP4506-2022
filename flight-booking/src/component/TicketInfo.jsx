@@ -1,4 +1,3 @@
-import * as Logos from "./LogoPath";
 import { HKExpree_SVG } from "./SVGPath";
 
 export default function TicketInfo({airline}) {

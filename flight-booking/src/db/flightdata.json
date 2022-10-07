@@ -1,0 +1,17 @@
+[
+    {
+        "name" : "Kansai Airports",
+        "country" : "Japan",
+        "code" : "KIX"
+    },
+    {
+        "name" : "Shanghai Pudong International Airport",
+        "country" : "China",
+        "code" : "PVG"
+    },
+    {
+        "name" : "Taoyuan International Airport",
+        "country" : "Taiwan",
+        "code" : "TPE"
+    }
+]
