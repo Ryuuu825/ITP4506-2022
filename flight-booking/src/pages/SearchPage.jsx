@@ -15,7 +15,7 @@ export default function SearchPage() {
 						<DestinationBox />
 					</div>
 					<div className="flex flex-col w-full h-full bg-white shadow-md rounded-lg">
-						<FilterBox />
+						<FilterBox locCount={[0, 10, 5, 9]} destCount={[0, 10, 5, 9]} dest={""} min={4203} max={18456} />
 					</div>
 				</div>
 				<div className="flex flex-col ml-3 w-9/12">

@@ -1,6 +1,17 @@
-import { CheckBox } from "./Form"
+import { useState, useEffect } from "react"
 
-export function PriceFilter({ min, max, value }) {
+export function PriceFilter({ min, max }) {
+	const [price, setPrice] = useState(max);
+	const [displayMessage, setDisplayMessage] = useState("");
+	// useEffect(() => {
+	// 	const timeOutId = setTimeout(() => setDisplayMessage(price), 500);
+	// 	return () => clearTimeout(timeOutId);
+	// }, [price]);
+
+	const priceHandler = (e) => {
+		setPrice(e.target.value);
+	}
+
 	return (
 		<div className="w-10/12 mb-10">
 			<div className="flex">
@@ -16,14 +27,18 @@ export function PriceFilter({ min, max, value }) {
 		C70.401,49.634,61.903,46.702,54.284,44.798z M47.398,43.112c-3.003-0.951-5.055-2.051-5.055-4.176c0-2.49,1.832-4.248,5.055-4.688
 		V43.112z M54.284,65.896v-9.816c3.224,1.025,5.495,2.199,5.495,4.615C59.779,63.04,58.02,65.163,54.284,65.896z"/>
 				</svg>
-				<label for="price-range" class="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Price: </label>
+				<label htmlFor="price-range" class="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Ticket Price: </label>
 			</div>
-			<input id="price-range" type="range" min={min} max={max} value={value} className="w-full range" />
+			<div className="flex">
+				<label className="flex-1 text-xs">HK${min}</label>
+				<label className="flex-1 text-xs text-end">HK${price}</label>
+			</div>
+			<input type="range" min={min} max={max} defaultValue={max} onChange={priceHandler} className="w-full" />
 		</div>
-	)
+	);
 }
 
-export function FlightTime() {
+export function FlightTime({ dest, locCount, destCount }) {
 	return (
 		<div className="w-10/12 mb-10">
 			<div className="flex">
@@ -33,30 +48,62 @@ export function FlightTime() {
 				</svg>
 				<label class="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Flight Times:</label>
 			</div>
+
+			<label htmlFor="" className="text-sm">Depart from Hong Kong</label>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"12:00 AM - 5:59 AM"} />
+				<label className="grow text-end text-xs">{locCount[0]}</label>
 			</div>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"6:00 AM - 11:59 AM"} />
+				<label className="grow text-end text-xs">{locCount[1]}</label>
 			</div>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"12:00 PM - 5:59 PM"} />
+				<label className="grow text-end text-xs">{locCount[2]}</label>
 			</div>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"6:00 PM - 11:59 PM"} />
+				<label className="grow text-end text-xs">{locCount[3]}</label>
+			</div>
+			<br />
+			<label htmlFor="" className="text-sm"> Arrives to {dest}</label>
+			<div className="flex items-center">
+				<CheckBox context={"12:00 AM - 5:59 AM"} />
+				<label className="grow text-end text-xs">{destCount[0]}</label>
 			</div>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"6:00 AM - 11:59 AM"} />
+				<label className="grow text-end text-xs">{destCount[1]}</label>
 			</div>
 			<div className="flex items-center">
-				<CheckBox context={"10:00 - 18:00"} />
-				<label className="grow text-end text-sm">0</label>
+				<CheckBox context={"12:00 PM - 5:59 PM"} />
+				<label className="grow text-end text-xs">{destCount[2]}</label>
+			</div>
+			<div className="flex items-center">
+				<CheckBox context={"6:00 PM - 11:59 PM"} />
+				<label className="grow text-end text-xs">{destCount[3]}</label>
 			</div>
 		</div>
 	)
+}
+
+export function CheckBox({ context, checked }) {
+	return (
+		<div class="flex items-center mb-2 mt-2">
+			<input
+				checked={checked}
+				id="default-checkbox"
+				type="checkbox"
+				value=""
+				class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500  focus:ring-2 "
+			/>
+			<label
+				for="default-checkbox"
+				class="ml-2 text-xs font-medium text-black-900"
+			>
+				{context}
+			</label>
+		</div>
+	);
 }

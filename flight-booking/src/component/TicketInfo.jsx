@@ -24,7 +24,7 @@ export default function TicketInfo({airline}) {
 					<p className="text-xs">Hong Kong Airlines, Beijing Capital Airlines</p>
 				</div>
 				<div className="flex flex-col flex-1 p-4 items-end my-2 border-l">
-					<p className="text-xl font-bold">HKD4,511.74</p>
+					<p className="text-xl font-bold">HK$ 4,511.74</p>
 					<p className="text-sm mb-4">Total price for all travelers</p>
 					<button className="w-full shadow-md h-10 border-4 border-amber-400 rounded-sm font-bold bg-amber-400 text-gray-700 hover:border-orange-300 hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-orange-200">View Deal</button>
 				</div>

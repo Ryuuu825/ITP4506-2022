@@ -1,6 +1,6 @@
 import { PriceFilter, FlightTime } from "../component/Filters";
 
-export default function FilterBox() {
+export default function FilterBox({ locCount, destCount, dest, min, max }) {
 	return (
 		<div class="flex flex-col justify-center items-center w-full px-2 py-4">
 			<div class="w-10/12 mb-5 border-b-2">
@@ -12,8 +12,8 @@ export default function FilterBox() {
 				</div>
 			</div>
 			<p className="text-sm mb-5">Showing 169 results</p>
-			<PriceFilter min="0" max="1000" value="100" />
-			<FlightTime value="true" />
+			<PriceFilter min={min} max={max} />
+			<FlightTime value="true" locCount={locCount} destCount={destCount} dest={dest} />
 		</div>
 	);
 }
