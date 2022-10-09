@@ -1,0 +1,48 @@
+[
+	{
+		"code": "JP",
+		"date": "12/10/2022",
+		"ticket": [
+			{
+				"id": "1",
+				"price": 5831.00,
+				"outTime": "02:05 PM",
+				"arrivalTime": "07:20 PM",
+				"arrivalDate": "Oct 9",
+				"duration": "5h 15m",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "2",
+				"price": 5831.00,
+				"outTime": "04:05 PM",
+				"arrivalTime": "09:20 PM",
+				"arrivalDate": "Oct 9",
+				"duration": "5h 15m",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "3",
+				"price": 5831.00,
+				"outTime": "11:05 AM",
+				"arrivalTime": "09:20 PM",
+				"arrivalDate": "Oct 9",
+				"duration": "10h 15m",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines",
+					"China Southern Airlines"
+				],
+				"stop": 1
+			}
+		]
+	}
+]

@@ -57,16 +57,16 @@ export default function Nav({ name }) {
                             {app.login ? (
                                 <DropDown>
                                     <svg
-                                        class="w-6 h-6 mx-auto"
+                                        className="w-6 h-6 mx-auto"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/20s00/svg"
                                     >
                                         <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                             d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                         ></path>
                                     </svg>
@@ -90,7 +90,7 @@ export default function Nav({ name }) {
                                     className="text-xl text-gray-800 relative"
                                     to="/login"
                                 >
-                                    <div class="mx-auto text-center">
+                                    <div className="mx-auto text-center">
                                         Login
                                     </div>
                                 </NavLink>

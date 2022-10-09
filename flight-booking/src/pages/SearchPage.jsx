@@ -4,8 +4,31 @@ import Nav from "../layout/Nav";
 import TicketInfo from "../component/TicketInfo";
 import Pagination from "../component/Pagination";
 import DestinationBox from "../layout/DestinationBox";
+import Tickets from "../db/tickets.json";
+import { useState, useEffect } from "react";
 
-export default function SearchPage() {
+export default function SearchPage({ dest, date }) {
+	const [data, setData] = useState(Tickets);
+	const [destTicket, setDestTicket] = useState([]);
+
+	useEffect(() => {
+		filterTicket();
+	}, []);
+
+	
+	const filterTicket = () => {
+    const filteredTicket = data.filter(ticket => ticket.code.includes("JP"));
+    setDestTicket(filteredTicket);
+  };
+
+	const filterBest = () => {
+    const { autos } = this.state;
+    const fordAutos = autos.filter(auto => auto.title.includes("Ford"));
+    // const fordAutos = autoData.filter( (auto) => auto.title.includes("Ford"));
+
+    this.setState({ filteredAutos: fordAutos });
+  };
+
 	const results = 169;
 	const ticketInfos = [...Array(12).keys()];
 	return (
@@ -23,8 +46,10 @@ export default function SearchPage() {
 				<div className="flex flex-col ml-3 w-9/12">
 					<SortTab />
 					<div className="flex flex-col w-full h-full">
-						{ticketInfos.map((ticketInfo) => (
-							<TicketInfo />
+						{destTicket.map((d) => (
+							d.ticket.map((t) => (
+								<TicketInfo key={t.id} dest={d.code} ticket={t}/>
+							))
 						))}
 					</div>
 					<Pagination records={169} perPage={12} />
