@@ -6,6 +6,8 @@ import Pagination from "../component/Pagination";
 import DestinationBox from "../layout/DestinationBox";
 
 export default function SearchPage() {
+	const results = 169;
+	const ticketInfos = [...Array(12).keys()];
 	return (
 		<div className="h-full bg-gray-100">
 			<Nav />
@@ -21,20 +23,11 @@ export default function SearchPage() {
 				<div className="flex flex-col ml-3 w-9/12">
 					<SortTab />
 					<div className="flex flex-col w-full h-full">
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
-						<TicketInfo />
+						{ticketInfos.map((ticketInfo) => (
+							<TicketInfo />
+						))}
 					</div>
-					<Pagination />
+					<Pagination records={169} perPage={12} />
 				</div>
 			</div>
 		</div>

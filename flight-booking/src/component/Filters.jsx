@@ -39,6 +39,7 @@ export function PriceFilter({ min, max }) {
 }
 
 export function FlightTime({ dest, locCount, destCount }) {
+	const timeSlots = ["12:00 AM - 5:59 AM", "6:00 AM - 11:59 AM", "12:00 PM - 5:59 PM", "6:00 PM - 11:59 PM"];
 	return (
 		<div className="w-10/12 mb-10">
 			<div className="flex">
@@ -50,50 +51,35 @@ export function FlightTime({ dest, locCount, destCount }) {
 			</div>
 
 			<label htmlFor="" className="text-sm">Depart from Hong Kong</label>
-			<div className="flex items-center">
-				<CheckBox context={"12:00 AM - 5:59 AM"} />
-				<label className="grow text-end text-xs">{locCount[0]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"6:00 AM - 11:59 AM"} />
-				<label className="grow text-end text-xs">{locCount[1]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"12:00 PM - 5:59 PM"} />
-				<label className="grow text-end text-xs">{locCount[2]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"6:00 PM - 11:59 PM"} />
-				<label className="grow text-end text-xs">{locCount[3]}</label>
-			</div>
+			{timeSlots.map((value, index) => {
+				return (
+					<div className="flex items-center">
+						<CheckBox context={value} disabled={locCount[index]} />
+						<label className="grow text-end text-xs">{locCount[index]}</label>
+					</div>
+				);
+			})}
 			<br />
 			<label htmlFor="" className="text-sm"> Arrives to {dest}</label>
-			<div className="flex items-center">
-				<CheckBox context={"12:00 AM - 5:59 AM"} />
-				<label className="grow text-end text-xs">{destCount[0]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"6:00 AM - 11:59 AM"} />
-				<label className="grow text-end text-xs">{destCount[1]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"12:00 PM - 5:59 PM"} />
-				<label className="grow text-end text-xs">{destCount[2]}</label>
-			</div>
-			<div className="flex items-center">
-				<CheckBox context={"6:00 PM - 11:59 PM"} />
-				<label className="grow text-end text-xs">{destCount[3]}</label>
-			</div>
+			{timeSlots.map((value, index) => {
+				return (
+					<div className="flex items-center">
+						<CheckBox context={value} disabled={destCount[index]} />
+						<label className="grow text-end text-xs">{destCount[index]}</label>
+					</div>
+				);
+			})}
 		</div>
 	)
 }
 
-export function CheckBox({ context, checked }) {
+export function CheckBox({ context, checked, disabled }) {
 	return (
 		<div class="flex items-center mb-2 mt-2">
 			<input
+				disabled={disabled > 0 ? false : true}
 				checked={checked}
-				id="default-checkbox"
+				name="default-checkbox"
 				type="checkbox"
 				value=""
 				class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500  focus:ring-2 "
