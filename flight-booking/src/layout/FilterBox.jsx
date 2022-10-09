@@ -1,6 +1,6 @@
 import { PriceFilter, FlightTime } from "../component/Filters";
 
-export default function FilterBox({ticketCount, locCount, destCount, dest, min, max }) {
+export default function FilterBox({ ticketCount, locCount, destCount, dest, min, max, setDestForm, destForm }) {
 	return (
 		<div className="flex flex-col justify-center items-center w-full px-2 py-4">
 			<div className="w-10/12 mb-5 border-b-2">
@@ -11,9 +11,9 @@ export default function FilterBox({ticketCount, locCount, destCount, dest, min, 
 					<p className="text-lg font-bold">Filter</p>
 				</div>
 			</div>
-			<p className="text-sm mb-5">Showing {ticketCount.ticket.length} results</p>
-			<PriceFilter min={min} max={max} />
-			<FlightTime locCount={locCount} destCount={destCount} dest={dest} />
+			<p className="text-sm mb-5">Showing {ticketCount === undefined ? 0 : ticketCount.ticket.length} results</p>
+			<PriceFilter min={min} max={max} setDestForm={setDestForm} destForm={destForm}/>
+			<FlightTime locCount={locCount} destCount={destCount} dest={dest} setDestForm={setDestForm} destForm={destForm}/>
 		</div>
 	);
 }

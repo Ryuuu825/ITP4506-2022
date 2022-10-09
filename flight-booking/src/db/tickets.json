@@ -159,5 +159,327 @@
 				"stop": 0
 			}
 		]
+	},
+	{
+		"code": "PVG",
+		"date": "2022-10-12",
+		"ticket": [
+			{
+				"id": "1",
+				"price": 3831.00,
+				"outTime": "14:05",
+				"arrivalTime": "2022-10-12 19:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "2",
+				"price": 3831.00,
+				"outTime": "16:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "3",
+				"price": 5831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "4",
+				"price": 8831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines",
+					"China Southern Airlines"
+				],
+				"stop": 1
+			},
+			{
+				"id": "5",
+				"price": 8831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "6",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "7",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "8",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "9",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "10",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "11",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "12",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "13",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "14",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-12 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			}
+		]
+	},
+	{
+		"code": "KIX",
+		"date": "2022-10-13",
+		"ticket": [
+			{
+				"id": "1",
+				"price": 3831.00,
+				"outTime": "14:05",
+				"arrivalTime": "2022-10-13 19:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "2",
+				"price": 3831.00,
+				"outTime": "16:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "3",
+				"price": 5831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "4",
+				"price": 8831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines",
+					"China Southern Airlines"
+				],
+				"stop": 1
+			},
+			{
+				"id": "5",
+				"price": 8831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "6",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "7",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "8",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "9",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "10",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "11",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "12",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "13",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			},
+			{
+				"id": "14",
+				"price": 6831.00,
+				"outTime": "11:05",
+				"arrivalTime": "2022-10-13 21:20",
+				"available": 100,
+				"airline": [
+					"Hong Kong Airlines"
+				],
+				"stop": 0
+			}
+		]
 	}
 ]

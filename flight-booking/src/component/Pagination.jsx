@@ -6,7 +6,7 @@ export default function Pagination({ records, perPage }) {
 	const [startPage, setStartPage] = useState(1);
 	const [endPage, setEndPage] = useState(0);
 	
-	const page = Math.ceil(records.ticket.length / perPage);
+	const page = Math.ceil((records === undefined ? 0 : records.ticket.length) / perPage);
 	const pages = [currentPage - 1, currentPage, currentPage + 1].slice(1);
 
 	const handleClick = (event) => {

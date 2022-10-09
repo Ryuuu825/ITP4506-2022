@@ -66,10 +66,7 @@ export function HeroBanner() {
                                             </div>
                                         </div>
                                     </div>
-                                    <Link to={{
-                                        pathname: "/search",
-                                        search: "?dest=Beijing&date=2022-10-12",
-                                    }}>
+                                    <Link to={`/search/PVG/2022-10-12`}>
                                         <Button content="Search" />
                                     </Link>
                                 </div>

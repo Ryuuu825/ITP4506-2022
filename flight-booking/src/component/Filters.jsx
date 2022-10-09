@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-export function PriceFilter({ min, max }) {
+export function PriceFilter({ min, max, setDestForm, destForm }) {
 	const [price, setPrice] = useState(max);
-	const [displayMessage, setDisplayMessage] = useState("");
-	// useEffect(() => {
-	// 	const timeOutId = setTimeout(() => setDisplayMessage(price), 500);
-	// 	return () => clearTimeout(timeOutId);
-	// }, [price]);
 
 	const priceHandler = (e) => {
 		setPrice(e.target.value);
+		let subData = JSON.parse(JSON.stringify(destForm));
+		subData.min = min;
+		subData.max = e.target.value;
+		setDestForm(subData);
 	}
 
 	return (
@@ -38,7 +37,21 @@ export function PriceFilter({ min, max }) {
 	);
 }
 
-export function FlightTime({ dest, locCount, destCount }) {
+export function FlightTime({ dest, locCount, destCount, destForm, setDestForm }) {	
+	const depTimeHandler = (e) => {
+		let subData = JSON.parse(JSON.stringify(destForm));
+		console.log("checked:",e.target.value);
+		subData.depTime[e.target.id] = e.target.value === "true" ? false : true;
+		setDestForm(subData);
+	}
+
+	const arrTimeHandler = (e) => {
+		let subData = JSON.parse(JSON.stringify(destForm));
+		console.log("checked:",e.target.value);
+		subData.arrTime[e.target.id] = e.target.value === "true" ? false : true;
+		setDestForm(subData);
+	}
+
 	const timeSlots = ["12:00 AM - 05:59 AM", "06:00 AM - 11:59 AM", "12:00 PM - 05:59 PM", "06:00 PM - 11:59 PM"];
 	return (
 		<div className="w-10/12 mb-10">
@@ -53,8 +66,8 @@ export function FlightTime({ dest, locCount, destCount }) {
 			<label htmlFor="" className="text-sm">Depart from Hong Kong</label>
 			{timeSlots.map((value, index) => {
 				return (
-					<div className="flex items-center" key={index}>
-						<CheckBox context={value} disabled={locCount[index]} />
+					<div className="flex items-center" key={index} onChange={depTimeHandler}>
+						<CheckBox context={value} disabled={locCount[index]} id={index}/>
 						<label className="grow text-end text-xs">{locCount[index]}</label>
 					</div>
 				);
@@ -63,8 +76,8 @@ export function FlightTime({ dest, locCount, destCount }) {
 			<label htmlFor="" className="text-sm"> Arrives to {dest}</label>
 			{timeSlots.map((value, index) => {
 				return (
-					<div className="flex items-center" key={index}>
-						<CheckBox context={value} disabled={destCount[index]} />
+					<div className="flex items-center" key={index} onChange={arrTimeHandler}>
+						<CheckBox context={value} disabled={destCount[index]} id={index}/>
 						<label className="grow text-end text-xs">{destCount[index]}</label>
 					</div>
 				);
@@ -73,19 +86,21 @@ export function FlightTime({ dest, locCount, destCount }) {
 	)
 }
 
-export function CheckBox({ context, checked, disabled }) {
+export function CheckBox({ id, context, disabled }) {
+	const [checked, setChecked] = useState(false);
+
 	return (
 		<div className="flex items-center mb-2 mt-2">
 			<input
 				disabled={disabled > 0 ? false : true}
-				checked={checked}
-				name="default-checkbox"
+				id={id}
 				type="checkbox"
-				value=""
+				value={checked}
+				onChange={() => setChecked(!checked)}
 				className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500  focus:ring-2 "
 			/>
 			<label
-				htmlFor="default-checkbox"
+				htmlFor={id}
 				className="ml-2 text-xs font-medium text-black-900"
 			>
 				{context}

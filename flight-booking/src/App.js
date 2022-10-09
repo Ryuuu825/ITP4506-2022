@@ -55,7 +55,7 @@ function App() {
                     <Route path="/operator">
                         <Route  path="reset-pw" element={<OperatorResetPw />} />
                     </Route>
-                    <Route path="/search"  element={<SearchPage />} />
+                    <Route path="/search/:dest/:date"  element={<SearchPage />} />
                 </Routes>
                 <Footor />
             </AppProvider>
