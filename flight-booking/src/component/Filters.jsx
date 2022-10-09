@@ -39,7 +39,7 @@ export function PriceFilter({ min, max }) {
 }
 
 export function FlightTime({ dest, locCount, destCount }) {
-	const timeSlots = ["12:00 AM - 5:59 AM", "6:00 AM - 11:59 AM", "12:00 PM - 5:59 PM", "6:00 PM - 11:59 PM"];
+	const timeSlots = ["12:00 AM - 05:59 AM", "06:00 AM - 11:59 AM", "12:00 PM - 05:59 PM", "06:00 PM - 11:59 PM"];
 	return (
 		<div className="w-10/12 mb-10">
 			<div className="flex">

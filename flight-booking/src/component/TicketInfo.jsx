@@ -1,6 +1,10 @@
 import { HKExpree_SVG } from "./SVGPath";
+import Moment from "react-moment";
+import moment from 'moment';
 
 export default function TicketInfo({ dest, date, ticket }) {
+	const fullOutTime = new Date(date + " " + ticket.outTime);
+	const duration = moment(ticket.arrivalTime).diff(fullOutTime, "hours") + "h " + moment(ticket.arrivalTime).diff(fullOutTime, "minutes") % 60 + "m";
 	return (
 		<div className="flex flex-col justify-center items-center w-full">
 			<div className="shadow-md flex flex-row w-full mb-2 border rounded-lg border-gray-200 bg-white">
@@ -8,21 +12,24 @@ export default function TicketInfo({ dest, date, ticket }) {
 					<div className="flex flex-row items-center justify-center p-2 ">
 						<HKExpree_SVG className="w-3" />
 						<div className="flex flex-col p-2">
-							<p className="text-base font-bold">{ticket.outTime}</p>
-							<p className="text-xs">HKG - {date.toLocaleString("Oct 1")}</p>
+							<p className="text-base font-bold"><Moment format="hh:mm A" date={fullOutTime} /></p>
+							<p className="text-xs">HKG - <Moment format="MMM DD">{date}</Moment></p>
 						</div>
 						<div className="flex flex-col flex-grow p-2 items-center">
-							<p className="text-xs border-b border-gray-300 w-full text-center">{ticket.duration}</p>
+							<p className="text-xs border-b border-gray-300 w-full text-center">
+								{duration}
+							</p>
 							<hr />
-							<p className="text-sm">{ticket.stop > 0 ? ticket.stop + " stop" : "Direct"}</p>
+							<p className="text-xs">{ticket.stop > 0 ? ticket.stop + " stop" : "Direct"}</p>
 						</div>
 						<div className="flex flex-col p-2">
-							<p className="text-base font-bold">{ticket.arrivalTime}</p>
-							<p className="text-xs">{dest} - {ticket.arrivalDate}</p>
+							<p className="text-base font-bold"><Moment format="hh:mm A" date={ticket.arrivalTime} /></p>
+							<p className="text-xs">{dest} - <Moment format="MMM DD">{ticket.arrivalTime}</Moment></p>
+
 						</div>
 					</div>
 					<i className="text-xs">
-						{ticket.airline.map((airline,index) => (
+						{ticket.airline.map((airline, index) => (
 							airline + (index < ticket.airline.length - 1 ? ", " : "")
 						))}
 					</i>
