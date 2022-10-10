@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 export function PriceFilter({ min, max, setDestForm, destForm }) {
-	const [price, setPrice] = useState(max);
-
+	const [price, setPrice] = useState(0);
+	useEffect (() => {
+		setPrice(max);
+	}, [max]);
 	const priceHandler = (e) => {
 		setPrice(e.target.value);
 		let subData = JSON.parse(JSON.stringify(destForm));
@@ -37,17 +39,17 @@ export function PriceFilter({ min, max, setDestForm, destForm }) {
 	);
 }
 
-export function FlightTime({ dest, locCount, destCount, destForm, setDestForm }) {	
+export function FlightTime({ dest, locCount, destCount, destForm, setDestForm }) {
 	const depTimeHandler = (e) => {
 		let subData = JSON.parse(JSON.stringify(destForm));
-		console.log("checked:",e.target.value);
+		console.log("checked:", e.target.value);
 		subData.depTime[e.target.id] = e.target.value === "true" ? false : true;
 		setDestForm(subData);
 	}
 
 	const arrTimeHandler = (e) => {
 		let subData = JSON.parse(JSON.stringify(destForm));
-		console.log("checked:",e.target.value);
+		console.log("checked:", e.target.value);
 		subData.arrTime[e.target.id] = e.target.value === "true" ? false : true;
 		setDestForm(subData);
 	}
@@ -67,7 +69,7 @@ export function FlightTime({ dest, locCount, destCount, destForm, setDestForm })
 			{timeSlots.map((value, index) => {
 				return (
 					<div className="flex items-center" key={index} onChange={depTimeHandler}>
-						<CheckBox context={value} disabled={locCount[index]} id={index}/>
+						<CheckBox context={value} disabled={locCount[index]} id={index} />
 						<label className="grow text-end text-xs">{locCount[index]}</label>
 					</div>
 				);
@@ -77,7 +79,7 @@ export function FlightTime({ dest, locCount, destCount, destForm, setDestForm })
 			{timeSlots.map((value, index) => {
 				return (
 					<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-						<CheckBox context={value} disabled={destCount[index]} id={index}/>
+						<CheckBox context={value} disabled={destCount[index]} id={index} />
 						<label className="grow text-end text-xs">{destCount[index]}</label>
 					</div>
 				);

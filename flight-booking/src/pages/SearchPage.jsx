@@ -21,8 +21,8 @@ export default function SearchPage() {
 	let { dest, date } = useParams();
 
 	let searchDate = {
-		"date": dest,
-		"dest": date,
+		"date": "",
+		"dest": "",
 		"min": 0,
 		"max": 0,
 		"depTime": [
@@ -43,7 +43,7 @@ export default function SearchPage() {
 	useEffect(() => {
 		filterTicket();
 		setIsShow(true);
-		console.log(tickets);
+		console.log("update:", tickets);
 	}, [destForm, currentPage]);
 
 	const filterTicket = () => {
@@ -52,21 +52,22 @@ export default function SearchPage() {
 			return d.code.includes(dest) && d.date.includes(date)
 		});
 		// const filteredTicket = filter(condition, records);
-		setTickets(filteredTicket);
 		// get max price
 		if (filteredTicket !== undefined && filteredTicket.length > 0) {
-			let maxValue = Math.max.apply(null,
+			const maxValue = Math.max.apply(null,
 				filteredTicket[0].ticket.map((o) => { return o.price; }));
 			setMaxPrice(maxValue);
 
 			// find min price
-			let minValue = Math.min.apply(null,
+			const minValue = Math.min.apply(null,
 				filteredTicket[0].ticket.map((o) => { return o.price; }));
 			setMinPrice(minValue);
 		}else {
 			setMaxPrice(0);
 			setMinPrice(0);
 		}
+
+		setTickets(filteredTicket);
 	};
 
 	return (
@@ -78,13 +79,13 @@ export default function SearchPage() {
 						<DestinationBox dest={dest} date={date} setDestForm={setDestForm} destForm={destForm} />
 					</div>
 					<div className="flex flex-col w-full h-full bg-white shadow-md rounded-lg">
-						{isShow ? <FilterBox ticketCount={tickets[0]} locCount={[0, 10, 5, 9]} destCount={[0, 10, 5, 9]} dest={destForm.code} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> : ""}
+						{isShow ? <FilterBox ticketCount={tickets.length > 0 ? tickets[0].ticket.length : 0} locCount={[0, 10, 5, 9]} destCount={[0, 10, 5, 9]} dest={destForm.code} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> : ""}
 					</div>
 				</form>
 				<div className="flex flex-col ml-3 w-9/12">
 					<SortTab />
 					<div className="flex flex-col w-full">
-						{tickets.length > 0 ? tickets.map((d, index) => (
+						{tickets.length > 0 && isShow ? tickets.map((d, index) => (
 							d.ticket.slice(startIndex+(currentPage*12), endIndex+(currentPage*12)).map((t) => (
 								<TicketInfo key={t.id} dest={d.code} ticket={t} date={d.date} />
 							))))

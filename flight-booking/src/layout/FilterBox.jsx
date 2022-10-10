@@ -11,8 +11,8 @@ export default function FilterBox({ ticketCount, locCount, destCount, dest, min,
 					<p className="text-lg font-bold">Filter</p>
 				</div>
 			</div>
-			<p className="text-sm mb-5">Showing {ticketCount === undefined ? 0 : ticketCount.ticket.length} results</p>
-			<PriceFilter min={min} max={max} setDestForm={setDestForm} destForm={destForm}/>
+			<p className="text-sm mb-5">Showing {ticketCount} results</p>
+			<PriceFilter min={ticketCount == 0 ? 0 : min} max={ticketCount == 0 ? 0 : max} setDestForm={setDestForm} destForm={destForm}/>
 			<FlightTime locCount={locCount} destCount={destCount} dest={dest} setDestForm={setDestForm} destForm={destForm}/>
 		</div>
 	);
