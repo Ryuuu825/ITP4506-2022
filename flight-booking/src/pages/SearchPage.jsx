@@ -56,12 +56,12 @@ export default function SearchPage() {
 		// get max price
 		if (filteredTicket !== undefined && filteredTicket.length > 0) {
 			let maxValue = Math.max.apply(null,
-				filteredTicket[0].ticket.map(function (o) { return o.price; }));
+				filteredTicket[0].ticket.map((o) => { return o.price; }));
 			setMaxPrice(maxValue);
 
 			// find min price
 			let minValue = Math.min.apply(null,
-				filteredTicket[0].ticket.map(function (o) { return o.price; }));
+				filteredTicket[0].ticket.map((o) => { return o.price; }));
 			setMinPrice(minValue);
 		}else {
 			setMaxPrice(0);
