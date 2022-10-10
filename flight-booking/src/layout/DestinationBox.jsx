@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function DestinationBox({ dest, date, setDestForm, destForm }) {
 	const minDate = new Date().toISOString().split("T")[0];
@@ -55,8 +56,11 @@ export default function DestinationBox({ dest, date, setDestForm, destForm }) {
 							</div>
 							<input type="date" id="search_date" min={minDate} value={selectedDate} className="bg-gray-50 border-4 border-orange-300 text-gray-900 text-sm focus:border-blue-300 focus:outline-none focus:ring-blue-300 block w-full pl-10 p-2.5" required onChange={e => setSelectedDate(e.target.value)} />
 						</div>
-						<button onClick={handleSearch} className="shadow-md rounded-lg inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-							<svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p></button>
+						<Link to={`/search/${selectedDest}/${selectedDate}/1`} className="w-full">
+							<button onClick={handleSearch} className="shadow-md rounded-lg inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+								<svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p>
+							</button>
+						</Link>
 					</div>
 				</div>
 			</div>

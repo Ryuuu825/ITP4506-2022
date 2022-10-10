@@ -66,7 +66,7 @@ export function HeroBanner() {
                                             </div>
                                         </div>
                                     </div>
-                                    <Link to={`/search/PVG/2022-10-12`}>
+                                    <Link to={`/search/PVG/2022-10-12?page=1`}>
                                         <Button content="Search" />
                                     </Link>
                                 </div>

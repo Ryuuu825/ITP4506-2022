@@ -9,9 +9,20 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function SearchPage() {
+
+	const [records, setData] = useState(TicketRecords);
+	const [isShow, setIsShow] = useState(false);
+	const [tickets, setTickets] = useState([]);
+	const [maxPrice, setMaxPrice] = useState(0);
+	const [minPrice, setMinPrice] = useState(0);
+	const [currentPage, setCurrentPage] = useState(0);
+	const [startIndex, setStartIndex] = useState(0);
+	const [endIndex, setEndIndex] = useState(12);
+	let { dest, date } = useParams();
+
 	let searchDate = {
-		"date": "",
-		"dest": "",
+		"date": dest,
+		"dest": date,
 		"min": 0,
 		"max": 0,
 		"depTime": [
@@ -27,54 +38,34 @@ export default function SearchPage() {
 			false
 		]
 	};
-
-	const [records, setData] = useState(TicketRecords);
-	const [isShow, setIsShow] = useState(false);
-	const [tickets, setTickets] = useState([]);
 	const [destForm, setDestForm] = useState(searchDate);
-	const [maxPrice, setMaxPrice] = useState(0);
-	const [minPrice, setMinPrice] = useState(0);
 
 	useEffect(() => {
-		dest = destForm.dest;
-		date = destForm.date;
 		filterTicket();
 		setIsShow(true);
 		console.log(tickets);
-	}, [destForm]);
-
-	let { dest, date } = useParams();
-
-	let filter = (condition, data) => {
-		return data.filter(item => {
-			return Object.keys(condition).every(key => {
-				return String(item[key]).toLowerCase().includes(
-					String(condition[key]).trim().toLowerCase())
-			})
-		})
-	}
+	}, [destForm, currentPage]);
 
 	const filterTicket = () => {
-
-		const condition = {
-			"code": dest,
-			"date": date,
-		}
 		// Filter by destination
-		//const filteredTicket = records.filter(d => {d.code.includes("KIX")  && d.date.includes({ date })});
-		const filteredTicket = filter(condition, records);
-		console.log(filteredTicket);
+		const filteredTicket = records.filter(d => {
+			return d.code.includes(dest) && d.date.includes(date)
+		});
+		// const filteredTicket = filter(condition, records);
 		setTickets(filteredTicket);
 		// get max price
-		if(filteredTicket !== undefined && filteredTicket.length > 0) {
+		if (filteredTicket !== undefined && filteredTicket.length > 0) {
 			let maxValue = Math.max.apply(null,
 				filteredTicket[0].ticket.map(function (o) { return o.price; }));
 			setMaxPrice(maxValue);
-	
+
 			// find min price
 			let minValue = Math.min.apply(null,
 				filteredTicket[0].ticket.map(function (o) { return o.price; }));
 			setMinPrice(minValue);
+		}else {
+			setMaxPrice(0);
+			setMinPrice(0);
 		}
 	};
 
@@ -93,13 +84,16 @@ export default function SearchPage() {
 				<div className="flex flex-col ml-3 w-9/12">
 					<SortTab />
 					<div className="flex flex-col w-full">
-						{tickets.map((d, index) => (
-							d.ticket.slice(0, 12).map((t) => (
+						{tickets.length > 0 ? tickets.map((d, index) => (
+							d.ticket.slice(startIndex+(currentPage*12), endIndex+(currentPage*12)).map((t) => (
 								<TicketInfo key={t.id} dest={d.code} ticket={t} date={d.date} />
-							))
-						))}
+							))))
+							: <div className="shadow-md flex items-center justify-center w-full mb-2 border rounded-lg border-gray-200 bg-white h-24">
+								<span>No Record Found</span>
+							</div>
+						}
 					</div>
-					{isShow ? <Pagination records={tickets === undefined ? []: tickets[0]} perPage={12} /> : " "}
+					{isShow ? <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} setStartIndex={setStartIndex} setEndIndex={setEndIndex} records={tickets === undefined ? [] : tickets[0]} perPage={12} /> : " "}
 				</div>
 			</div>
 		</div>

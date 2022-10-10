@@ -1,28 +1,27 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-export default function Pagination({ records, perPage }) {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [recordsPerPage, setRecordsPerPage] = useState(perPage);
-	const [startPage, setStartPage] = useState(1);
-	const [endPage, setEndPage] = useState(0);
-	
-	const page = Math.ceil((records === undefined ? 0 : records.ticket.length) / perPage);
-	const pages = [currentPage - 1, currentPage, currentPage + 1].slice(1);
+export default function Pagination({ records, perPage, setCurrentPage, currentPage }) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	console.log(records);
+	const pageCount = Math.ceil((records === undefined ? 1 : records.ticket.length) / perPage);
+	console.log(pageCount);
 
 	const handleClick = (event) => {
 		setCurrentPage(Number(event.target.id));
+		setSearchParams({ page: Number(event.target.id)+1 });
 	};
 
 	const handleNext = () => {
-		console.log(page);
-		if (currentPage < page) {
+		if (currentPage < pageCount-1) {
 			setCurrentPage(currentPage + 1);
+			setSearchParams({ page: Number(currentPage + 2) });
 		}
 	};
 
 	const handlePrev = () => {
-		if (currentPage > 1) {
+		if (currentPage > 0) {
 			setCurrentPage(currentPage - 1);
+			setSearchParams({ page: Number(currentPage) });
 		}
 	};
 
@@ -36,13 +35,13 @@ export default function Pagination({ records, perPage }) {
 					</svg>
 				</div>
 				<div className="flex h-8 font-medium ">
-					{[currentPage - 1, currentPage, currentPage + 1].map((page, index) => {
+					{[...Array(pageCount)].map((page, index) => {
 						return (
 							<div
 								key={index}
-								id={index + 1}
+								id={index}
 								onClick={handleClick}
-								className={`w-8 md:flex justify-center items-center cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 ${currentPage === index + 1 ? "border-blue-600" : "border-transparent"
+								className={`w-8 md:flex justify-center items-center cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 ${currentPage === index ? "border-blue-600" : "border-transparent"
 									}`}
 							>
 								{index + 1}

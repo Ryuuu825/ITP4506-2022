@@ -1,4 +1,4 @@
-import { HKExpree_SVG } from "./SVGPath";
+import { HKExpress_SVG, AirChina_SVG } from "./SVGPath";
 import Moment from "react-moment";
 import moment from 'moment';
 
@@ -10,7 +10,7 @@ export default function TicketInfo({ dest, date, ticket }) {
 			<div className="shadow-md flex flex-row w-full mb-2 border rounded-lg border-gray-200 bg-white">
 				<div className="flex flex-col flex-2 p-2 w-8/12">
 					<div className="flex flex-row items-center justify-center p-2 ">
-						<HKExpree_SVG className="w-3" />
+						<HKExpress_SVG className="w-3" />
 						<div className="flex flex-col p-2">
 							<p className="text-base font-bold"><Moment format="hh:mm A" date={fullOutTime} /></p>
 							<p className="text-xs">HKG - <Moment format="MMM DD">{date}</Moment></p>
