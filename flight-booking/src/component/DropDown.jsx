@@ -14,6 +14,11 @@ export function DropDown({ children }) {
     useEffect(() => {
         // close dropdown when click outside
         const closeDropdown = (e) => {
+            // if click on dropdown , do nothing
+            if (e.target.closest(".dropdown")) {
+                return;
+            }
+
             const all_dropdown = document.querySelectorAll(".dropdown");
             all_dropdown.forEach((dropdown) => {
                 if (!dropdown.contains(e.target)) {
@@ -49,7 +54,7 @@ export function DropDownList({ children }) {
     })
 
     return (
-        <div className="absolute z-50 mt-1 bg-white rounded-md shadow-lg right-3">
+        <div className="absolute z-[9999] mt-1 bg-white rounded-md shadow-lg right-3">
             <ul>
                 {React.Children.map(children, (child) => {
                     return <li>{child}</li>;

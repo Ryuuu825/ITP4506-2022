@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export function HeroBanner() {
     return (
         <div className="mx-auto mb-10 w-full " >
-            <section class="z-[999]">
+            <section class="z-[99]">
                 <div
                     class="relative bg-no-repeat bg-cover "
                     style={{
