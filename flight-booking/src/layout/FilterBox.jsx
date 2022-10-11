@@ -1,6 +1,9 @@
 import { PriceFilter, FlightTime } from "../component/Filters";
+import { useSearchParams} from "react-router-dom";
 
-export default function FilterBox({ ticketCount, locCount, destCount, dest, min, max, setDestForm, destForm }) {
+
+export default function FilterBox({ setIsFilterPrice, setIsFilterTime, setCurrentPage, ticketCount, locCount, destCount, dest, min, max, setDestForm, destForm }) {
+	const [searchParams, setSearchParams] = useSearchParams({ page: 1 });
 	return (
 		<div className="flex flex-col justify-center items-center w-full px-2 py-4">
 			<div className="w-10/12 mb-5 border-b-2">
@@ -12,8 +15,8 @@ export default function FilterBox({ ticketCount, locCount, destCount, dest, min,
 				</div>
 			</div>
 			<p className="text-sm mb-5">Showing {ticketCount} results</p>
-			<PriceFilter min={ticketCount == 0 ? 0 : min} max={ticketCount == 0 ? 0 : max} setDestForm={setDestForm} destForm={destForm}/>
-			<FlightTime locCount={locCount} destCount={destCount} dest={dest} setDestForm={setDestForm} destForm={destForm}/>
+			<PriceFilter setIsFilterPrice={setIsFilterPrice} setCurrentPage={setCurrentPage} params={searchParams} setParams={setSearchParams} min={ticketCount === 0 ? 0 : min} max={ticketCount === 0 ? 0 : max} setDestForm={setDestForm} destForm={destForm}/>
+			<FlightTime setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} params={searchParams} setParams={setSearchParams} locCount={locCount} destCount={destCount} dest={dest} setDestForm={setDestForm} destForm={destForm}/>
 		</div>
 	);
 }

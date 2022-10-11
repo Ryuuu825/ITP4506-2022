@@ -2,9 +2,7 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Pagination({ records, perPage, setCurrentPage, currentPage }) {
 	const [searchParams, setSearchParams] = useSearchParams();
-	console.log(records);
-	const pageCount = Math.ceil((records === undefined ? 1 : records.ticket.length) / perPage);
-	console.log(pageCount);
+	const pageCount = Math.ceil((records === undefined ? 1 : records.length) / perPage);
 
 	const handleClick = (event) => {
 		setCurrentPage(Number(event.target.id));

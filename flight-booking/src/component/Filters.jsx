@@ -1,15 +1,20 @@
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 
-export function PriceFilter({ min, max, setDestForm, destForm }) {
-	const [price, setPrice] = useState(0);
-	useEffect (() => {
+export function PriceFilter({ setIsFilterPrice, setCurrentPage, min, max, setDestForm, destForm, setParams, params }) {
+	const [price, setPrice] = useState(max);
+
+	useEffect(() => {
 		setPrice(max);
 	}, [max]);
+
 	const priceHandler = (e) => {
 		setPrice(e.target.value);
 		let subData = JSON.parse(JSON.stringify(destForm));
 		subData.min = min;
-		subData.max = e.target.value;
+		subData.max = Number(e.target.value);
+		setCurrentPage(0);
+		setParams({ page: 1 });
+		(max === Number(e.target.value)) ? setIsFilterPrice(true) : setIsFilterPrice(true);
 		setDestForm(subData);
 	}
 
@@ -34,23 +39,32 @@ export function PriceFilter({ min, max, setDestForm, destForm }) {
 				<label className="flex-1 text-xs">HK${min}</label>
 				<label className="flex-1 text-xs text-end">HK${price}</label>
 			</div>
-			<input type="range" min={min} max={max} defaultValue={max} onChange={priceHandler} className="w-full" />
+			<input type="range" min={min} max={max} defaultValue={price} onChange={priceHandler} className="w-full" />
 		</div>
 	);
 }
 
-export function FlightTime({ dest, locCount, destCount, destForm, setDestForm }) {
+export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, destCount, destForm, setDestForm, setParams, params }) {
 	const depTimeHandler = (e) => {
 		let subData = JSON.parse(JSON.stringify(destForm));
-		console.log("checked:", e.target.value);
 		subData.depTime[e.target.id] = e.target.value === "true" ? false : true;
+		setCurrentPage(0);
+		setParams({ page: 1 });
+		(subData.arrTime.every((e) => e === false)
+			&& subData.depTime.every((e) => e === false))
+			? setIsFilterTime(false) : setIsFilterTime(true);
+
 		setDestForm(subData);
 	}
 
 	const arrTimeHandler = (e) => {
 		let subData = JSON.parse(JSON.stringify(destForm));
-		console.log("checked:", e.target.value);
 		subData.arrTime[e.target.id] = e.target.value === "true" ? false : true;
+		setCurrentPage(0);
+		setParams({ page: 1 });
+		(subData.arrTime.every((e) => e === false)
+			&& subData.depTime.every((e) => e === false))
+			? setIsFilterTime(false) : setIsFilterTime(true);
 		setDestForm(subData);
 	}
 

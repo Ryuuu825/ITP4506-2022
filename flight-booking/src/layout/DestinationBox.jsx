@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link,useNavigate  } from "react-router-dom";
 
-export default function DestinationBox({ dest, date, setDestForm, destForm }) {
+export default function DestinationBox({ setCurrentPage, setShow, dest, date, setDestForm, destForm }) {
 	const minDate = new Date().toISOString().split("T")[0];
 	const [selectedDate, setSelectedDate] = useState(date);
 	const [selectedDest, setSelectedDest] = useState(dest);
@@ -11,8 +11,8 @@ export default function DestinationBox({ dest, date, setDestForm, destForm }) {
 		let subData = JSON.parse(JSON.stringify(destForm));
 		subData.date = selectedDate;
 		subData.dest = selectedDest;
-		subData.min = 0;
-		subData.max = 0;
+		setCurrentPage(0);
+		setShow(false);
 		setDestForm(subData);
 		navigate(`/search/${selectedDest}/${selectedDate}?page=1`);
 	}
