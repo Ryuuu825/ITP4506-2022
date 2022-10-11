@@ -79,7 +79,7 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 				<label className="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Flight Times:</label>
 			</div>
 
-			<label htmlFor="" className="text-sm">Depart from Hong Kong</label>
+			<label htmlFor="" className="text-sm">Depart from HKG</label>
 			{timeSlots.map((value, index) => {
 				return (
 					<div className="flex items-center" key={index} onChange={depTimeHandler}>

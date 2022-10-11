@@ -92,7 +92,7 @@ export default function SearchPage() {
 						<DestinationBox setShow={setIsShow} setCurrentPage={setCurrentPage} dest={dest} date={date} setDestForm={setDestForm} destForm={destForm} />
 					</div>
 					<div className="flex flex-col w-full h-full bg-white shadow-md rounded-lg">
-						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={[0, 13, 2, 0]} destCount={[1, 0, 0, 14]} dest={destForm.code} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
+						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={[0, 13, 2, 0]} destCount={[1, 0, 0, 14]} dest={destForm.dest} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
 							<div className="flex flex-col w-full h-screen bg-white shadow-md rounded-lg"></div>}
 					</div>
 				</form>
