@@ -1,0 +1,27 @@
+[
+	{
+		"code": "TPE",
+		"airport": "Taiwan Taoyuan International Airport",
+		"area": "Taipei, Taiwan"
+	},
+	{
+		"code": "PVG",
+		"airport": "Shanghai Pudong International Airport",
+		"area": "Shanghai, China"
+	},
+	{
+		"code": "KIX",
+		"airport": "Kansai International Airport",
+		"area": "Osaka, Japan"
+	},
+	{
+		"code": "SHA",
+		"airport": "Shanghai Hongqiao International Airport",
+		"area": "Shanghai, China"
+	},
+	{
+		"code":"ITM",
+		"airport":"Itami Airport",
+		"area":"Osaka, Japan"
+	}
+]

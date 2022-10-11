@@ -12,7 +12,6 @@ export default function SearchPage() {
 	const [isShow, setIsShow] = useState(false);
 	const [isFilterPrice, setIsFilterPrice] = useState(false);
 	const [isFilterTime, setIsFilterTime] = useState(false);
-	const [filteredTickets, setFilteredTickets] = useState([]);
 	const [maxPrice, setMaxPrice] = useState(0);
 	const [minPrice, setMinPrice] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
@@ -100,10 +99,8 @@ export default function SearchPage() {
 					<SortTab />
 					<div className="flex flex-col w-full">
 						{displayItem.length > 0 && isShow ?
-							// displayItem.map((d, index) => (
 							displayItem.slice(startIndex + (currentPage * 12), endIndex + (currentPage * 12)).map((t) => (
 								<TicketInfo key={t.id} dest={dest} ticket={t} date={date} />
-								// ))
 							))
 							: <div className="shadow-md flex items-center justify-center w-full mb-2 border rounded-lg border-gray-200 bg-white h-24">
 								<span>No Record Found</span>
