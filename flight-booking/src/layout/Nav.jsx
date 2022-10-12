@@ -57,7 +57,7 @@ export default function Nav({ name }) {
                             {app.login ? (
                                 <DropDown>
                                     <svg
-                                        className="w-6 h-6 mx-auto"
+                                        className="w-10 h-10 mx-auto"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
