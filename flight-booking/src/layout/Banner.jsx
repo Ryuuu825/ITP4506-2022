@@ -7,6 +7,9 @@ import data from "../db/airport.json";
 export function HeroBanner() {
     const [date, setDate] = useState("");
     const [to, setTo] = useState("");
+
+    const validForm = date !== "" && to !== "";
+
     return (
         <div className="mx-auto mb-10 w-full " >
             <section class="z-[99]">
@@ -44,9 +47,13 @@ export function HeroBanner() {
                                             />
                                         </div>
                                     </div>
-                                    <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
-                                        <Button content="Search" />
+                                    { validForm ? (
+                                        <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
+                                        <Button content="Search"  />
                                     </Link>
+                                    ) : (
+                                        <Button content="Search" disable />
+                                    )}
                                 </div>
                             </div>
                         </div>
