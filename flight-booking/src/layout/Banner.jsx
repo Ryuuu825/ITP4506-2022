@@ -1,9 +1,12 @@
 import { Button } from "../component/Button";
-import { DatePicker, ExpandableInputText, FloatingLabel, InputBox } from "../component/Form";
+import { DatePicker, ExpandableInputText, FloatingLabel, InputBox, DropDownSearch } from "../component/Form";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import data from "../db/airport.json";
 
 export function HeroBanner() {
+    const [date, setDate] = useState("");
+    const [to, setTo] = useState("");
     return (
         <div className="mx-auto mb-10 w-full " >
             <section class="z-[99]">
@@ -28,45 +31,20 @@ export function HeroBanner() {
                                     </span>
                                 </h1>
                                 <div className="flex justify-center flex-row align-middle">
-                                    <div className="w-9/12 mr-10">
-                                        <div className="flex flex-row align-middle">
-                                            <div className="w-8/12 mr-auto" style={{zIndex:"100"}}>
-                                                <ExpandableInputText
-                                                    type="text"
-                                                    placeholder="Enter your destination"
-                                                    validate={true}
-                                                    id = "destination"
-                                                    dropdownlist={[
-                                                        "Hong Kong",
-                                                        "Singapore",
-                                                        "Malaysia",
-                                                        "Thailand",
-                                                        "Indonesia",
-                                                        "Vietnam",
-                                                        "Philippines",
-                                                        "Cambodia",
-                                                        "Laos",
-                                                        "Myanmar",
-                                                        "Japan",
-                                                        "South Korea",
-                                                        "Taiwan",
-                                                        "China",
-                                                        "India",
-                                                        "Nepal",
-                                                        "Sri Lanka"
-                                                    ]}
-                                                />
-                                            </div >
-                                            <div className="w-4/12 mr-auto">
-                                                <DatePicker
-                                                    style={{
-                                                        zIndex: 1,
-                                                    }}
-                                                 />
-                                            </div>
+                                    <div className="w-10/12 mr-2 flex flex-row items-center">
+                                        <div className="grow mr-2 z-50 text-start">
+                                            <DropDownSearch dest={to} setTo={setTo}/>
+                                        </div >
+                                        <div className="w-4/12">
+                                            <DatePicker
+                                                style={{
+                                                    zIndex: 1,
+                                                }}
+                                                setDate={setDate}
+                                            />
                                         </div>
                                     </div>
-                                    <Link to={{pathname:`/search/PVG/2022-10-12`, search:'?page=1'}}>
+                                    <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
                                         <Button content="Search" />
                                     </Link>
                                 </div>

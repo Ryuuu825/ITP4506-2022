@@ -4,7 +4,7 @@ import data from "../db/airport.json";
 export default function DropDownBox({ dest, show, onChange, setDest }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selected, setSelected] = useState(dest);
-	const [filter, setFilter] = useState("");
+	const [filter, setFilter] = useState(dest);
 	const [filteredData, setFilteredData] = useState([]);
 	const inputRef = useRef();
 
@@ -19,17 +19,15 @@ export default function DropDownBox({ dest, show, onChange, setDest }) {
 	}, [filter]);
 
 	const handleInput = (e) => {
+		setDest(e.target.value);
 		setFilter(e.target.value);
 		setIsOpen(true);
 	};
 
-	const handleSelect = (item) => {
-		onChange(selected);
-	};
 	return (
-		<div className="w-80 z-50 absolute bg-white border rounded-lg shadow-md p-2.5" onBlur={() => console.log("children lost focus")}>
-			<input type="text" ref={inputRef} onChange={handleInput} defaultValue={dest} className="w-full p-2.5 rounded border-1 border-blue-600" placeholder="Where to?" name="" id="" />
-			<p className="text-sm pt-2 pb-4 font-light">Select airport</p>
+		<div className="w-full scale-110 z-50 absolute bg-white border rounded-lg shadow-md p-4 text-gray-600">
+			<input type="text" ref={inputRef} onChange={handleInput} defaultValue={dest} className="text-sm w-full p-2 rounded border-2 focus:border-blue-300 focus:ring-blue-300 border-blue-600" placeholder="Where to?" name="" id="" />
+			<p className="text-sm pt-2 pb-4">Select airport</p>
 			<div className="">
 				{isOpen && filteredData.length > 0 ?
 					filteredData.slice(0, 5).map((item) => (
