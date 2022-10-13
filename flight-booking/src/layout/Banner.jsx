@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import data from "../db/airport.json";
 
 export function HeroBanner() {
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(new Date().toLocaleDateString("sv"));
     const [to, setTo] = useState("");
 
     const validForm = date !== "" && to !== "";

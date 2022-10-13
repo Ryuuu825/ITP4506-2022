@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import DropDownBox from "../component/DropDownBox";
 
 export default function DestinationBox({ setCurrentPage, setShow, dest, date, setDestForm, destForm }) {
-	const minDate = new Date().toISOString().split("T")[0];
 	const [selectedDate, setSelectedDate] = useState(date);
 	const [selectedDest, setSelectedDest] = useState(dest);
 	const [showDropDown, setShowDropDown] = useState(false);
 	const [fullField, setFullField] = useState(true);
 	const navigate = useNavigate();
-	const searchBar = useRef();
 	const dropBox = useRef();
 
 	useEffect(() => {
@@ -89,7 +87,7 @@ export default function DestinationBox({ setCurrentPage, setShow, dest, date, se
 							<div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 								<svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
 							</div>
-							<input type="date" id="search_date" min={minDate} value={selectedDate} className="bg-gray-50 border-4 border-orange-300 text-gray-900 text-sm focus:border-blue-300 focus:outline-none focus:ring-blue-300 block w-full pl-10 p-2.5" required onChange={e => setSelectedDate(e.target.value)} />
+							<input type="date" id="search_date" min={new Date().toLocaleDateString("sv")} value={selectedDate} className="bg-gray-50 border-4 border-orange-300 text-gray-900 text-sm focus:border-blue-300 focus:outline-none focus:ring-blue-300 block w-full pl-10 p-2.5" required onChange={e => setSelectedDate(e.target.value)} />
 						</div>
 						<button onClick={handleSearch} className="w-full shadow-md rounded-lg inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
 							<svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p>

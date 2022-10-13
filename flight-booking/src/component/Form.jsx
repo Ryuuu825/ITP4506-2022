@@ -260,7 +260,8 @@ export function DatePicker({ id, handler, props, setDate}) {
             <input
                 type="date"
                 id={id}
-                min={new Date().toISOString().split("T")[0]}
+                min={new Date().toLocaleDateString("sv")}
+                defaultValue={new Date().toLocaleDateString("sv")}
                 class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-50 appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg"
                 onChange={(e)=> setDate(e.target.value)}
                 {...props}

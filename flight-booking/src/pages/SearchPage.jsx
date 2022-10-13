@@ -69,14 +69,14 @@ export default function SearchPage() {
 				) : true;
 			});
 
-			const filterCountOutTime1	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
-			const filterCountOutTime2	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
-			const filterCountOutTime3	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "12:00" && d.outTime <= "17:59") });
-			const filterCountOutTime4	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "18:00" && d.outTime <= "23:59") });
-			const filterCountArrTime1	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "00:00" && ((d.arrivalTime).split(" "))[1] <= "05:59") });
-			const filterCountArrTime2	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "06:00" && ((d.arrivalTime).split(" "))[1] <= "11:59") });
-			const filterCountArrTime3	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "12:00" && ((d.arrivalTime).split(" "))[1] <= "17:59") });
-			const filterCountArrTime4	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") });
+			const filterCountOutTime1	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
+			const filterCountOutTime2	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
+			const filterCountOutTime3	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "12:00" && d.outTime <= "17:59") });
+			const filterCountOutTime4	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "18:00" && d.outTime <= "23:59") });
+			const filterCountArrTime1	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "00:00" && ((d.arrivalTime).split(" "))[1] <= "05:59") });
+			const filterCountArrTime2	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "06:00" && ((d.arrivalTime).split(" "))[1] <= "11:59") });
+			const filterCountArrTime3	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "12:00" && ((d.arrivalTime).split(" "))[1] <= "17:59") });
+			const filterCountArrTime4	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") });
 
 			const filterCount = [filterCountOutTime1.length, filterCountOutTime2.length, filterCountOutTime3.length, filterCountOutTime4.length, filterCountArrTime1.length, filterCountArrTime2.length, filterCountArrTime3.length, filterCountArrTime4.length];
 			setFilterCount(filterCount);
