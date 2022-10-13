@@ -19,6 +19,7 @@ export default function SearchPage() {
 	const [endIndex, setEndIndex] = useState(12);
 	const [displayItem, setDisplayItem] = useState([]);
 	let { dest, date } = useParams();
+	const [filterCount, setFilterCount] = useState([]);
 
 	let searchDate = {
 		"date": date,
@@ -68,6 +69,17 @@ export default function SearchPage() {
 				) : true;
 			});
 
+			const filterCountOutTime1	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
+			const filterCountOutTime2	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
+			const filterCountOutTime3	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "12:00" && d.outTime <= "17:59") });
+			const filterCountOutTime4	= filteredTicket[0].ticket.filter(d => { return (d.outTime >= "18:00" && d.outTime <= "23:59") });
+			const filterCountArrTime1	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "00:00" && ((d.arrivalTime).split(" "))[1] <= "05:59") });
+			const filterCountArrTime2	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "06:00" && ((d.arrivalTime).split(" "))[1] <= "11:59") });
+			const filterCountArrTime3	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "12:00" && ((d.arrivalTime).split(" "))[1] <= "17:59") });
+			const filterCountArrTime4	= filteredTicket[0].ticket.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") });
+
+			const filterCount = [filterCountOutTime1.length, filterCountOutTime2.length, filterCountOutTime3.length, filterCountOutTime4.length, filterCountArrTime1.length, filterCountArrTime2.length, filterCountArrTime3.length, filterCountArrTime4.length];
+			setFilterCount(filterCount);
 			// find min price
 			setMinPrice((isFilterTime ? Math.min(...filteredTicketByFilterTime.map(d => d.price)) : Math.min(...filteredTicket[0].ticket.map(d => d.price))));
 
@@ -91,7 +103,7 @@ export default function SearchPage() {
 						<DestinationBox setShow={setIsShow} setCurrentPage={setCurrentPage} dest={dest} date={date} setDestForm={setDestForm} destForm={destForm} />
 					</div>
 					<div className="flex flex-col w-full h-full bg-white shadow-md rounded-lg">
-						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={[0, 13, 2, 0]} destCount={[1, 0, 0, 14]} dest={destForm.dest} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
+						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={filterCount.slice(0,4)} destCount={filterCount.slice(4,8)} dest={destForm.dest} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
 							<div className="flex flex-col w-full h-screen bg-white shadow-md rounded-lg"></div>}
 					</div>
 				</form>

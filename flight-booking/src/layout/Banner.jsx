@@ -52,7 +52,7 @@ export function HeroBanner() {
                                         <Button content="Search"  />
                                     </Link>
                                     ) : (
-                                        <Button content="Search" disable />
+                                        <Button content="Search" />
                                     )}
                                 </div>
                             </div>
