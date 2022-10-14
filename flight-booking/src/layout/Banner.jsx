@@ -3,7 +3,6 @@ import { DatePicker, ExpandableInputText, FloatingLabel, InputBox, DropDownSearc
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import data from "../db/airport.json";
-import { jp } from "../asserts/jp.jpg";
 
 export function HeroBanner() {
     const [date, setDate] = useState(new Date().toLocaleDateString("sv"));

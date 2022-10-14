@@ -1,13 +1,13 @@
 export function Button( { content, onClick, color , hovercolor , disable , style , id } , props ) {
     if (!color) color = "primary";
-    let className = "p-3 rounded-lg text-white font-normal focus:ring-2 focus:ring-gray-50 bg-primary hover:bg-primary-800";
+    let className = "p-3 rounded-lg text-white font-normal focus:ring-2 focus:ring-gray-50 bg-primary hover:bg-primary-800 w-full ";
     className = className.concat(" ", style);
     if ( disable ) {
         className = className.concat(" disabled:opacity-50 disabled:cursor-not-allowed");
     }
 
     // className = "bg-primary p-3 rounded-lg text-white font-normal my-5 hover:bg-primary disabled:opacity-50 disabled:cursor-not-allowed ".concat(style);
-    return <button onClick={ onClick } className={className} disabled={disable} id={id} {...props}>{ content }</button>;
+    return <button onClick={ onClick } className={className} disabled={disable} id={id} {...props}>{ content ? content : props.children }</button>;
 }
 
 export function Floating ( { path , onClick, color } ) {
