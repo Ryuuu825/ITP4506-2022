@@ -10,24 +10,41 @@ import UserAccount from "../db/users.json";
 import PageLogo from "../component/Logo";
 
 const validatePassword = (password) => {
-    let pw_err_msg = [];
+    let pw_err_msg = "";
     if (password === "") {
-        pw_err_msg.push("Password is required");
+        pw_err_msg = "Password is required";
+        return pw_err_msg;
     }
+
+
     if (password.length < 8) {
-        pw_err_msg.push("Password must be at least 8 characters");
+        pw_err_msg = "Password must be at least 8 characters";
+        return pw_err_msg;
     }
+
+    let temp_str = "Password must contain at least one of the following: ";
+
     if (!/[A-Z]/.test(password)) {
-        pw_err_msg.push("Password must contain at least one uppercase letter");
+        temp_str += "uppercase letter, ";
+        pw_err_msg = temp_str;
+            
     }
     if (!/[a-z]/.test(password)) {
-        pw_err_msg.push("Password must contain at least one lowercase letter");
+        temp_str += "lowercase letter, ";
+        pw_err_msg = temp_str;
     }
     if (!/[0-9]/.test(password)) {
-        pw_err_msg.push("Password must contain at least one number");
+        temp_str += "number, ";
+        pw_err_msg = temp_str;
     }
     if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-        pw_err_msg.push("Password must contain at least one special character");
+        temp_str += "special character, ";
+        pw_err_msg = temp_str;
+    }
+
+    if (pw_err_msg !== "") {
+        pw_err_msg = pw_err_msg.slice(0, -2);
+        pw_err_msg += ".";
     }
 
     return pw_err_msg;
@@ -238,7 +255,7 @@ export function SignUp() {
     const fname = useRef("");
     const lname = useRef("");
 
-    const [password_error_msgs, set_password_error_msgs] = useState([]);
+    const [password_error_msgs, set_password_error_msgs] = useState("");
 
     // ingore the first render
     const [email_valid, set_email_valid] = useState(true);
@@ -408,6 +425,7 @@ export function SignUp() {
                                     const pw_err_msg = validatePassword(
                                         password.current
                                     );
+
 
                                     if (pw_err_msg.length > 0) {
                                         set_password_valid(false);
