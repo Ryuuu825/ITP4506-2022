@@ -6,17 +6,22 @@ import Nav from "../layout/Nav";
 import { useApp } from "../hook/Main";
 import LogoClouds from "../layout/LogoClouds";
 import { RandomFlight } from "../services/RandomFlight";
+import  jp  from "../asserts/jp.jpg";
+import  uk  from "../asserts/uk.jpg";
+import  kn  from "../asserts/korea.jpg";
+import  tw  from "../asserts/tw.jpg";
 
-function Box({ name }) {
+
+function Box({ name , img_src }) {
     return (
         <div
             class={
-                "relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mr-4 hover:scale-105 transition duration-300 ease-in-out "
+                "relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mr-4 hover:scale-105 transition duration-300 ease-in-out h-48  w-60"
             }
         >
             <img
-                src="https://mdbootstrap.com/img/new/standard/nature/028.jpg"
-                class="w-full"
+                src={img_src}
+                class="h-full w-full object-cover"
                 alt={name}
             />
             <Link className="cursor-pointer">
@@ -122,13 +127,14 @@ export function LandingPage() {
                 <div className="p-dest">
                     <div className="w-1/2">
                         <h1 className="text-3xl font-bold">
-                            Popular flight destination
+                            Featured for you
                         </h1>
                     </div>
                     <ListBoxHor>
-                        {places.map((place) => (
-                            <Box name={place} />
-                        ))}
+                        <Box name={"Japan"} img_src={jp} />
+                        <Box name={"United Kingdom"} img_src={uk} />
+                        <Box name={"Korea"} img_src={kn} />
+                        <Box name={"Taiwan"} img_src={tw} />
                     </ListBoxHor>
                 </div>
 

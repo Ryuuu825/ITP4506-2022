@@ -3,12 +3,14 @@ import { DatePicker, ExpandableInputText, FloatingLabel, InputBox, DropDownSearc
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import data from "../db/airport.json";
+import { jp } from "../asserts/jp.jpg";
 
 export function HeroBanner() {
     const [date, setDate] = useState(new Date().toLocaleDateString("sv"));
     const [to, setTo] = useState("");
 
-    const validForm = date !== "" && to !== "";
+    const validForm = to !== "";
+    
 
     return (
         <div className="mx-auto mb-10 w-full " >
@@ -52,7 +54,7 @@ export function HeroBanner() {
                                         <Button content="Search"  />
                                     </Link>
                                     ) : (
-                                        <Button content="Search" />
+                                        <Button content="Search" onClick={() => {alert("Please tell us here you want to go")}}/>
                                     )}
                                 </div>
                             </div>
