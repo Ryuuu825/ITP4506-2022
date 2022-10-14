@@ -38,7 +38,7 @@ function Header({ noback }) {
 
     return (
         <>
-            <div className="flex flex-rows justify-center align-middles">
+            <div className="flex flex-rows justify-center align-middles mb-3">
                 {noback ? null : (
                     <button
                         className="inline-block"
@@ -84,6 +84,8 @@ export function SingIn() {
 
     const app = useApp();
     app.setDisableFooter(true);
+
+    document.title = "Login | IVE Airline";
 
     return (
         <div className="h-screen flex">
@@ -207,7 +209,7 @@ export function SingIn() {
                         Sign in
                     </Button>
 
-                    <div className="text-primary text-center text-sm">
+                    <div className="text-primary text-center text-sm mt-3">
                         <Link to="/forgot-pw" className="text-primary">
                             Forgot password?
                         </Link>
@@ -259,6 +261,8 @@ export function SignUp() {
             }
         });
     }, []);
+
+    document.title = "Sign up";
 
     return (
         <div className="h-screen flex">
@@ -451,6 +455,9 @@ export function ForgotPassword() {
     const [sucess, set_sucess] = useState(false);
 
     const navigate = useNavigate();
+
+    document.title = "Forgot Password";
+
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
@@ -550,6 +557,8 @@ function RegisterSuccess({ name }) {
         return () => clearTimeout(timer);
     });
 
+    document.title = "Register Success";
+    
     return (
         <div className="flex flex-col justify-center sm-auto mt-10">
             <Header noback />
@@ -588,6 +597,8 @@ function ResetPwSuccess() {
         return () => clearTimeout(timer);
     });
 
+    document.title = "Reset Password Success";
+
     return (
         <div className="flex flex-col justify-center sm-auto mt-10">
             <Header noback />
@@ -620,6 +631,9 @@ export function OperatorResetPw({ name = "Lee" }) {
     const [success, set_success] = useState(false);
 
     const navigate = useNavigate();
+
+    document.title = "Reset Password";
+
     if (!success) {
         return (
             <div>

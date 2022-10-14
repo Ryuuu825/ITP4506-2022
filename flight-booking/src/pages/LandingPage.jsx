@@ -38,7 +38,6 @@ function Box({ name }) {
 function ListItem({ dest, dest_code, price, date, flight_class }) {
     return (
         <Link
-            to="/booking"
             class="text-black px-4 py-2 flex flex-row justify-between items-center border p-3 rounded-lg mt-1 mb-2 relative mx-1 hover:scale-105 transition"
             style={{ width: "47%" }}
         >
@@ -108,6 +107,7 @@ export function LandingPage() {
         flights.push(RandomFlight());
     }
 
+    document.title = "Home | Flight Booking";
     
     return (
         <div>

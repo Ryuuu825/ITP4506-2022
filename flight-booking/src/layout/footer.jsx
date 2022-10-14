@@ -11,7 +11,8 @@ export default function Footor() {
             <footer className="bg-white sm:p-6 dark:bg-gray-900 bottom-0 overflow-hidden">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
-                        <a
+                        <Link 
+                            to="/"
                             href="https://flowbite.com/"
                             className="flex items-center"
                         >
@@ -23,7 +24,7 @@ export default function Footor() {
                             <span className="self-center text-blue-700 text-2xl font-semibold whitespace-nowrap dark:text-white">
                                 IVE AIRLINE
                             </span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
@@ -35,6 +36,15 @@ export default function Footor() {
                                     <Link to="/" className="hover:underline">
                                         IVE Airline
                                     </Link>
+                                </li>
+                                <li className="mb-4">
+                                    <a 
+                                        href="https://www.ive.edu.hk/ivesite/html/tc/"
+                                        className="hover:underline"
+                                        target={"_blank"}
+                                         >
+                                        IVE 
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -76,9 +86,9 @@ export default function Footor() {
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                         © 2022{" "}
-                        <a href="https://flowbite.com/" className="hover:underline">
+                        <Link to="/" className="hover:underline">
                             IVE Airline™
-                        </a>
+                        </Link>
                         . All Rights Reserved.
                     </span>
                     <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">

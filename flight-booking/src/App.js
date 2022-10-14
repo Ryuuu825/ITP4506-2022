@@ -45,7 +45,7 @@ function App() {
         <>
             <AppProvider>
                 <Routes>
-                    <Route path="/" element={<Main />} />
+                    <Route path="/" element={<LandingPage />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="/NotAllow" element={<NotAllowed />} />
                     <Route path="/login" element={<SingIn />} />

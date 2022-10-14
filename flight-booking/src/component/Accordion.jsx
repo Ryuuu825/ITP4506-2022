@@ -61,10 +61,10 @@ export default function Accordion({ title, content, alwaysOpen }) {
             <div
                 ref={contentRef}
                 style={{ minHeight: `${open ? height : 0}px`  }}
-                className="transition-height duration-500 ease-in-out border-b "
+                className="transition-height duration-500 ease-in-out border-b"
             >
-                <div className=" text-black font-normal text-xl pl-10 pt-2">
-                    {open ? <div className="w-10/12 mx-auto mb-5">{content}</div> : ""}
+                <div className="text-black font-normal text-xl pt-2">
+                    {open ? <div className="w-11/12 ml-5 mb-5">{content}</div> : ""}
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { useApp } from '../hook/Main';
 function Spin({size_  }) 
 {
 
+    document.title = "Loading";
     if (size_)
     {
         let size_num = [12,12]
