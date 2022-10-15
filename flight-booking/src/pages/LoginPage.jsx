@@ -277,7 +277,7 @@ function AskOtherInfo() {
                         </h1>
                         <div className="flex flex-row items-center align-middle">
                             <span className="mt-3 text-start">
-                                We want to know you better
+                                More about you
                             </span>
                             <Tooltips content={"For suggestion"} />
                         </div>

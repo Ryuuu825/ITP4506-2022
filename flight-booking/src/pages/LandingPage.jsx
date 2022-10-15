@@ -16,7 +16,7 @@ function Box({ name , img_src }) {
     return (
         <div
             class={
-                "relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mr-4 hover:scale-105 transition duration-300 ease-in-out h-48  w-60"
+                "relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mr-4 hover:scale-105 transition duration-300 ease-in-out h-48  w-72"
             }
         >
             <img
@@ -253,7 +253,7 @@ export function LandingPage() {
             <div className="w-11/12 mx-auto 2xl:w-6/12 mt-24">
                 <LogoClouds />
             </div>
-            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-24">
+            <div className="w-11/12 mx-auto 2xl:w-6/12 mt-24 h-auto">
                 <div className="text-3xl font-bold mb-10">
                     Frequently asked questions
                 </div>

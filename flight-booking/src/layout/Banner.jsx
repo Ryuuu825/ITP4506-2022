@@ -50,10 +50,12 @@ export function HeroBanner() {
                                     </div>
                                     { validForm ? (
                                         <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
-                                        <Button content="Search"  />
-                                    </Link>
+                                            <Button content="Search"  />
+                                        </Link>
                                     ) : (
+                                       <div>
                                         <Button content="Search" onClick={() => {alert("Please tell us here you want to go")}}/>
+                                       </div>
                                     )}
                                 </div>
                             </div>

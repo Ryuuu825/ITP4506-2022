@@ -12,6 +12,7 @@ module.exports = {
       animation: {
         'fixed-up': 'fixed-up 1s ease-out',
         'fixed-down': 'fixed-down 1s ease-out',
+        'min-height': 'min-height 1s ease-out',
       },
       keyframes: theme => ({
         'fixed-up': {
@@ -21,6 +22,10 @@ module.exports = {
         'fixed-down': {
           '0%': { transform: 'translateY(0%)' },
           '100%': { transform: 'translateY(100%)' },
+        },
+        'min-height': {
+          '0%': { minHeight: '0px' },
+          '100%': { minHeight: '100px' },
         },
         
       }),

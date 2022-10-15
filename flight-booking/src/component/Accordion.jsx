@@ -17,10 +17,11 @@ export default function Accordion({ title, content, alwaysOpen }) {
         setOpen(!open);
     };
 
+
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col " >
             <button
-                className={"w-full flex flex-row py-3 "}
+                className={"w-full flex flex-row py-3"}
                 onClick={toggleAccordion}
             >
                 <p className="text-2xl font-semibold mt-3 text-left mr-auto">{title}</p>
@@ -60,11 +61,12 @@ export default function Accordion({ title, content, alwaysOpen }) {
             </button>
             <div
                 ref={contentRef}
-                style={{ minHeight: `${open ? height : 0}px`  }}
-                className="transition-height duration-500 ease-in-out border-b"
+                style={{ height: `${open ? "120" : 0}px`  }}
+                className="transition-height duration-500 ease-in-out overflow-hidden w-full"
+                
             >
-                <div className="text-black font-normal text-xl pt-2">
-                    {open ? <div className="w-11/12 ml-5 mb-5">{content}</div> : ""}
+                <div  className="text-black font-normal text-xl pt-2 " >
+                    {open ? <div className="w-11/12 ml-5 mb-5 relative" >{content}</div> : ""}
                 </div>
             </div>
         </div>
