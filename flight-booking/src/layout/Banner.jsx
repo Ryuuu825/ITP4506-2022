@@ -1,5 +1,5 @@
 import { Button } from "../component/Button";
-import { DatePicker, ExpandableInputText, FloatingLabel, InputBox, DropDownSearch } from "../component/Form";
+import { DatePicker, DropDownSearch } from "../component/Form";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import data from "../db/airport.json";
@@ -9,7 +9,7 @@ export function HeroBanner() {
     const [to, setTo] = useState("");
 
     const validForm = to !== "";
-    
+
 
     return (
         <div className="mx-auto mb-10 w-full " >
@@ -37,7 +37,7 @@ export function HeroBanner() {
                                 <div className="flex justify-center flex-row align-middle">
                                     <div className="w-10/12 mr-2 flex flex-row items-center">
                                         <div className="grow mr-2 z-50 text-start">
-                                            <DropDownSearch dest={to} setTo={setTo}/>
+                                            <DropDownSearch dest={to} setTo={setTo} />
                                         </div >
                                         <div className="w-4/12">
                                             <DatePicker
@@ -48,22 +48,26 @@ export function HeroBanner() {
                                             />
                                         </div>
                                     </div>
-                                    { validForm ? (
-                                        <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
-                                            <Button content="Search"  />
-                                        </Link>
-                                    ) : (
-                                       <div>
-                                        <Button content="Search" onClick={() => {alert("Please tell us here you want to go")}}/>
-                                       </div>
-                                    )}
+                                    <div>
+                                        {validForm ? (
+                                            <Link to={{ pathname: `/search/${to}/${date}`, search: '?page=1' }}>
+                                                <button className="w-full shadow-md rounded-lg inline-flex items-center py-3 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                                    <svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p>
+                                                </button>
+                                            </Link>
+                                        ) : (
+                                            <button onClick={() => { alert("Please tell us where you want to go") }} className="w-full shadow-md rounded-lg inline-flex items-center py-3 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                                <svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p>
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </div >
+            </section >
+        </div >
     );
 }
 
