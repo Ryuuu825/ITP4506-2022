@@ -1,11 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
-import { DropDown, DropDownItemDivider, DropDownList, DropDownListItem } from "../component/DropDown";
+import {
+    DropDown,
+    DropDownItemDivider,
+    DropDownList,
+    DropDownListItem,
+} from "../component/DropDown";
 import { useApp } from "../hook/Main";
 import PageLogo from "../component/Logo";
 
 export default function Nav({ name }) {
     const app = useApp();
-    console.log(app.login)
+    console.log(app);
     return (
         <div className="bg-white h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3">
@@ -19,9 +24,7 @@ export default function Nav({ name }) {
                                 to="/"
                                 className="text-xl text-gray-800 font-semibold"
                                 style={({ isActive }) => {
-                                    return isActive
-                                        ? { color: "#3058D2" }
-                                        : {};
+                                    return isActive ? { color: "#3058D2" } : {};
                                 }}
                             >
                                 Home
@@ -31,9 +34,7 @@ export default function Nav({ name }) {
                             <NavLink
                                 className="text-xl text-gray-800"
                                 style={({ isActive }) => {
-                                    return isActive
-                                        ? { color: "#3058D2" }
-                                        : {};
+                                    return isActive ? { color: "#3058D2" } : {};
                                 }}
                                 to="/about"
                             >
@@ -44,47 +45,89 @@ export default function Nav({ name }) {
                             <NavLink
                                 className="text-xl text-gray-800"
                                 style={({ isActive }) => {
-                                    return isActive
-                                        ? { color: "#3058D2" }
-                                        : {};
+                                    return isActive ? { color: "#3058D2" } : {};
                                 }}
                                 to="/contact"
                             >
                                 Helps
                             </NavLink>
                         </li>
+                        <li className="">
+                            {/* A hor line */}
+                            <div className="h-6 border-l-2 border-black ml-3"></div>
+                        </li>
                         <li className="mx-3 w-24">
                             {app.login ? (
                                 <DropDown>
-                                    <svg
-                                        className="w-10 h-10 mx-auto"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/20s00/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    <div className="mx-auto flex flex-row justify-center align-middle items-center select-none">
+                                        <img
+                                            className="w-10 h-10 rounded-full mr-2"
+                                            src="https://avatars.githubusercontent.com/u/85796869?v=4"
+                                            alt="profile"
+                                        />
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 28 28"
+                                            xmlns="http://www.w3.org/2000/svg"
                                         >
-                                        </path>
-                                    </svg>
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M19 9l-7 7-7-7"
+                                            ></path>
+                                        </svg>
+                                    </div>
 
                                     <DropDownList target>
-                                        <DropDownListItem context={"List of Saved flightss"} />
+                                        {/* The profile */}
+                                        <DropDownListItem
+                                            context={
+                                                <div className="flex flex-row justify-between items-center">
+                                                    <div className="flex flex-row items-center">
+                                                        <div className="ml-3">
+                                                            <p className="">
+                                                                Signed in as
+                                                            </p>
+                                                            <p className="text-lg font-semibold">
+                                                                {app.userName}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        />
                                         <DropDownItemDivider />
-                                        <DropDownListItem context={"Logout"}
-                                            handler={() => {
+                                        <DropDownListItem
+                                            context={"List of Saved flightss"}
+                                        />
+                                        <DropDownListItem
+                                            context={"Your stars"}
+                                        />
+                                        <DropDownListItem
+                                            context={"Your trips"}
+                                        />
+                                        <DropDownItemDivider />
+                                        <DropDownListItem
+                                            context={"Try Premium"}
+                                        />
+                                        <DropDownListItem context={"Help"} />
+                                        <DropDownListItem
+                                            context={"Settings"}
+                                        />
+                                        <DropDownItemDivider />
+                                        <DropDownListItem
+                                            context={"Sign out"}
+                                            handler=
+                                            {() => {
                                                 app.setLogin(false);
                                                 // reload page
                                                 window.location.reload();
                                             }}
-                                        />
+                                            />
                                     </DropDownList>
-
-
                                 </DropDown>
                             ) : (
                                 <NavLink
@@ -97,7 +140,6 @@ export default function Nav({ name }) {
                                 </NavLink>
                             )}
                         </li>
-
                     </ul>
                 </div>
             </div>

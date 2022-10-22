@@ -2,16 +2,19 @@
     {
         "name" : "admin",
         "email" : "Admin@ive-airline.org" ,
-        "password" : "TKkxNHrGs&!$t6+&"
+        "password" : "TKkxNHrGs&!$t6+&",
+        "username" : "Admin-1"
     },
     {
         "name" : "normal",
         "email" : "210123456@stu.vtc.edu.hk",
-        "password" : "TKkxNHrGs&!$t6+&"
+        "password" : "TKkxNHrGs&!$t6+&",
+        "username" : "Ken"
     },
     {
         "name" : "operator",
         "email" : "staff-1@ive-airline.org",
-        "password" : "TKkxNHrGs&!$t6+&"
+        "password" : "TKkxNHrGs&!$t6+&",
+        "username" : "staff-1"
     }
 ]

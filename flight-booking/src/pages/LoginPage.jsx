@@ -193,6 +193,7 @@ export function SingIn() {
                                 ) {
                                     app.setLogin(true);
                                     app.setUser(potential_user.name);
+                                    app.setUserName(potential_user.username);
                                     if (potential_user.name === "operator") {
                                         navigate("/operator/reset-pw");
                                     } else {
