@@ -9,8 +9,12 @@ import { useApp } from "../hook/Main";
 import UserAccount from "../db/users.json";
 import PageLogo from "../component/Logo";
 import Tooltips, { TooltipsBottom } from "../component/tooltips";
-
-import bg from "../asserts/login-bg.jpeg";
+import { Birthday_SVG } from "../component/SVGPath";
+import footer from "../asserts/foot.png";
+import imgBorder from "../asserts/image-border.png";
+import bg1 from "../asserts/login-bg.jpg";
+import bg2 from "../asserts/login-bg2.jpg";
+import bg3 from "../asserts/login-bg3.jpg";
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -86,212 +90,195 @@ function Header({ noback }) {
         </>
     );
 }
-export function SingIn() {
-    const navigate = useNavigate();
-    // get the previous page
 
+export function SingIn() {
+    // get the previous page
+    const imgList = [bg1, bg2, bg3];
+
+    const [bgImg, setBgImg] = useState(imgList[0]);
+    let idx = 1;
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setBgImg(imgList[idx]);
+            idx++;
+            if (idx % 3 == 0) {
+                idx = 0;
+            }
+        }, 3000);
+        return () => clearInterval(timer);
+    }, []);
+
+    document.title = "Login | IVE Airline";
+
+    return (
+        <div className="h-screen flex bg-blue-100">
+            <div
+                className="z-10 h-3/4 w-3/5 flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle"
+            >
+                <div className="rounded-l-xl flex-1 right relative h-full bg-cover" style={{ backgroundImage: `url(${bgImg})` }}>
+                    <img className="absolute right-0 border-0" src={`${imgBorder}`} style={{ height: "100%" }} alt="" srcset="" />
+                </div>
+                <div className="rounded-r-xl h-full bg-white flex-1">
+                    <LoginForm />
+                </div>
+            </div>
+            <div className="fixed bottom-0 left-0">
+                <img src={`${footer}`} alt="" srcset="" />
+            </div>
+        </div>
+    );
+}
+
+export function LoginForm() {
+    const navigate = useNavigate();
     const email = useRef("");
     const password = useRef("");
-
+    const app = useApp();
+    app.setDisableFooter(true);
     const [emailError, setEmailError] = useState(false);
     const [pwError, setPwError] = useState(false);
     const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
     const [inputed_all, set_inputed_all] = useState(false);
-
-    const app = useApp();
-    app.setDisableFooter(true);
-
-    document.title = "Login | IVE Airline";
-
     return (
-        <div className="h-screen flex overflow-hidden bg-black">
-                {/* bg image */}
-                <div className="absolute">
-                    <img
-                        className="h-screen w-full object-cover opacity-50 blur"
-                        src={bg}
-                        alt="Login Background"
+        <div className="flex flex-col justify-center p-8">
+            <Header />
+            <h1 className="text-3xl font-medium text-start mt-3">
+                Sign in
+            </h1>
+            <span className="mt-3 text-start">
+                Get the best experience with our app
+            </span>
+
+            <FloatingLabel
+                placeholder={"Email"}
+                type="email"
+                id={"r_email"}
+                handler={(e) => {
+                    setPwError(false);
+                    email.current = e.target.value;
+                    if (
+                        email.current !== "" &&
+                        password.current !== ""
+                    ) {
+                        set_inputed_all(true);
+                    } else {
+                        set_inputed_all(false);
+                    }
+                }}
+                validate={!emailError}
+                error_message={emailErrorMsg}
+            />
+            <FloatingLabel
+                placeholder={"Password"}
+                type="password"
+                id={"s_password"}
+                handler={(e) => {
+                    password.current = e.target.value;
+                    if (
+                        email.current !== "" &&
+                        password.current !== ""
+                    ) {
+                        set_inputed_all(true);
+                    } else {
+                        set_inputed_all(false);
+                    }
+                }}
+                validate={true}
+            />
+
+
+            <div>
+                <div className="flex align-center text-sm text-gray-500">
+                    <CheckBox
+                        id="default-checkbox"
+                        context="Keep me signed in"
                     />
+                    <TooltipsBottom content={`Selecting this checkbox will keep you signed in for
+            30 days. If you are using a public or shared device,
+            uncheck this box to prevent unauthorized access to
+            your account.`} title={`Keep me signed in`} />
                 </div>
 
-                <div className="bg-white rounded-lg p-8 shadow-xl m-auto justify-evenly z-10 flex flex-row">
-                    <div className="flex flex-col justify-center m-auto">
-                        <div className="flex flex-row pt-5">
-                            <div className="flex flex-col">
-                                <div className="flex flex-row align-middle mb-5">
-                                    <img
-                                        src={logo}
-                                        alt=""
-                                        className="w-8 inline"
-                                    />
-                                    <h1 className="text-2xl font-normal text-start inline px-2">
-                                        Ive Airline
-                                    </h1>
-                                </div>
-
-                                <h1 className="text-3xl font-medium text-start mt-3">
-                                    Sign in
-                                </h1>
-                                <span className="mt-3 text-start">
-                                    Get the best experience with our app
-                                </span>
-
-                                <FloatingLabel
-                                    placeholder={"Email"}
-                                    type="email"
-                                    id={"r_email"}
-                                    handler={(e) => {
-                                        setPwError(false);
-                                        email.current = e.target.value;
-                                        if (
-                                            email.current !== "" &&
-                                            password.current !== ""
-                                        ) {
-                                            set_inputed_all(true);
-                                        } else {
-                                            set_inputed_all(false);
-                                        }
-                                    }}
-                                    validate={!emailError}
-                                    error_message={emailErrorMsg}
-                                />
-                                <FloatingLabel
-                                    placeholder={"Password"}
-                                    type="password"
-                                    id={"s_password"}
-                                    handler={(e) => {
-                                        password.current = e.target.value;
-                                        if (
-                                            email.current !== "" &&
-                                            password.current !== ""
-                                        ) {
-                                            set_inputed_all(true);
-                                        } else {
-                                            set_inputed_all(false);
-                                        }
-                                    }}
-                                    validate={true}
-                                />
-
-                                <div>
-                                    <div className="flex align-center text-sm text-gray-500">
-                                        <CheckBox
-                                            id="default-checkbox"
-                                            context="Keep me signed in"
-                                        />
-                                        <TooltipsBottom
-                                            content={`Selecting this checkbox will keep you signed in for
-                            30 days. If you are using a public or shared device,
-                            uncheck this box to prevent unauthorized access to
-                            your account.`}
-                                            title={`Keep me signed in`}
-                                        />
-                                    </div>
-
-                                    <div className="text-sm text-black-500 mt-5">
-                                        By signing in, you agree to our
-                                        <span className="text-blue-600 cursor-pointer">
-                                            {" "}
-                                            Terms of Service
-                                        </span>
-                                        <span> and</span>
-                                        <span className="text-blue-600 cursor-pointer">
-                                            {" "}
-                                            Privacy Policy
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <Button
-                                    onClick={() => {
-                                        const potential_user = UserAccount.find(
-                                            (user) =>
-                                                user.email === email.current
-                                        );
-                                        if (potential_user) {
-                                            if (
-                                                potential_user.password ===
-                                                password.current
-                                            ) {
-                                                app.setLogin(true);
-                                                app.setUser(
-                                                    potential_user.name
-                                                );
-                                                app.setUserName(
-                                                    potential_user.username
-                                                );
-                                                if (
-                                                    potential_user.name ===
-                                                    "operator"
-                                                ) {
-                                                    navigate(
-                                                        "/operator/reset-pw"
-                                                    );
-                                                } else {
-                                                    navigate("/index");
-                                                }
-                                            } else {
-                                                setPwError(true);
-                                                document.getElementById(
-                                                    "s_password"
-                                                ).value = "";
-                                            }
-                                        } else {
-                                            setEmailError(true);
-                                            setEmailErrorMsg("Email not found");
-                                            document.getElementById(
-                                                "s_password"
-                                            ).value = "";
-                                        }
-
-                                        if (
-                                            !/\S+@\S+\.\S+/.test(email.current)
-                                        ) {
-                                            setEmailError(true);
-                                            setEmailErrorMsg(
-                                                "Email format is not valid"
-                                            );
-                                            document.getElementById(
-                                                "s_password"
-                                            ).value = "";
-                                        }
-                                    }}
-                                    content="Sign in"
-                                    color={"primary"}
-                                    disable={!inputed_all}
-                                    style="w-full mt-5"
-                                    id="signin-btn"
-                                >
-                                    Sign in <span></span>
-                                </Button>
-
-                                <div className="text-primary text-center text-sm mt-3">
-                                    <Link
-                                        to="/forgot-pw"
-                                        className="text-primary"
-                                    >
-                                        Forgot password?
-                                    </Link>
-                                </div>
-
-                                <div className="flex justify-center mt-5 text-center align-middle">
-                                    <span className="text-sm text-black-500">
-                                        Don't have an account?
-                                    </span>
-                                    <Link
-                                        to="/create-account"
-                                        className="text-blue-600 ml-1 text-sm"
-                                    >
-                                        Create one
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="text-sm text-black-500 mt-5">
+                    By signing in, you agree to our
+                    <span className="text-blue-600 cursor-pointer">
+                        {" "}
+                        Terms of Service
+                    </span>
+                    <span> and</span>
+                    <span className="text-blue-600 cursor-pointer">
+                        {" "}
+                        Privacy Policy
+                    </span>
                 </div>
             </div>
-    );
+
+            <Button
+                onClick={() => {
+                    const potential_user = UserAccount.find(
+                        (user) => user.email === email.current
+                    );
+                    if (potential_user) {
+                        if (
+                            potential_user.password === password.current
+                        ) {
+                            app.setLogin(true);
+                            app.setUser(potential_user.name);
+                            app.setUserName(potential_user.username);
+                            if (potential_user.name === "operator") {
+                                navigate("/operator/reset-pw");
+                            } else {
+                                navigate("/index");
+                            }
+                        } else {
+                            setPwError(true);
+                            document.getElementById(
+                                "s_password"
+                            ).value = "";
+                        }
+                    } else {
+                        setEmailError(true);
+                        setEmailErrorMsg("Email not found");
+                        document.getElementById("s_password").value =
+                            "";
+                    }
+
+                    if (!/\S+@\S+\.\S+/.test(email.current)) {
+                        setEmailError(true);
+                        setEmailErrorMsg("Email format is not valid");
+                        document.getElementById("s_password").value =
+                            "";
+                    }
+                }}
+                content="Sign in"
+                color={"primary"}
+                disable={!inputed_all}
+                style="w-full mt-5"
+            >
+                Sign in
+            </Button>
+
+            <div className="text-primary text-center text-sm mt-3">
+                <Link to="/forgot-pw" className="text-primary">
+                    Forgot password?
+                </Link>
+            </div>
+
+            <div className="flex justify-center mt-5 text-center align-middle">
+                <span className="text-sm text-black-500">
+                    Don't have an account?
+                </span>
+                <Link
+                    to="/create-account"
+                    className="text-blue-600 ml-1 text-sm"
+                >
+                    Create one
+                </Link>
+            </div>
+        </div>
+    )
 }
 
 
