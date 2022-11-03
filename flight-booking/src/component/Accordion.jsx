@@ -21,14 +21,15 @@ export default function Accordion({ title, content, alwaysOpen }) {
     return (
         <div className="w-full flex flex-col " >
             <button
-                className={"w-full flex flex-row py-3"}
+                className={"w-full flex flex-row py-3 "}
                 onClick={toggleAccordion}
             >
-                <p className="text-2xl font-semibold mt-3 text-left mr-auto">{title}</p>
+                <p className="peer text-2xl font-semibold mt-3  text-left mr-auto">{title}</p>
                 <span className="mr-3">
                     {!open ? (
                         <svg
-                            class="w-6 h-6"
+                            className="w-6 h-6 " 
+                            // display only when parent is hovered
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -61,7 +62,7 @@ export default function Accordion({ title, content, alwaysOpen }) {
             </button>
             <div
                 ref={contentRef}
-                style={{ height: `${open ? "120" : 0}px`  }}
+                style={{ height: `${open ? "115" : "0"}px`  }}
                 className="transition-height duration-500 ease-in-out overflow-hidden w-full"
                 
             >

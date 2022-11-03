@@ -7,7 +7,7 @@ export default function AppProvider(props) {
     const [user, setUser] = useState(null);
     const [userName, setUserName] = useState(null);
     const [disableFooter, setDisableFooter] = useState(false);
-    
+
 
 
     return (

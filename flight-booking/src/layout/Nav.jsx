@@ -13,12 +13,12 @@ export default function Nav({ name }) {
     console.log(app);
     return (
         <div className="bg-white h-24 border-b-2 ">
-            <div className="flex flex-row justify-between align-middle p-3">
+            <div className="flex flex-row justify-between align-middle p-3 items-center">
                 <NavLink className="flex items-center justify-center " to="/">
                     <PageLogo />
                 </NavLink>
                 <div className="ml-auto">
-                    <ul className="flex flex-row justify-around items-center pt-6">
+                    <ul className="flex flex-row justify-around items-center pt-2">
                         <li className="mx-3">
                             <NavLink
                                 to="/"
@@ -36,7 +36,6 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive ? { color: "#3058D2" } : {};
                                 }}
-                                to="/about"
                             >
                                 My trips
                             </NavLink>
@@ -47,7 +46,6 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive ? { color: "#3058D2" } : {};
                                 }}
-                                to="/contact"
                             >
                                 Helps
                             </NavLink>

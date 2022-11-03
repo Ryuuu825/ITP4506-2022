@@ -258,7 +258,7 @@ export function LandingPage() {
                     Frequently asked questions
                 </div>
                 <Accordion
-                    title={"Why book with us?"}
+                    title={"Q1. Why book with us?"}
                     content={
                         <>
                             <Paragraph>
@@ -277,7 +277,7 @@ export function LandingPage() {
                     alwaysOpen
                 />
                 <Accordion
-                    title={`What happens after I've booked my flight?`}
+                    title={`Q2. What happens after I've booked my flight?`}
                     content={
                         <>
                             <Paragraph>
@@ -289,7 +289,7 @@ export function LandingPage() {
                     }
                 />
                 <Accordion
-                    title={`How can I stay up to date with the latest news?`}
+                    title={`Q3. How can I stay up to date with the latest news?`}
                     content={
                         <>
                             <Paragraph>
@@ -308,7 +308,7 @@ export function LandingPage() {
                     }
                 />
                 <Accordion
-                    title={`Any requirements under COVID-19?`}
+                    title={`Q4. Any requirements under COVID-19?`}
                     content={
                         <>
                             <Paragraph>
