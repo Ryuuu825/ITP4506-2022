@@ -15,6 +15,7 @@ import imgBorder from "../asserts/image-border.png";
 import bg1 from "../asserts/login-bg.jpg";
 import bg2 from "../asserts/login-bg2.jpg";
 import bg3 from "../asserts/login-bg3.jpg";
+import forgot_pw_img from "../asserts/forgot-pw-img.png";
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -113,17 +114,24 @@ export function SingIn() {
 
     return (
         <div className="h-screen flex bg-blue-100">
-            <div
-                className="z-10 h-3/4 w-3/5 flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle"
-            >
-                <div className="rounded-l-xl flex-1 right relative h-full bg-cover" style={{ backgroundImage: `url(${bgImg})` }}>
-                    <img className="absolute right-0 border-0" src={`${imgBorder}`} style={{ height: "100%" }} alt="" srcset="" />
+            <div className="z-10 md:h-3/4 md:w-3/5  sm:w-4/5 sm:h-5/6   flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle">
+                <div
+                    className="rounded-l-xl flex-1 right relative h-full bg-cover animate-fade-in-forever"
+                    style={{ backgroundImage: `url(${bgImg})` }}
+                >
+                    <img
+                        className="absolute right-0 border-0"
+                        src={`${imgBorder}`}
+                        style={{ height: "100%" }}
+                        alt=""
+                        srcset=""
+                    />
                 </div>
                 <div className="rounded-r-xl h-full bg-white flex-1">
                     <LoginForm />
                 </div>
             </div>
-            <div className="fixed bottom-0 left-0">
+            <div className="fixed bottom-0 left-0 w-full">
                 <img src={`${footer}`} alt="" srcset="" />
             </div>
         </div>
@@ -144,9 +152,7 @@ export function LoginForm() {
     return (
         <div className="flex flex-col justify-center p-8">
             <Header />
-            <h1 className="text-3xl font-medium text-start mt-3">
-                Sign in
-            </h1>
+            <h1 className="text-3xl font-medium text-start mt-3 ">Sign in</h1>
             <span className="mt-3 text-start">
                 Get the best experience with our app
             </span>
@@ -158,10 +164,7 @@ export function LoginForm() {
                 handler={(e) => {
                     setPwError(false);
                     email.current = e.target.value;
-                    if (
-                        email.current !== "" &&
-                        password.current !== ""
-                    ) {
+                    if (email.current !== "" && password.current !== "") {
                         set_inputed_all(true);
                     } else {
                         set_inputed_all(false);
@@ -176,10 +179,7 @@ export function LoginForm() {
                 id={"s_password"}
                 handler={(e) => {
                     password.current = e.target.value;
-                    if (
-                        email.current !== "" &&
-                        password.current !== ""
-                    ) {
+                    if (email.current !== "" && password.current !== "") {
                         set_inputed_all(true);
                     } else {
                         set_inputed_all(false);
@@ -188,17 +188,19 @@ export function LoginForm() {
                 validate={true}
             />
 
-
             <div>
                 <div className="flex align-center text-sm text-gray-500">
                     <CheckBox
                         id="default-checkbox"
                         context="Keep me signed in"
                     />
-                    <TooltipsBottom content={`Selecting this checkbox will keep you signed in for
+                    <TooltipsBottom
+                        content={`Selecting this checkbox will keep you signed in for
             30 days. If you are using a public or shared device,
             uncheck this box to prevent unauthorized access to
-            your account.`} title={`Keep me signed in`} />
+            your account.`}
+                        title={`Keep me signed in`}
+                    />
                 </div>
 
                 <div className="text-sm text-black-500 mt-5">
@@ -221,9 +223,7 @@ export function LoginForm() {
                         (user) => user.email === email.current
                     );
                     if (potential_user) {
-                        if (
-                            potential_user.password === password.current
-                        ) {
+                        if (potential_user.password === password.current) {
                             app.setLogin(true);
                             app.setUser(potential_user.name);
                             app.setUserName(potential_user.username);
@@ -234,22 +234,18 @@ export function LoginForm() {
                             }
                         } else {
                             setPwError(true);
-                            document.getElementById(
-                                "s_password"
-                            ).value = "";
+                            document.getElementById("s_password").value = "";
                         }
                     } else {
                         setEmailError(true);
                         setEmailErrorMsg("Email not found");
-                        document.getElementById("s_password").value =
-                            "";
+                        document.getElementById("s_password").value = "";
                     }
 
                     if (!/\S+@\S+\.\S+/.test(email.current)) {
                         setEmailError(true);
                         setEmailErrorMsg("Email format is not valid");
-                        document.getElementById("s_password").value =
-                            "";
+                        document.getElementById("s_password").value = "";
                     }
                 }}
                 content="Sign in"
@@ -278,9 +274,8 @@ export function LoginForm() {
                 </Link>
             </div>
         </div>
-    )
+    );
 }
-
 
 function AskOtherInfo() {
     const [finsihed, setFinished] = useState(false);
@@ -867,86 +862,103 @@ export function ForgotPassword() {
 
     const navigate = useNavigate();
 
+    const app = useApp()
+    app.setDisableFooter(true)
+
     document.title = "Forgot Password";
 
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
+        <div className="flex justify-center items-center h-screen bg-blue-100 ">
+            <div className="fixed bottom-0 w-full ">
+                <img src={`${footer}`} alt="" srcset="" />
+            </div>
+
+            <div className=" bg-white rounded-lg shadow-xl h-1/2 ">
                 {!sucess ? (
-                    <>
-                        <div className="flex justify-center align-middle flex-row mb-3">
-                            <button
-                                className="inline-block"
-                                onClick={() => {
-                                    navigate(-1);
-                                }}
-                            >
-                                <svg
-                                    className="h-6 w6 text-black"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M7 16l-4-4m0 0l4-4m-4 4h18"
-                                    />
-                                </svg>
-                            </button>
-                            <h1 className="text-2xl font-bold text-center mx-auto">
-                                Forgot Password
-                            </h1>
+                    <div className="flex flex-row h-full align-middle items-center justify-center">
+                        <div className="flex justify-center h-full p-3">
+                            <img src={forgot_pw_img} alt="" className="h-full" />
                         </div>
-                        <span className="mt-3 text-start">
-                            Enter your email address and we will send you a link
-                            to reset your password.
-                        </span>
+                        
+                        <div className="h-full flex flex-col w-1/2 pl-5">
+                            <div className="flex flex-row mt-14 border-b-2 pb-3">
+                                <button
+                                    className="inline-block"
+                                    onClick={() => {
+                                        navigate(-1);
+                                    }}
+                                >
+                                    <svg
+                                        className="h-6 w6 text-black"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                                        />
+                                    </svg>
+                                </button>
+                                <h1 className="text-2xl font-bold text-center mx-auto">
+                                    Forgot Password
+                                </h1>
+                            </div>
+                            <div className="mt-12">
+                                <span className="mt-3 text-start">
+                                    Enter your email address and we will send
+                                    you a link to reset your password.
+                                </span>
 
-                        <FloatingLabel
-                            placeholder={"Email"}
-                            type="email"
-                            id={"r_email"}
-                            handler={(e) => {
-                                set_email(e.target.value);
-                                if (email === "") {
-                                    set_inputed_all(false);
-                                } else {
-                                    set_inputed_all(true);
-                                }
-                            }}
-                            validate={email_valid}
-                            error_message="Email format is not valid"
-                        />
+                                <FloatingLabel
+                                    placeholder={"Email"}
+                                    type="email"
+                                    id={"r_email"}
+                                    handler={(e) => {
+                                        set_email(e.target.value);
+                                        if (email === "") {
+                                            set_inputed_all(false);
+                                        } else {
+                                            set_inputed_all(true);
+                                        }
+                                    }}
+                                    validate={email_valid}
+                                    error_message="Email format is not valid"
+                                />
 
-                        <Button
-                            content="Continue"
-                            color={"primary"}
-                            disable={!inputed_all}
-                            style="w-full mt-5"
-                            id="sign_up_btn"
-                            onClick={() => {
-                                if (
-                                    email === "" ||
-                                    !/\S+@\S+\.\S+/.test(email)
-                                ) {
-                                    set_email_valid(false);
-                                } else {
-                                    set_email_valid(true);
-                                    set_sucess(true);
-                                }
-                            }}
-                        >
-                            Sign in
-                        </Button>
-                    </>
+                                <Button
+                                    content="Continue"
+                                    color={"primary"}
+                                    disable={!inputed_all}
+                                    style="w-full mt-5"
+                                    id="sign_up_btn"
+                                    onClick={() => {
+                                        if (
+                                            email === "" ||
+                                            !/\S+@\S+\.\S+/.test(email)
+                                        ) {
+                                            set_email_valid(false);
+                                        } else {
+                                            set_email_valid(true);
+                                            set_sucess(true);
+                                        }
+                                    }}
+                                >
+                                    Sign in
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
                 ) : (
-                    <LoadPage
-                        page={<ResetPwSuccess />}
-                        Preloaded={<Header noback />}
-                        loading_time={1}
-                    />
+                    <div className="h-min">
+                        <LoadPage
+                            page={<ResetPwSuccess />}
+                            Preloaded={<Header noback />}
+                            loading_time={123}
+                        />
+                    </div>
                 )}
             </div>
         </div>

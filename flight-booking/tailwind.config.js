@@ -13,6 +13,9 @@ module.exports = {
         'fixed-up': 'fixed-up 1s ease-out',
         'fixed-down': 'fixed-down 1s ease-out',
         'min-height': 'min-height 1s ease-out',
+        'shake': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+        'fade-in': 'fade-in 0.5s ease-out',
+        'fade-in-forever': 'fade-in-forever 3s ease-out infinite',
       },
       keyframes: theme => ({
         'fixed-up': {
@@ -27,7 +30,22 @@ module.exports = {
           '0%': { minHeight: '0px' },
           '100%': { minHeight: '100px' },
         },
-        
+        'shake': {
+          '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+          '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+          '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+          '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-in-forever': {
+          '0%': { opacity: '0.7' },
+          '10%': { opacity: '0.8' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.9' },
+        },
       }),
     },
     colors: {

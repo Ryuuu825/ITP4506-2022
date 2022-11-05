@@ -376,6 +376,7 @@ export function DropDownSearch({ dest, setTo }) {
                 setShowDropDown(false)
             }
         }
+
         document.addEventListener("mousedown", checkIfClickedOutside)
         return () => {
             // Cleanup the event listener

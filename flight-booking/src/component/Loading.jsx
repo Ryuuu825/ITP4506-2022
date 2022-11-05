@@ -88,7 +88,7 @@ export function LoadPage({page, loading_time , Preloaded})
     }, [loading]);
 
     return (    
-        <div>
+        <div className='h-full'>
             { loading ? 
                 <>
                     {Preloaded}

@@ -10,6 +10,16 @@ export function HeroBanner() {
 
     const validForm = to !== "";
 
+    // add a shake animation to the form if the user tries to submit an invalid form
+    
+    function handleSubmit(e) {
+        if (!validForm) {
+            document.getElementById("whereto").classList.add("animate-shake");
+            setTimeout(() => {
+                document.getElementById("whereto").classList.remove("animate-shake");
+            }, 500);
+        }
+    }
 
     return (
         <div className="mx-auto mb-10 w-full " >
@@ -36,7 +46,7 @@ export function HeroBanner() {
                                 </h1>
                                 <div className="flex justify-center flex-row align-middle">
                                     <div className="w-10/12 mr-2 flex flex-row items-center">
-                                        <div className="grow mr-2 z-50 text-start">
+                                        <div className="grow mr-2 z-50 text-start" id="whereto">
                                             <DropDownSearch dest={to} setTo={setTo} />
                                         </div >
                                         <div className="w-4/12">
@@ -56,7 +66,7 @@ export function HeroBanner() {
                                                 </button>
                                             </Link>
                                         ) : (
-                                            <button onClick={() => { alert("Please tell us where you want to go") }} className="w-full shadow-md rounded-lg inline-flex items-center py-3 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                            <button  onClick={handleSubmit} className="w-full shadow-md rounded-lg inline-flex items-center py-3 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                                 <svg aria-hidden="true" className="-ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><p className="items-center w-full">Search</p>
                                             </button>
                                         )}
