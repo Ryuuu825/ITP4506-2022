@@ -10,6 +10,7 @@ import { ForgotPassword, SingIn, SignUp, OperatorResetPw } from "./pages/LoginPa
 import Footor from "./layout/footer";
 import SearchBox from "./layout/FilterBox";
 import SearchPage from "./pages/SearchPage";
+import { ToastContainer } from "react-toastify";
 
 function Main() {
     const [count, setCount] = useState(0); // useState will cause re-render
@@ -43,6 +44,9 @@ function Main() {
 function App() {
     return (
         <>
+            <div className="z-[999] absolute">
+                <ToastContainer />
+            </div>
             <AppProvider>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />

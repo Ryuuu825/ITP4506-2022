@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo.svg";
 import { CheckBox, FloatingLabel } from "../component/Form";
-import { Button } from "../component/Button";
+import { Button, LoadingButton } from "../component/Button";
 import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
 import { useApp } from "../hook/Main";
@@ -16,6 +16,10 @@ import bg1 from "../asserts/login-bg.jpg";
 import bg2 from "../asserts/login-bg2.jpg";
 import bg3 from "../asserts/login-bg3.jpg";
 import forgot_pw_img from "../asserts/forgot-pw-img.png";
+
+import { toast, ToastContainer  } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -116,7 +120,10 @@ export function SingIn() {
 
     return (
         <div className="h-screen flex bg-blue-100 w-full overflow-hidden">
-            <div ref={box} className="z-10 md:h-3/4 md:w-3/5  sm:w-4/5 sm:h-5/6   flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle">
+            <div
+                ref={box}
+                className="z-10 md:h-3/4 md:w-3/5  sm:w-4/5 sm:h-5/6   flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle"
+            >
                 <div
                     className="rounded-l-xl flex-1 right relative h-full bg-cover animate-fade-in-forever"
                     style={{ backgroundImage: `url(${bgImg})` }}
@@ -130,7 +137,7 @@ export function SingIn() {
                     />
                 </div>
                 <div className="rounded-r-xl h-full bg-white flex-1">
-                    <LoginForm box={box}/>
+                    <LoginForm box={box} />
                 </div>
             </div>
             <div className="fixed bottom-0 left-0 w-full">
@@ -152,6 +159,7 @@ export function LoginForm({ box }) {
 
     const [inputed_all, set_inputed_all] = useState(false);
 
+    
     return (
         <div className="flex flex-col justify-center p-8" ref={box}>
             <Header />
@@ -220,7 +228,7 @@ export function LoginForm({ box }) {
                 </div>
             </div>
 
-            <Button
+            <LoadingButton
                 onClick={() => {
                     const potential_user = UserAccount.find(
                         (user) => user.email === email.current
@@ -250,6 +258,21 @@ export function LoginForm({ box }) {
                         setEmailErrorMsg("Email format is not valid");
                         document.getElementById("s_password").value = "";
                     }
+
+                    // toast error at the top-right corner of the screen
+                    if (emailError || pwError) {
+                        toast.error('Failed to Login!', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            });
+                    }
+
                 }}
                 content="Sign in"
                 color={"primary"}
@@ -257,18 +280,18 @@ export function LoginForm({ box }) {
                 style="w-full mt-5"
             >
                 Sign in
-            </Button>
+            </LoadingButton>
 
             <div className="text-primary text-center text-sm mt-3">
-                <span onClick={
-                    () => {
+                <span
+                    onClick={() => {
                         box.current.classList.add("animate-fade-out-right");
                         setTimeout(() => {
                             navigate("/forgot-pw");
-                        }
-                        , 500);
-                    }
-                } className="text-primary cursor-pointer">
+                        }, 500);
+                    }}
+                    className="text-primary cursor-pointer"
+                >
                     Forgot password?
                 </span>
             </div>
@@ -284,6 +307,8 @@ export function LoginForm({ box }) {
                     Create one
                 </Link>
             </div>
+
+            
         </div>
     );
 }
@@ -873,28 +898,35 @@ export function ForgotPassword() {
 
     const navigate = useNavigate();
 
-    const app = useApp()
-    app.setDisableFooter(true)
+    const app = useApp();
+    app.setDisableFooter(true);
 
     const box = useRef(null);
 
     document.title = "Forgot Password";
 
     return (
-        <div  className="flex justify-center items-center h-screen bg-blue-100 ">
+        <div className="flex justify-center items-center h-screen bg-blue-100 ">
+            <ToastContainer />
             <div className="fixed bottom-0 w-full ">
                 <img src={`${footer}`} alt="" srcset="" />
             </div>
 
-            <div ref={box} className=" bg-white rounded-lg shadow-xl h-3/4  animate-fade-in-left transition-all duration-200 ease-linear "
-                style={{ transition : "all 0.5s ease-in-out" , width : "60%" }}
+            <div
+                ref={box}
+                className=" bg-white rounded-lg shadow-xl h-3/4  animate-fade-in-left transition-all duration-200 ease-linear "
+                style={{ transition: "all 0.5s ease-in-out", width: "60%" }}
             >
                 {!sucess ? (
                     <div className="flex flex-row h-full align-middle items-center justify-center  overflow-hidden rounded bg-white-100">
                         <div className="flex justify-center h-full p-3">
-                            <img src={forgot_pw_img} alt="" className="h-full" />
+                            <img
+                                src={forgot_pw_img}
+                                alt=""
+                                className="h-full"
+                            />
                         </div>
-                        
+
                         <div className="h-full flex flex-col w-1/2 pl-5">
                             <div className="flex flex-row mt-14 border-b-2 pb-3">
                                 <button
@@ -960,13 +992,10 @@ export function ForgotPassword() {
                                             set_sucess(true);
                                         }
                                     }}
-                                >
-                                </Button>
+                                ></Button>
 
-                               <div className="text-center text-xs text-black-500 mt-5 font-light ">
-                                    <span 
-                                        className="cursor-pointer text-blue-600"
-                                    >
+                                <div className="text-center text-xs text-black-500 mt-5 font-light ">
+                                    <span className="cursor-pointer text-blue-600">
                                         Terms of Service
                                     </span>
                                     {/* a point */}
@@ -974,8 +1003,7 @@ export function ForgotPassword() {
                                     <span className="cursor-pointer text-blue-600">
                                         Privacy Policy
                                     </span>
-                               </div>
-                                
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1035,10 +1063,9 @@ function RegisterSuccess({ name = "Lee " }) {
     );
 }
 
-function ResetPwSuccess({box}) {
+function ResetPwSuccess({ box }) {
     const navigate = useNavigate();
     const [time, set_time] = useState(5);
-
 
     if (box.current) {
         box.current.classList.remove("h-3/4");
@@ -1052,7 +1079,6 @@ function ResetPwSuccess({box}) {
             if (time <= 0) {
                 navigate("/login");
             }
-
         }, 1000);
 
         return () => clearTimeout(timer);
@@ -1074,7 +1100,9 @@ function ResetPwSuccess({box}) {
                         <span className="text-primary font-semibold">HERE</span>
                     </Link>{" "}
                     to sign in. {/* auto direct user in 5 sec */}
-                    <span className="text-sm text-black-500">( {time} sec )</span>
+                    <span className="text-sm text-black-500">
+                        ( {time} sec )
+                    </span>
                 </div>
             </div>
         </div>
