@@ -251,12 +251,15 @@ export function LoginForm({ box }) {
                         setEmailError(true);
                         setEmailErrorMsg("Email not found");
                         document.getElementById("s_password").value = "";
+                        document.getElementById("s_password").classList.add("animate-shake")
+
                     }
 
                     if (!/\S+@\S+\.\S+/.test(email.current)) {
                         setEmailError(true);
                         setEmailErrorMsg("Email format is not valid");
                         document.getElementById("s_password").value = "";
+                        document.getElementById("r_email").classList.add("animate-shake")
                     }
 
                     // toast error at the top-right corner of the screen
