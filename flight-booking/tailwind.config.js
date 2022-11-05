@@ -15,7 +15,13 @@ module.exports = {
         'min-height': 'min-height 1s ease-out',
         'shake': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
         'fade-in': 'fade-in 0.5s ease-out',
-        'fade-in-forever': 'fade-in-forever 3s ease-out infinite',
+        'fade-in-forever': 'fade-in-forever 3s ease-in infinite',
+        'fade-in-left': 'fade-in-left 0.5s ease-out',
+        'fade-in-right': 'fade-in-right 0.5s ease-out',
+        'fade-out-right': 'fade-out-right 0.5s ease-out',
+        'loader': 'loader 1.5s linear infinite',
+        'success-whto-small': 'success-whto-small 0.5s ease-out',
+        'width': 'width 1s ease-out',
       },
       keyframes: theme => ({
         'fixed-up': {
@@ -42,10 +48,34 @@ module.exports = {
         },
         'fade-in-forever': {
           '0%': { opacity: '0.7' },
-          '10%': { opacity: '0.8' },
           '50%': { opacity: '1' },
-          '100%': { opacity: '0.9' },
+          '100%': { opacity: '0.7' },
         },
+        'fade-in-left': {
+          '0%': { opacity: '0', transform: 'translateX(-50%)' },
+          '100%': { opacity: '1', transform: 'translateX(0%)' },
+        },
+        'fade-in-right': {
+          '0%': { opacity: '0', transform: 'translateX(100%)' },
+          '100%': { opacity: '1', transform: 'translateX(0%)' },
+        },
+        'fade-out-right': {
+          '0%': { opacity: '1', transform: 'translateX(0%)' },
+          '100%': { opacity: '0', transform: 'translateX(50%)' },
+        },
+        'loader': {
+          '0%': { transform: 'translate3d(0, -1rem, 0)' , opacity: '0' },
+          '50%': { transform: 'translate3d(0, 1rem, 0)' , opacity: '1' },
+          '100%': { transform: 'translate3d(0, -1rem, 0)' , opacity: '0' },
+        },
+        'success-whto-small': {
+          '0%': { width: '100%', height: '100%' },
+          '100%': { width: '50%', height: '50%' }
+        },
+        'width': {
+          '0%': { width: 'h-3/4' },
+          '100%': { width: 'h-max' }
+        }
       }),
     },
     colors: {

@@ -29,12 +29,21 @@ function Spin({size_  })
     {
         return (
             <>
-                <div className="flex justify-center items-center bg-white">
+                <div className="flex justify-center items-center bg-white h-full flex-row ">
                     {/* A screen size spinner */}
-                    <div className=" m-40 ">
+                    {/* <div className=" m-40 ">
                         <div className="animate-spin rounded-full  border-l-4  border-black h-32 w-32">
                         </div>
+                    </div> */}
+                    <div className="mr-5">
+                        <h1 className="text-2xl font-bold text-gray-800 animate-loader ">Loading</h1>
                     </div>
+                    <div className="flex justify-center">
+                        <span className="circle animate-loader animation-delay-200"></span>
+                        <span className="circle animate-loader animation-delay-400"></span>
+                        <span className="circle animate-loader animation-delay-600"></span>
+                    </div>
+                    
                 </div>
             </>
         )
@@ -88,7 +97,7 @@ export function LoadPage({page, loading_time , Preloaded})
     }, [loading]);
 
     return (    
-        <div className='h-full'>
+        <div className='h-full w-full'>
             { loading ? 
                 <>
                     {Preloaded}

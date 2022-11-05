@@ -99,6 +99,8 @@ export function SingIn() {
     const [bgImg, setBgImg] = useState(imgList[0]);
     let idx = 1;
 
+    const box = useRef(null);
+
     useEffect(() => {
         const timer = setInterval(() => {
             setBgImg(imgList[idx]);
@@ -113,8 +115,8 @@ export function SingIn() {
     document.title = "Login | IVE Airline";
 
     return (
-        <div className="h-screen flex bg-blue-100">
-            <div className="z-10 md:h-3/4 md:w-3/5  sm:w-4/5 sm:h-5/6   flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle">
+        <div className="h-screen flex bg-blue-100 w-full overflow-hidden">
+            <div ref={box} className="z-10 md:h-3/4 md:w-3/5  sm:w-4/5 sm:h-5/6   flex flex-row rounded-xl shadow-xl m-auto justify-center align-middle">
                 <div
                     className="rounded-l-xl flex-1 right relative h-full bg-cover animate-fade-in-forever"
                     style={{ backgroundImage: `url(${bgImg})` }}
@@ -128,7 +130,7 @@ export function SingIn() {
                     />
                 </div>
                 <div className="rounded-r-xl h-full bg-white flex-1">
-                    <LoginForm />
+                    <LoginForm box={box}/>
                 </div>
             </div>
             <div className="fixed bottom-0 left-0 w-full">
@@ -138,7 +140,7 @@ export function SingIn() {
     );
 }
 
-export function LoginForm() {
+export function LoginForm({ box }) {
     const navigate = useNavigate();
     const email = useRef("");
     const password = useRef("");
@@ -149,8 +151,9 @@ export function LoginForm() {
     const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
     const [inputed_all, set_inputed_all] = useState(false);
+
     return (
-        <div className="flex flex-col justify-center p-8">
+        <div className="flex flex-col justify-center p-8" ref={box}>
             <Header />
             <h1 className="text-3xl font-medium text-start mt-3 ">Sign in</h1>
             <span className="mt-3 text-start">
@@ -257,9 +260,17 @@ export function LoginForm() {
             </Button>
 
             <div className="text-primary text-center text-sm mt-3">
-                <Link to="/forgot-pw" className="text-primary">
+                <span onClick={
+                    () => {
+                        box.current.classList.add("animate-fade-out-right");
+                        setTimeout(() => {
+                            navigate("/forgot-pw");
+                        }
+                        , 500);
+                    }
+                } className="text-primary cursor-pointer">
                     Forgot password?
-                </Link>
+                </span>
             </div>
 
             <div className="flex justify-center mt-5 text-center align-middle">
@@ -865,17 +876,21 @@ export function ForgotPassword() {
     const app = useApp()
     app.setDisableFooter(true)
 
+    const box = useRef(null);
+
     document.title = "Forgot Password";
 
     return (
-        <div className="flex justify-center items-center h-screen bg-blue-100 ">
+        <div  className="flex justify-center items-center h-screen bg-blue-100 ">
             <div className="fixed bottom-0 w-full ">
                 <img src={`${footer}`} alt="" srcset="" />
             </div>
 
-            <div className=" bg-white rounded-lg shadow-xl h-1/2 ">
+            <div ref={box} className=" bg-white rounded-lg shadow-xl h-3/4  animate-fade-in-left transition-all duration-200 ease-linear "
+                style={{ transition : "all 0.5s ease-in-out" , width : "60%" }}
+            >
                 {!sucess ? (
-                    <div className="flex flex-row h-full align-middle items-center justify-center">
+                    <div className="flex flex-row h-full align-middle items-center justify-center  overflow-hidden rounded bg-white-100">
                         <div className="flex justify-center h-full p-3">
                             <img src={forgot_pw_img} alt="" className="h-full" />
                         </div>
@@ -906,7 +921,7 @@ export function ForgotPassword() {
                                     Forgot Password
                                 </h1>
                             </div>
-                            <div className="mt-12">
+                            <div className="mt-20">
                                 <span className="mt-3 text-start">
                                     Enter your email address and we will send
                                     you a link to reset your password.
@@ -946,17 +961,30 @@ export function ForgotPassword() {
                                         }
                                     }}
                                 >
-                                    Sign in
                                 </Button>
+
+                               <div className="text-center text-xs text-black-500 mt-5 font-light ">
+                                    <span 
+                                        className="cursor-pointer text-blue-600"
+                                    >
+                                        Terms of Service
+                                    </span>
+                                    {/* a point */}
+                                    <span className="mx-1">•</span>
+                                    <span className="cursor-pointer text-blue-600">
+                                        Privacy Policy
+                                    </span>
+                               </div>
+                                
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <div className="h-min">
+                    <div className="h-full p-12 overflow-hidden ">
                         <LoadPage
-                            page={<ResetPwSuccess />}
+                            page={<ResetPwSuccess box={box} />}
                             Preloaded={<Header noback />}
-                            loading_time={123}
+                            loading_time={3}
                         />
                     </div>
                 )}
@@ -1007,9 +1035,16 @@ function RegisterSuccess({ name = "Lee " }) {
     );
 }
 
-function ResetPwSuccess() {
+function ResetPwSuccess({box}) {
     const navigate = useNavigate();
     const [time, set_time] = useState(5);
+
+
+    if (box.current) {
+        box.current.classList.remove("h-3/4");
+        box.current.classList.add("h-1/2");
+        box.current.style.width = "20%";
+    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -1017,6 +1052,7 @@ function ResetPwSuccess() {
             if (time <= 0) {
                 navigate("/login");
             }
+
         }, 1000);
 
         return () => clearTimeout(timer);
@@ -1025,19 +1061,21 @@ function ResetPwSuccess() {
     document.title = "Reset Password Success";
 
     return (
-        <div className="flex flex-col justify-center sm-auto mt-10">
+        <div className="flex flex-col sm-auto mt-8 h-full ">
             <Header noback />
-            <h1 className="font-semibold text-3xl mt-5">Password Reset</h1>
-            <div className="text-sm text-black-500 mt-5">
-                Your password has been reset
-                <span className="font-semibold"> successfully</span>.
-                <br />
-                Click{" "}
-                <Link to="/login">
-                    <span className="text-primary font-semibold">HERE</span>
-                </Link>{" "}
-                to sign in. {/* auto direct user in 5 sec */}
-                <span className="text-sm text-black-500">( {time} sec )</span>
+            <div className="flex flex-col justify-center align-middle text-center items-center my-auto">
+                <h1 className="font-semibold text-3xl mt-5">Password Reset</h1>
+                <div className="text-sm text-black-500 mt-5">
+                    Your password has been reset
+                    <span className="font-semibold"> successfully</span>.
+                    <br />
+                    Click{" "}
+                    <Link to="/login">
+                        <span className="text-primary font-semibold">HERE</span>
+                    </Link>{" "}
+                    to sign in. {/* auto direct user in 5 sec */}
+                    <span className="text-sm text-black-500">( {time} sec )</span>
+                </div>
             </div>
         </div>
     );
