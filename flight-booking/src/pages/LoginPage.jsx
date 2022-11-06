@@ -17,9 +17,10 @@ import bg2 from "../asserts/login-bg2.jpg";
 import bg3 from "../asserts/login-bg3.jpg";
 import forgot_pw_img from "../asserts/forgot-pw-img.png";
 
-import { toast, ToastContainer  } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../styles/Button.css";
+import AuthCode from "react-auth-code-input";
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -159,7 +160,6 @@ export function LoginForm({ box }) {
 
     const [inputed_all, set_inputed_all] = useState(false);
 
-    
     return (
         <div className="flex flex-col justify-center p-8" ref={box}>
             <Header />
@@ -251,20 +251,23 @@ export function LoginForm({ box }) {
                         setEmailError(true);
                         setEmailErrorMsg("Email not found");
                         document.getElementById("s_password").value = "";
-                        document.getElementById("s_password").classList.add("animate-shake")
-
+                        document
+                            .getElementById("s_password")
+                            .classList.add("animate-shake");
                     }
 
                     if (!/\S+@\S+\.\S+/.test(email.current)) {
                         setEmailError(true);
                         setEmailErrorMsg("Email format is not valid");
                         document.getElementById("s_password").value = "";
-                        document.getElementById("r_email").classList.add("animate-shake")
+                        document
+                            .getElementById("r_email")
+                            .classList.add("animate-shake");
                     }
 
                     // toast error at the top-right corner of the screen
                     if (emailError || pwError) {
-                        toast.error('Failed to Login!', {
+                        toast.error("Failed to Login!", {
                             position: "top-right",
                             autoClose: 5000,
                             hideProgressBar: false,
@@ -273,9 +276,8 @@ export function LoginForm({ box }) {
                             draggable: true,
                             progress: undefined,
                             theme: "light",
-                            });
+                        });
                     }
-
                 }}
                 content="Sign in"
                 color={"primary"}
@@ -310,8 +312,6 @@ export function LoginForm({ box }) {
                     Create one
                 </Link>
             </div>
-
-            
         </div>
     );
 }
@@ -632,263 +632,277 @@ function AskOtherInfo() {
 }
 
 export function SignUp() {
-    const email = useRef("");
-    const password = useRef("");
-    const c_password = useRef("");
-    const fname = useRef("");
-    const lname = useRef("");
-
-    const [password_error_msgs, set_password_error_msgs] = useState("");
-
-    // ingore the first render
-    const [email_valid, set_email_valid] = useState(true);
-    const [password_valid, set_password_valid] = useState(true);
-    const [c_password_valid, set_c_password_valid] = useState(true);
-    const [fname_valid, set_fname_valid] = useState(true);
-    const [lname_valid, set_lname_valid] = useState(true);
-
-    const [sucess, set_sucess] = useState(false);
-
-    const [inputed_all, set_inputed_all] = useState(false);
-
     const app = useApp();
     app.setDisableFooter(true);
 
-    // when user press the "enter" key, system press the "Sign up" button
-    useEffect(() => {
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                document.getElementById("sign_up_btn").click();
-            }
-        });
-    }, []);
-
     document.title = "Sign up";
 
+    const [step, setStep] = useState(1);
+
+    // step button state
+    const [canNext , setCanNext] = useState(false);
+    // step 1
+    const stepOne = useRef(null);
+    const [emailValid, setEmailValid] = useState(true);
+    const [email, setEmail] = useState("");
+    const validStepOne = () => {
+        setCanNext(false);
+        setEmailValid(true);
+        // test email
+        if (email.length == 0 || email == "") {
+            toast.error("Please enter your email address");
+            return;
+        }
+        if (
+            !/\S+@\S+\.\S+/.test(email)
+        ) {
+            setEmailValid(false);
+            return;
+        } 
+        setCanNext(true);
+    };
+
+
+
     return (
-        <div className="h-screen flex flex-col">
-            {!sucess ? (
-                <>
-                    <Header noback />
-                    <div
-                        className="bg-white px-8 m-auto justify-center align-middle"
-                        style={{ width: "34rem" }}
-                    >
-                        <div className="flex flex-col justify-center m-auto"></div>
-                        <h1 className="text-3xl font-medium text-start mt-3">
-                            Create an account
-                        </h1>
-
-                        <span className="mt-3 text-start">
-                            Let start your journey with us
+        <div className="h-screen flex flex-col bg-blue-100">
+            <div className="flex w-full h-3/4  my-auto justify-center align-middle item-center">
+                <div className="relative box bg-white h-full w-3/5 rounded-lg shadow-lg overflow-hidden">
+                    <div className="flex flex-row w-full h-24 overflow-hidden items-center align-middle justify-center  ">
+                        <img src={logo} className="h-12" alt="logo" />
+                        <span className="text-2xl text-blue-700 font-semibold pl-5 pt-2">
+                            IVE AIRLINE
                         </span>
-
-                        <FloatingLabel
-                            placeholder={"Email"}
-                            type="email"
-                            id={"r_email"}
-                            handler={(e) => {
-                                email.current = e.target.value;
-                                if (
-                                    email.current !== "" &&
-                                    password.current !== "" &&
-                                    fname.current !== "" &&
-                                    lname.current !== "" &&
-                                    c_password.current !== ""
-                                ) {
-                                    set_inputed_all(true);
-                                } else {
-                                    set_inputed_all(false);
-                                }
-                            }}
-                            validate={email_valid}
-                            error_message="Email format is not valid"
-                        />
-
-                        <div className="w-full flex flex-row justify-center">
-                            <div className="w-1/2 mr-2">
-                                <FloatingLabel
-                                    placeholder={"First Name"}
-                                    type="text"
-                                    id={"r_fname"}
-                                    handler={(e) => {
-                                        fname.current = e.target.value;
-                                        if (
-                                            email.current !== "" &&
-                                            password.current !== "" &&
-                                            fname.current !== "" &&
-                                            lname.current !== "" &&
-                                            c_password.current !== ""
-                                        ) {
-                                            set_inputed_all(true);
-                                        } else {
-                                            set_inputed_all(false);
-                                        }
-                                    }}
-                                    validate={fname_valid}
-                                />
-                            </div>
-                            <div className="w-1/2 ml-2">
-                                <FloatingLabel
-                                    placeholder={"Last Name"}
-                                    type="text"
-                                    id={"r_lname"}
-                                    handler={(e) => {
-                                        lname.current = e.target.value;
-                                        if (
-                                            email.current !== "" &&
-                                            password.current !== "" &&
-                                            fname.current !== "" &&
-                                            lname.current !== "" &&
-                                            c_password.current !== ""
-                                        ) {
-                                            set_inputed_all(true);
-                                        } else {
-                                            set_inputed_all(false);
-                                        }
-                                    }}
-                                    validate={lname_valid}
-                                />
-                            </div>
-                        </div>
-                        <FloatingLabel
-                            placeholder={"Password"}
-                            type="password"
-                            id={"r_password"}
-                            handler={(e) => {
-                                password.current = e.target.value;
-                                if (
-                                    email.current !== "" &&
-                                    password.current !== "" &&
-                                    fname.current !== "" &&
-                                    lname.current !== "" &&
-                                    c_password.current !== ""
-                                ) {
-                                    set_inputed_all(true);
-                                } else {
-                                    set_inputed_all(false);
-                                }
-                            }}
-                            validate={password_valid}
-                            error_message={password_error_msgs}
-                        />
-
-                        <FloatingLabel
-                            placeholder={"Confirm Password"}
-                            type="password"
-                            id={"c_password"}
-                            handler={(e) => {
-                                c_password.current = e.target.value;
-                                if (
-                                    email.current !== "" &&
-                                    password.current !== "" &&
-                                    fname.current !== "" &&
-                                    lname.current !== ""
-                                ) {
-                                    set_inputed_all(true);
-                                } else {
-                                    set_inputed_all(false);
-                                }
-                            }}
-                            validate={c_password_valid}
-                            error_message={"Password does not match"}
-                        />
-                        <div>
-                            <div className="flex align-center text-sm text-gray-500">
-                                <CheckBox
-                                    id="default-checkbox"
-                                    context="Keep me signed in"
-                                />
-                                <TooltipsBottom
-                                    content={`Selecting this checkbox will keep you signed in for
-                            30 days. If you are using a public or shared device,
-                            uncheck this box to prevent unauthorized access to
-                            your account.`}
-                                    title={`Keep me signed in`}
-                                />
-                            </div>
-                        </div>
-
-                        <Button
-                            content="Continue"
-                            color={"primary"}
-                            disable={!inputed_all}
-                            style="w-full mt-3"
-                            id="sign_up_btn"
-                            onClick={() => {
-                                let status = true;
-                                if (
-                                    email.current === "" ||
-                                    !/\S+@\S+\.\S+/.test(email.current)
-                                ) {
-                                    set_email_valid(false);
-                                    status = false;
-                                } else {
-                                    set_email_valid(true);
-                                }
-
-                                const pw_err_msg = validatePassword(
-                                    password.current
-                                );
-
-                                if (pw_err_msg.length > 0) {
-                                    set_password_valid(false);
-                                    set_password_error_msgs(pw_err_msg);
-                                    status = false;
-                                } else {
-                                    set_password_valid(true);
-                                }
-
-                                if (c_password.current !== password.current) {
-                                    set_c_password_valid(false);
-                                    status = false;
-                                } else {
-                                    set_c_password_valid(true);
-                                }
-
-                                if (status) {
-                                    // forward user to sign in page
-                                    set_password_valid(true);
-                                    set_sucess(true);
-                                }
-                            }}
-                        >
-                            Sign in
-                        </Button>
-
-                        <div className="flex justify-center my-3 text-center align-middle">
-                            <span className="text-sm text-black-500">
-                                Already have an account?
-                            </span>
-                            <a href="#" className="text-blue-600 ml-1 text-sm">
-                                <Link to="/login">Sign In</Link>
-                            </a>
-                        </div>
-                        <div className="text-sm text-black-500 mt-5 border-t py-2">
-                            By creating an account, you agree to our
-                            <span className="text-blue-600 cursor-pointer">
-                                {" "}
-                                Terms of Service
-                            </span>
-                            <span> and</span>
-                            <span className="text-blue-600 cursor-pointer">
-                                {" "}
-                                Privacy Policy
-                            </span>
-                        </div>
-                        <div className="mb-5"></div>
                     </div>
-                </>
-            ) : (
-                // <LoadPage
-                //     page={<RegisterSuccess name={fname.current} />}
-                //     loading_time={3}
-                //     Preloaded={<Header noback />}
-                // />
-                <>
-                    <AskOtherInfo />
-                </>
-            )}
+                    <div className="w-10/12 mx-auto ">
+                        <div className="border"></div>
+                        <div class="mx-4 p-4 mb-6">
+                            <div class="flex items-center">
+                                <div class="flex items-center relative">
+                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-primary"
+                                        style={{ backgroundColor: step === 1 ? "rgb(48 88 210)" : "white" , color : step === 1 ? "white" : "rgb(48 88 210)" , borderColor : step >= 1 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="100%"
+                                            height="100%"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-bookmark "
+                                        >
+                                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-primary">
+                                        Email
+                                    </div>
+                                </div>
+                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out"
+                                    style={{ borderColor: step > 1 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                ></div>
+                                <div class="flex items-center text-white relative">
+                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2"
+                                        style={{ backgroundColor: step === 2 ? "rgb(48 88 210)" : "white" , color : step === 2 ? "white": (step >= 2 ? "rgb(48 88 210)" : "grey" ) ,
+                                        borderColor : step >= 2 ? "rgb(48 88 210)" : "rgb(209 213 219)" 
+                                        }}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="100%"
+                                            height="100%"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-user-plus "
+                                        >
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="8.5" cy="7" r="4"></circle>
+                                            <line
+                                                x1="20"
+                                                y1="8"
+                                                x2="20"
+                                                y2="14"
+                                            ></line>
+                                            <line
+                                                x1="23"
+                                                y1="11"
+                                                x2="17"
+                                                y2="11"
+                                            ></line>
+                                        </svg>
+                                    </div>
+                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase"
+                                        style={{ color: step >= 2 ? "rgb(48 88 210)" : "grey"  }}
+                                    >
+                                        Account
+                                    </div>
+                                </div>
+                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out "
+                                    style={{ borderColor: step > 2 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                ></div>
+                                <div class="flex items-center text-gray-500 relative">
+                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+                                        style={{ backgroundColor: step === 3 ? "rgb(48 88 210)" : "white" , color : step === 3 ? "white": (step >= 3 ? "rgb(48 88 210)" : "grey" ) ,
+                                        borderColor : step >= 3 ? "rgb(48 88 210)" : "rgb(209 213 219)"  }}>
+                                            
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="100%"
+                                            height="100%"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-mail "
+                                        >
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
+                                        style={{ color: step >= 3 ? "rgb(48 88 210)" : "grey" }}
+                                    >
+                                        Message
+                                    </div>
+                                </div>
+                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out "
+                                    style={{ borderColor: step > 3 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                ></div>
+                                <div class="flex items-center text-gray-500 relative">
+                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+                                        style={{ backgroundColor: step === 4 ? "rgb(48 88 210)" : "white" , color : step === 4 ? "white": (step >= 4 ? "rgb(48 88 210)" : "grey" ) ,
+                                        borderColor : step >= 4 ? "rgb(48 88 210)" : "rgb(209 213 219)"  }}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="100%"
+                                            height="100%"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-database "
+                                        >
+                                            <ellipse
+                                                cx="12"
+                                                cy="5"
+                                                rx="9"
+                                                ry="3"
+                                            ></ellipse>
+                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
+                                        style={{ color: step >= 4 ? "rgb(48 88 210)" : "grey" }}
+                                    >
+                                        Confirm
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* For different Form */}
+
+                    <div className=" h-3/6">
+
+                        <div ref={stepOne} className=" step1 h-full w-full flex justify-center items-center align-middle">
+                            <div className="flex flex-col justify-center items-center">
+                                <div>
+                                    <h1 className="text-2xl font-bold">Step 1</h1>
+                                </div>
+                                <div>
+                                    <h1 className="mt-2 mb-3">
+                                        Please provide your email
+                                        and we will send you a
+                                        verification code
+                                    </h1>
+
+                                </div>
+                                <div className="w-full">
+                                    <FloatingLabel
+                                        placeholder={"Email"}
+                                        type="email"
+                                        id={"r_email"}
+                                        handler={(e) => {
+                                            setEmail(e.target.value);
+                                        }}
+                                        validate={emailValid}
+                                        error_message="Email format is not valid"
+                                        defaultValue={email}
+                                    />
+                                </div>
+                                {/* <AuthCode  allowedCharacters='numeric' length={5}
+                                inputClassName="border-2 border-gray-300 bg-white w-12 rounded-lg text-sm focus:outline-none"
+                                containerClassName="flex justify-center items-center"
+                                 /> */}
+                            </div>
+                        </div>
+
+                    </div>
+    
+                    
+
+                    <div className="z-[99] relative flex flex-row justify-center mt-12">
+                        
+                        <div
+                            onClick={() => {
+                                if (step === 2) {
+                                    setStep(1);
+                                    stepOne.current.classList.remove("hidden");
+                                    stepOne.current.classList.add("animate-fade-in-right");
+                                    setTimeout(() => {
+                                        stepOne.current.classList.remove("animate-fade-in-right");
+
+                                    }
+                                    , 500);
+                                }
+                            }}
+                            className="btn text-center w-1/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-primary select-none  hover:text-white "
+                        >
+                            <span className="text-sm">Back</span>
+                        </div>
+
+
+                        <div
+                            onClick={() => {
+
+                                if (step === 1) {
+                                    validStepOne();
+                                    if (canNext) {
+                                        stepOne.current.classList.add("animate-fade-out-right");
+                                        
+                                        setTimeout(() => {
+                                            stepOne.current.classList.add("hidden");
+                                            stepOne.current.classList.remove("animate-fade-out-right");
+                                        
+                                        }, 500);
+                                        setStep(2);
+                                    }
+                                }
+                            }}
+                            className="transition-colors text-center w-2/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-white bg-primary select-none hover:bg-primary-dark"
+                        >
+                            Next
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div className="fixed bottom-0 left-0 w-full">
+                <img src={`${footer}`} alt="" srcset="" />
+            </div>
         </div>
     );
 }
@@ -910,18 +924,16 @@ export function ForgotPassword() {
 
     return (
         <div className="flex justify-center items-center h-screen bg-blue-100 ">
-            <ToastContainer />
             <div className="fixed bottom-0 w-full ">
                 <img src={`${footer}`} alt="" srcset="" />
             </div>
-
             <div
                 ref={box}
                 className=" bg-white rounded-lg shadow-xl h-3/4  animate-fade-in-left transition-all duration-200 ease-linear "
                 style={{ transition: "all 0.5s ease-in-out", width: "60%" }}
             >
                 {!sucess ? (
-                    <div className="flex flex-row h-full align-middle items-center justify-center  overflow-hidden rounded bg-white-100">
+                    <div className="flex flex-row h-full align-middle items-center justify-center  overflow-hidden rounded bg-white-100 p-5">
                         <div className="flex justify-center h-full p-3">
                             <img
                                 src={forgot_pw_img}
@@ -958,8 +970,10 @@ export function ForgotPassword() {
                             </div>
                             <div className="mt-20">
                                 <span className="mt-3 text-start">
-                                    Enter your email address and we will send
-                                    you a link to reset your password.
+                                    Don't worry we can help you out! If you
+                                    still remember your email address, please
+                                    enter it below and we will send you a link
+                                    to reset your password.
                                 </span>
 
                                 <FloatingLabel

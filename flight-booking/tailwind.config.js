@@ -21,7 +21,7 @@ module.exports = {
         'fade-out-right': 'fade-out-right 0.5s ease-out',
         'loader': 'loader 1.5s linear infinite',
         'success-whto-small': 'success-whto-small 0.5s ease-out',
-        'width': 'width 1s ease-out',
+        'banner': 'banner-move 5s ease-out infinite',
       },
       keyframes: theme => ({
         'fixed-up': {
@@ -56,25 +56,21 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateX(0%)' },
         },
         'fade-in-right': {
-          '0%': { opacity: '0', transform: 'translateX(100%)' },
+          '0%': { opacity: '0', transform: 'translateX(50%)' },
           '100%': { opacity: '1', transform: 'translateX(0%)' },
         },
         'fade-out-right': {
           '0%': { opacity: '1', transform: 'translateX(0%)' },
-          '100%': { opacity: '0', transform: 'translateX(50%)' },
+          '100%': { opacity: '0', transform: 'translateX(100%)' },
         },
         'loader': {
           '0%': { transform: 'translate3d(0, -1rem, 0)' , opacity: '0' },
           '50%': { transform: 'translate3d(0, 1rem, 0)' , opacity: '1' },
           '100%': { transform: 'translate3d(0, -1rem, 0)' , opacity: '0' },
         },
-        'success-whto-small': {
-          '0%': { width: '100%', height: '100%' },
-          '100%': { width: '50%', height: '50%' }
-        },
-        'width': {
-          '0%': { width: 'h-3/4' },
-          '100%': { width: 'h-max' }
+        'banner-move': {
+          '0%': { transform : 'translate(0,0)' },
+          '100%': { transform : 'translate(-50%,0)' },
         }
       }),
     },

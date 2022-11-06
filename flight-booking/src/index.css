@@ -17,3 +17,7 @@
 .circle {
     @apply w-4 h-4 my-12 mx-1 bg-black rounded-full;
 }
+
+.disable {
+    @apply opacity-50 cursor-not-allowed;
+}

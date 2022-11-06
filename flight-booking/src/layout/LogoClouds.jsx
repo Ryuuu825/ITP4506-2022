@@ -1,4 +1,4 @@
-import ive_logo from '../asserts/ive-logo.png';
+import ive_logo from "../asserts/ive-logo.png";
 export default function LogoClouds() {
     return (
         <div className="container mx-auto pt-16">
@@ -11,18 +11,45 @@ export default function LogoClouds() {
                     agencies to create amazing experiences.
                 </p>
             </div>
-            <div className="py-16 flex w-full flex-wrap justify-center">
-                <div className="mx-3 rounded-lg shadow-xl w-3/12 flex justify-center border-gray-200  items-center ">
-                    <img src={ive_logo} style={{height:"72px" , width:"110px"}} className="my-8"  />
-                </div>
-                <div className="mx-3 rounded-lg shadow-xl w-3/12 flex justify-center  border-gray-200  items-center ">
-                    <img src={ive_logo} style={{height:"72px" , width:"110px"}} className="my-8"  />
-                </div>
-                <div className="mx-3 rounded-lg shadow-xl w-3/12 flex justify-center border-gray-200  items-center ">
-                    <img src={ive_logo} style={{height:"72px" , width:"110px"}} className="my-8"  />
+            <div className="overflow-hidden">
+                <div className="py-16 flex justify-center overflow-hidden w-fit -ml-36">
+                    <div className="rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center">
+                        <img
+                            src={ive_logo}
+                            style={{ height: "72px", width: "110px" }}
+                            className="my-8"
+                        />
+                    </div>
+                    <div className="  rounded-lg shadow-xl w-72 flex justify-center  border-gray-200  items-center ">
+                        <img
+                            src={ive_logo}
+                            style={{ height: "72px", width: "110px" }}
+                            className="my-8"
+                        />
+                    </div>
+                    <div className=" rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
+                        <img
+                            src={ive_logo}
+                            style={{ height: "72px", width: "110px" }}
+                            className="my-8"
+                        />
+                    </div>
+                    <div className="  rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
+                        <img
+                            src={ive_logo}
+                            style={{ height: "72px", width: "110px" }}
+                            className="my-8"
+                        />
+                    </div>
+                    <div className="  rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
+                        <img
+                            src={ive_logo}
+                            style={{ height: "72px", width: "110px" }}
+                            className="my-8"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
     );
-
 }

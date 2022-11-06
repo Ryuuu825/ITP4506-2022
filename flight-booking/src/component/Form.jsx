@@ -56,6 +56,7 @@ export function FloatingLabel({
     normal_message,
     validate,
     preventCopy,
+    defaultValue,
     props
 }) {
     const [show, setShow] = useState(false);
@@ -76,6 +77,7 @@ export function FloatingLabel({
                             placeholder=" "
                             onChange={handler}
                             onCopy={preventCopy ? (e) => e.preventDefault() : null}
+                            value={defaultValue}
                             {...props}
                         />
                     )
@@ -88,6 +90,7 @@ export function FloatingLabel({
                             placeholder=" "
                             onChange={handler}
                             onCopy={preventCopy ? (e) => e.preventDefault() : null}
+                            value={defaultValue}
                             {...props}
                         />
                     )

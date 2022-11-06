@@ -1,0 +1,24 @@
+
+.btn {
+    transition: 1s all ease;
+    position: relative;
+}
+.btn::after {
+    background: rgb(48 88 210);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0%,-50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    border-radius:  0.5rem;
+}
+
+.btn:hover::after {
+    width: 100%;
+
+}
