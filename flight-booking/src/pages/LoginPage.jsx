@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo.svg";
-import { CheckBox, FloatingLabel } from "../component/Form";
+import { CheckBox, DatePicker, FloatingLabel } from "../component/Form";
 import { Button, LoadingButton } from "../component/Button";
 import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
@@ -775,6 +775,15 @@ export function SignUp() {
         );
     };
 
+
+    // step 2
+    const stepTwo = useRef(null);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    const [dob, setDob] = useState(new Date());
+
+
     return (
         <div className="h-screen flex flex-col bg-blue-100">
             <div className="flex w-full h-3/4  my-auto justify-center align-middle item-center">
@@ -823,7 +832,7 @@ export function SignUp() {
                                         </svg>
                                     </div>
                                     <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-primary">
-                                        Email
+                                        Account 
                                     </div>
                                 </div>
                                 <div
@@ -896,7 +905,7 @@ export function SignUp() {
                                                     : "grey",
                                         }}
                                     >
-                                        Account
+                                        Personal Info
                                     </div>
                                 </div>
                                 <div
@@ -1135,10 +1144,10 @@ export function SignUp() {
                                         {tooltipStatus == 1 && (
                                             <div
                                                 role="tooltip"
-                                                className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-white p-4 rounded"
+                                                className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-200 p-4 rounded"
                                             >
                                                 <svg
-                                                    className="absolute left-0 -ml-2 bottom-0 top-0 h-full"
+                                                    className="absolute left-0 -ml-2 bottom-0 top-0 h-full "
                                                     width="9px"
                                                     height="16px"
                                                     viewBox="0 0 9 16"
@@ -1156,7 +1165,7 @@ export function SignUp() {
                                                         <g
                                                             id="Tooltips-"
                                                             transform="translate(-874.000000, -1029.000000)"
-                                                            fill="#FFFFFF"
+                                                            fill="rgb(229 231 235)"
                                                         >
                                                             <g
                                                                 id="Group-3-Copy-16"
@@ -1240,22 +1249,124 @@ export function SignUp() {
                                  /> */}
                             </div>
                         </div>
+                        <div ref={stepTwo} className="step2 hidden h-full w-full justify-center items-center align-middle">
+                            <div className="w-7/12 flex flex-col justify-center items-center align-middle">
+                                    <div>
+                                        <h1 className="mt-2 mb-3">
+                                            Step Two
+                                        </h1>
+                                    </div>
+                                    <div className="w-full flex flex-col align-middle">
+                                        {/* Title, First Name, Last Name, Sexual, Jobs, Phone */}
+                                        
+                                        <div className="flex flex-row w-full justify-center align-middle items-center">
+                                            <div className="h-full w-8/12 relative">
+                                            <FloatingLabel
+                                                    placeholder={"First Name"}
+                                                    type="text"
+                                                    id={"fname"}
+                                                    handler={(e) => {
+                                                    }}
+                                                    validate={true}
+                                                    bg="bg-gray-50"
+                                                />
+                                            
+                                            </div>
+                                            <div className="h-full w-4/12 ml-3 relative">
+                                                
+                                                <FloatingLabel
+                                                    placeholder={"Last Name"}
+                                                    type="text"
+                                                    id={"lname"}
+                                                    handler={(e) => {
+                                                    }}
+                                                    validate={true}
+                                                    bg="bg-gray-50"
+                                                />
+                                            </div>
+                                                
+                                        </div>
+
+                                        <div className="flex flex-row w-full">
+                                            <div className="">
+                                                <div className="text-sm  text-gray-500 mb-2">
+                                                    Sexual
+                                                </div>
+                                                <div className="flex flex-row w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2  appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg">
+                                                    <div className=" " >
+                                                        <input defaultChecked className="peer hidden" type="radio" name="sex" id="m" />
+                                                        <div className="rounded-lg py-3 px-2.5 select-none  peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                            <label htmlFor="m" className="py-3 px-2.5 cursor-pointer">
+                                                                Male 
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className=" " >
+                                                        <input className="peer hidden" type="radio" name="sex" id="f" />
+                                                        <div className="rounded-lg py-3 px-2.5 select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                            <label htmlFor="f" className="py-3 px-2.5 cursor-pointer">
+                                                                Female 
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="" >
+                                                        <input className="peer hidden" type="radio" name="sex" id="n" />
+                                                        <div className="rounded-lg py-3 px-2.5 select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                            <label htmlFor="n" className="py-3 px-2.5 cursor-pointer">
+                                                                Non-Binary 
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                   
+                                                </div>
+                                            </div>
+
+                                            <div className="relative w-6/12 ml-auto">
+                                                <div className="text-sm  text-gray-500 mb-2">
+                                                    Date of Birth
+                                                </div>
+                                                <div className="w-full">
+                                                <div class="relative">
+                                                    <input
+                                                        type="date"
+                                                        id={"dob"}
+                                                        max={new Date().toLocaleDateString("sv")}
+                                                        class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2  appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg"
+                                                        onChange={(e)=> {
+                                                            
+                                                        }}
+                                                    />
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+                        </div>
                     </div>
+                    
 
                     <div className="z-[99] relative flex flex-row justify-center mt-12">
                         <div
                             onClick={() => {
                                 if (step === 2) {
-                                    setStep(1);
-                                    stepOne.current.classList.remove("hidden");
-                                    stepOne.current.classList.add(
-                                        "animate-fade-in-left"
-                                    );
+                                    stepTwo.current.classList.add("animate-fade-out-right");
                                     setTimeout(() => {
-                                        stepOne.current.classList.remove(
-                                            "animate-fade-in-left"
-                                        );
+                                        stepTwo.current.classList.add("hidden");
+                                        stepTwo.current.classList.remove("animate-fade-out-right");
+                                        stepOne.current.classList.remove("hidden");
+                                        stepOne.current.classList.add("animate-fade-in-left");
                                     }, 500);
+
+                                    setTimeout(() => {
+                                        stepOne.current.classList.remove("animate-fade-in-left");
+                                    }, 1000);
+
+                                    setStep(1);
                                 }
                             }}
                             className="btn text-center w-1/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-primary select-none  hover:text-white "
@@ -1278,7 +1389,22 @@ export function SignUp() {
                                             stepOne.current.classList.remove(
                                                 "animate-fade-out-left"
                                             );
+                                            stepTwo.current.classList.remove(
+                                                "hidden"
+                                            );
+                                            stepTwo.current.classList.add(
+                                                "flex"
+                                            );
+                                            stepTwo.current.classList.add(
+                                                "animate-fade-in-right"
+                                            );
                                         }, 500);
+
+                                        setTimeout(() => {
+                                            stepTwo.current.classList.remove(
+                                                "animate-fade-in-right"
+                                            );
+                                        }, 1000);
                                         setStep(2);
                                     }
                                 }
