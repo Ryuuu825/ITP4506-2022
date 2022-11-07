@@ -639,12 +639,27 @@ export function SignUp() {
 
     const [step, setStep] = useState(1);
 
+    // tooltip
+    const [tooltipStatus, setTooltipStatus] = useState(0);
+    useEffect(() => {
+        const onMouseClickOnOther = (e) => {
+            if (!document.getElementById("password").contains(e.target)) {
+                setTooltipStatus(0);
+            }
+        };
+        window.addEventListener("click", onMouseClickOnOther);
+    }, []);
+
     // step button state
-    const [canNext , setCanNext] = useState(false);
+    const [canNext, setCanNext] = useState(false);
     // step 1
     const stepOne = useRef(null);
     const [emailValid, setEmailValid] = useState(true);
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
+    const [password2Valid, setPassword2Valid] = useState(true);
+
     const validStepOne = () => {
         setCanNext(false);
         setEmailValid(true);
@@ -653,16 +668,112 @@ export function SignUp() {
             toast.error("Please enter your email address");
             return;
         }
-        if (
-            !/\S+@\S+\.\S+/.test(email)
-        ) {
+        if (!/\S+@\S+\.\S+/.test(email)) {
             setEmailValid(false);
             return;
-        } 
+        }
+        // test if first password is empty
+        if (password.length == 0 || password == "") {
+            toast.error("Please enter your password");
+            return;
+        }
+        // test if first password is valid 
+        if (pwCheckListItem1Status == 0 || pwCheckListItem2Status == 0 || pwCheckListItem3Status == 0) {
+            toast.error("Please enter a valid password");
+            return;
+        }
+
+        // test if second password is empty
+        if (password2.length == 0 || password2 == "") {
+            toast.error("Please enter your password again");
+            return;
+        }
+
+        // test if second password is valid
+        if (password2 != password) {
+            setPassword2Valid(false);
+            return;
+        }
+
+        setEmailValid(true);
+        setPassword2Valid(true);
         setCanNext(true);
     };
 
+    // pwCheckListItem
+    const [pwCheckListItem1Status, setPwCheckListItem1Status] = useState(0);
+    const [pwCheckListItem2Status, setPwCheckListItem2Status] = useState(0);
+    const [pwCheckListItem3Status, setPwCheckListItem3Status] = useState(0);
+    const [pwCheckListItem4Status, setPwCheckListItem4Status] = useState(0);
+    const [pwCheckListItem5Status, setPwCheckListItem5Status] = useState(0);
 
+    const Checker = ({ type, message }) => {
+        console.log(type);
+        return (
+            <>
+                {type ? (
+                    <div className="flex valid">
+                        <Kick />
+                        <p className="ml-2 text-xs leading-4  pb-3">
+                            {message}
+                        </p>
+                    </div>
+                ) : (
+                    <div className="flex invalid">
+                        <Cross />
+                        <p className="ml-2 text-xs leading-4 invalid pb-3">
+                            {message}
+                        </p>
+                    </div>
+                )}
+            </>
+        );
+    };
+
+    const Kick = () => {
+        return (
+            <>
+                <svg
+                    class="h-4 w-4 text-green"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    {" "}
+                    <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                    <path d="M5 12l5 5l10 -10" />
+                </svg>
+            </>
+        );
+    };
+
+    const Cross = () => {
+        return (
+            <>
+                <svg
+                    class="h-4 w-4 text-red-500"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    {" "}
+                    <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                    <line x1="18" y1="6" x2="6" y2="18" />{" "}
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </>
+        );
+    };
 
     return (
         <div className="h-screen flex flex-col bg-blue-100">
@@ -679,8 +790,23 @@ export function SignUp() {
                         <div class="mx-4 p-4 mb-6">
                             <div class="flex items-center">
                                 <div class="flex items-center relative">
-                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-primary"
-                                        style={{ backgroundColor: step === 1 ? "rgb(48 88 210)" : "white" , color : step === 1 ? "white" : "rgb(48 88 210)" , borderColor : step >= 1 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}>
+                                    <div
+                                        class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-primary"
+                                        style={{
+                                            backgroundColor:
+                                                step === 1
+                                                    ? "rgb(48 88 210)"
+                                                    : "white",
+                                            color:
+                                                step === 1
+                                                    ? "white"
+                                                    : "rgb(48 88 210)",
+                                            borderColor:
+                                                step >= 1
+                                                    ? "rgb(48 88 210)"
+                                                    : "rgb(209 213 219)",
+                                        }}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="100%"
@@ -700,14 +826,35 @@ export function SignUp() {
                                         Email
                                     </div>
                                 </div>
-                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out"
-                                    style={{ borderColor: step > 1 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                <div
+                                    class="flex-auto border-t-2 transition duration-500 ease-in-out"
+                                    style={{
+                                        borderColor:
+                                            step > 1
+                                                ? "rgb(48 88 210)"
+                                                : "rgb(209 213 219)",
+                                    }}
                                 ></div>
                                 <div class="flex items-center text-white relative">
-                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2"
-                                        style={{ backgroundColor: step === 2 ? "rgb(48 88 210)" : "white" , color : step === 2 ? "white": (step >= 2 ? "rgb(48 88 210)" : "grey" ) ,
-                                        borderColor : step >= 2 ? "rgb(48 88 210)" : "rgb(209 213 219)" 
-                                        }}>
+                                    <div
+                                        class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2"
+                                        style={{
+                                            backgroundColor:
+                                                step === 2
+                                                    ? "rgb(48 88 210)"
+                                                    : "white",
+                                            color:
+                                                step === 2
+                                                    ? "white"
+                                                    : step >= 2
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                            borderColor:
+                                                step >= 2
+                                                    ? "rgb(48 88 210)"
+                                                    : "rgb(209 213 219)",
+                                        }}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="100%"
@@ -721,7 +868,11 @@ export function SignUp() {
                                             class="feather feather-user-plus "
                                         >
                                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
+                                            <circle
+                                                cx="8.5"
+                                                cy="7"
+                                                r="4"
+                                            ></circle>
                                             <line
                                                 x1="20"
                                                 y1="8"
@@ -736,20 +887,47 @@ export function SignUp() {
                                             ></line>
                                         </svg>
                                     </div>
-                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase"
-                                        style={{ color: step >= 2 ? "rgb(48 88 210)" : "grey"  }}
+                                    <div
+                                        class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase"
+                                        style={{
+                                            color:
+                                                step >= 2
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                        }}
                                     >
                                         Account
                                     </div>
                                 </div>
-                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out "
-                                    style={{ borderColor: step > 2 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                <div
+                                    class="flex-auto border-t-2 transition duration-500 ease-in-out "
+                                    style={{
+                                        borderColor:
+                                            step > 2
+                                                ? "rgb(48 88 210)"
+                                                : "rgb(209 213 219)",
+                                    }}
                                 ></div>
                                 <div class="flex items-center text-gray-500 relative">
-                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
-                                        style={{ backgroundColor: step === 3 ? "rgb(48 88 210)" : "white" , color : step === 3 ? "white": (step >= 3 ? "rgb(48 88 210)" : "grey" ) ,
-                                        borderColor : step >= 3 ? "rgb(48 88 210)" : "rgb(209 213 219)"  }}>
-                                            
+                                    <div
+                                        class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+                                        style={{
+                                            backgroundColor:
+                                                step === 3
+                                                    ? "rgb(48 88 210)"
+                                                    : "white",
+                                            color:
+                                                step === 3
+                                                    ? "white"
+                                                    : step >= 3
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                            borderColor:
+                                                step >= 3
+                                                    ? "rgb(48 88 210)"
+                                                    : "rgb(209 213 219)",
+                                        }}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="100%"
@@ -766,19 +944,47 @@ export function SignUp() {
                                             <polyline points="22,6 12,13 2,6"></polyline>
                                         </svg>
                                     </div>
-                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
-                                        style={{ color: step >= 3 ? "rgb(48 88 210)" : "grey" }}
+                                    <div
+                                        class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
+                                        style={{
+                                            color:
+                                                step >= 3
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                        }}
                                     >
                                         Message
                                     </div>
                                 </div>
-                                <div class="flex-auto border-t-2 transition duration-500 ease-in-out "
-                                    style={{ borderColor: step > 3 ? "rgb(48 88 210)" : "rgb(209 213 219)" }}
+                                <div
+                                    class="flex-auto border-t-2 transition duration-500 ease-in-out "
+                                    style={{
+                                        borderColor:
+                                            step > 3
+                                                ? "rgb(48 88 210)"
+                                                : "rgb(209 213 219)",
+                                    }}
                                 ></div>
                                 <div class="flex items-center text-gray-500 relative">
-                                    <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
-                                        style={{ backgroundColor: step === 4 ? "rgb(48 88 210)" : "white" , color : step === 4 ? "white": (step >= 4 ? "rgb(48 88 210)" : "grey" ) ,
-                                        borderColor : step >= 4 ? "rgb(48 88 210)" : "rgb(209 213 219)"  }}>
+                                    <div
+                                        class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+                                        style={{
+                                            backgroundColor:
+                                                step === 4
+                                                    ? "rgb(48 88 210)"
+                                                    : "white",
+                                            color:
+                                                step === 4
+                                                    ? "white"
+                                                    : step >= 4
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                            borderColor:
+                                                step >= 4
+                                                    ? "rgb(48 88 210)"
+                                                    : "rgb(209 213 219)",
+                                        }}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="100%"
@@ -801,8 +1007,14 @@ export function SignUp() {
                                             <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
                                         </svg>
                                     </div>
-                                    <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
-                                        style={{ color: step >= 4 ? "rgb(48 88 210)" : "grey" }}
+                                    <div
+                                        class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
+                                        style={{
+                                            color:
+                                                step >= 4
+                                                    ? "rgb(48 88 210)"
+                                                    : "grey",
+                                        }}
                                     >
                                         Confirm
                                     </div>
@@ -814,32 +1026,213 @@ export function SignUp() {
                     {/* For different Form */}
 
                     <div className=" h-3/6">
-
-                        <div ref={stepOne} className=" step1 h-full w-full flex justify-center items-center align-middle">
-                            <div className="flex flex-col justify-center items-center">
-                                <div>
-                                    <h1 className="text-2xl font-bold">Step 1</h1>
-                                </div>
+                        <div
+                            ref={stepOne}
+                            className=" step1 h-full w-full flex justify-center items-center align-middle"
+                        >
+                            <div className="w-full flex flex-col justify-center items-center">
                                 <div>
                                     <h1 className="mt-2 mb-3">
-                                        Please provide your email
-                                        and we will send you a
-                                        verification code
+                                        Please enter your email and password for
+                                        account creation.
                                     </h1>
-
                                 </div>
-                                <div className="w-full">
-                                    <FloatingLabel
-                                        placeholder={"Email"}
-                                        type="email"
-                                        id={"r_email"}
-                                        handler={(e) => {
-                                            setEmail(e.target.value);
+                                <div className="inputgroup w-5/12">
+                                    <div className="w-full">
+                                        <FloatingLabel
+                                            placeholder={"Email"}
+                                            type="email"
+                                            id={"r_email"}
+                                            handler={(e) => {
+                                                setEmail(e.target.value);
+                                            }}
+                                            validate={emailValid}
+                                            error_message="Email format is not valid"
+                                            defaultValue={email}
+                                        />
+                                    </div>
+
+                                    <div
+                                        className="w-full relative"
+                                        id="password"
+                                        onMouseEnter={() => {
+                                            setTooltipStatus(1);
                                         }}
-                                        validate={emailValid}
-                                        error_message="Email format is not valid"
-                                        defaultValue={email}
-                                    />
+                                    >
+                                        <FloatingLabel
+                                            placeholder={"Password"}
+                                            type="password"
+                                            id={"r_password"}
+                                            handler={(e) => {
+                                                setPwCheckListItem1Status(
+                                                    false
+                                                );
+                                                setPwCheckListItem2Status(
+                                                    false
+                                                );
+                                                setPwCheckListItem3Status(
+                                                    false
+                                                );
+                                                setPwCheckListItem4Status(
+                                                    false
+                                                );
+                                                setPwCheckListItem5Status(
+                                                    false
+                                                );
+
+                                                if (
+                                                    e.target.value.length >= 8
+                                                ) {
+                                                    setPwCheckListItem1Status(
+                                                        true
+                                                    );
+                                                }
+
+                                                if (
+                                                    e.target.value.match(
+                                                        /[a-z]/g
+                                                    )
+                                                ) {
+                                                    setPwCheckListItem3Status(
+                                                        true
+                                                    );
+                                                }
+                                                if (
+                                                    e.target.value.match(
+                                                        /[A-Z]/g
+                                                    )
+                                                ) {
+                                                    setPwCheckListItem2Status(
+                                                        true
+                                                    );
+                                                }
+
+                                                if (
+                                                    e.target.value.match(
+                                                        /[0-9]/g
+                                                    )
+                                                ) {
+                                                    setPwCheckListItem4Status(
+                                                        true
+                                                    );
+                                                }
+
+                                                if (
+                                                    e.target.value.match(
+                                                        /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+                                                    )
+                                                ) {
+                                                    setPwCheckListItem5Status(
+                                                        true
+                                                    );
+                                                }
+
+                                                setPassword(e.target.value);
+                                            }}
+                                            validate={true}
+                                            error_message="Password must be at least 8 characters"
+                                        />
+                                        {tooltipStatus == 1 && (
+                                            <div
+                                                role="tooltip"
+                                                className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-white p-4 rounded"
+                                            >
+                                                <svg
+                                                    className="absolute left-0 -ml-2 bottom-0 top-0 h-full"
+                                                    width="9px"
+                                                    height="16px"
+                                                    viewBox="0 0 9 16"
+                                                    version="1.1"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                >
+                                                    <g
+                                                        id="Page-1"
+                                                        stroke="none"
+                                                        strokeWidth={1}
+                                                        fill="none"
+                                                        fillRule="evenodd"
+                                                    >
+                                                        <g
+                                                            id="Tooltips-"
+                                                            transform="translate(-874.000000, -1029.000000)"
+                                                            fill="#FFFFFF"
+                                                        >
+                                                            <g
+                                                                id="Group-3-Copy-16"
+                                                                transform="translate(850.000000, 975.000000)"
+                                                            >
+                                                                <g
+                                                                    id="Group-2"
+                                                                    transform="translate(24.000000, 0.000000)"
+                                                                >
+                                                                    <polygon
+                                                                        id="Triangle"
+                                                                        transform="translate(4.500000, 62.000000) rotate(-90.000000) translate(-4.500000, -62.000000) "
+                                                                        points="4.5 57.5 12.5 66.5 -3.5 66.5"
+                                                                    />
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                                <div className="font-bold text-black pb-3 ">
+                                                    Password must be at least
+                                                </div>
+                                                <Checker
+                                                    message={"8 characters"}
+                                                    type={
+                                                        pwCheckListItem1Status
+                                                    }
+                                                />
+                                                <Checker
+                                                    message={
+                                                        "1 uppercase letter"
+                                                    }
+                                                    type={
+                                                        pwCheckListItem2Status
+                                                    }
+                                                />
+                                                <Checker
+                                                    message={
+                                                        "1 lowercase letter"
+                                                    }
+                                                    type={
+                                                        pwCheckListItem3Status
+                                                    }
+                                                />
+                                                <Checker
+                                                    message={"1 number"}
+                                                    type={
+                                                        pwCheckListItem4Status
+                                                    }
+                                                />
+                                                <Checker
+                                                    message={
+                                                        "1 special character"
+                                                    }
+                                                    type={
+                                                        pwCheckListItem5Status
+                                                    }
+                                                />
+                                            </div>
+                                        )}{" "}
+                                    </div>
+
+                                    <div className="w-full">
+                                        <FloatingLabel
+                                            placeholder={"Password"}
+                                            type="password"
+                                            id={"r_password2"}
+                                            handler={(e) => {
+                                                setPassword2(
+                                                    e.target.value
+                                                );
+                                            }}
+                                            validate={password2Valid}
+                                            error_message="Your passwords do not match"
+                                        />
+                                    </div>
                                 </div>
                                 {/* <AuthCode  allowedCharacters='numeric' length={5}
                                 inputClassName="border-2 border-gray-300 bg-white w-12 rounded-lg text-sm focus:outline-none"
@@ -847,24 +1240,22 @@ export function SignUp() {
                                  /> */}
                             </div>
                         </div>
-
                     </div>
-    
-                    
 
                     <div className="z-[99] relative flex flex-row justify-center mt-12">
-                        
                         <div
                             onClick={() => {
                                 if (step === 2) {
                                     setStep(1);
                                     stepOne.current.classList.remove("hidden");
-                                    stepOne.current.classList.add("animate-fade-in-right");
+                                    stepOne.current.classList.add(
+                                        "animate-fade-in-left"
+                                    );
                                     setTimeout(() => {
-                                        stepOne.current.classList.remove("animate-fade-in-right");
-
-                                    }
-                                    , 500);
+                                        stepOne.current.classList.remove(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 500);
                                 }
                             }}
                             className="btn text-center w-1/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-primary select-none  hover:text-white "
@@ -872,19 +1263,21 @@ export function SignUp() {
                             <span className="text-sm">Back</span>
                         </div>
 
-
                         <div
                             onClick={() => {
-
                                 if (step === 1) {
                                     validStepOne();
                                     if (canNext) {
-                                        stepOne.current.classList.add("animate-fade-out-right");
-                                        
+                                        stepOne.current.classList.add(
+                                            "animate-fade-out-left"
+                                        );
                                         setTimeout(() => {
-                                            stepOne.current.classList.add("hidden");
-                                            stepOne.current.classList.remove("animate-fade-out-right");
-                                        
+                                            stepOne.current.classList.add(
+                                                "hidden"
+                                            );
+                                            stepOne.current.classList.remove(
+                                                "animate-fade-out-left"
+                                            );
                                         }, 500);
                                         setStep(2);
                                     }
@@ -894,8 +1287,6 @@ export function SignUp() {
                         >
                             Next
                         </div>
-
-
                     </div>
                 </div>
             </div>

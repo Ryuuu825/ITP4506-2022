@@ -10,7 +10,6 @@ import PageLogo from "../component/Logo";
 
 export default function Nav({ name }) {
     const app = useApp();
-    console.log(app);
     return (
         <div className="bg-white h-24 border-b-2 ">
             <div className="flex flex-row justify-between align-middle p-3 items-center">

@@ -75,7 +75,7 @@ export function FloatingLabel({
                             id={id}
                             class={valid_class_name}
                             placeholder=" "
-                            onChange={handler}
+                            onInput={handler}
                             onCopy={preventCopy ? (e) => e.preventDefault() : null}
                             value={defaultValue}
                             {...props}

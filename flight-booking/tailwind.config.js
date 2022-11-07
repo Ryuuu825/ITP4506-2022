@@ -19,6 +19,7 @@ module.exports = {
         'fade-in-left': 'fade-in-left 0.5s ease-out',
         'fade-in-right': 'fade-in-right 0.5s ease-out',
         'fade-out-right': 'fade-out-right 0.5s ease-out',
+        'fade-out-left': 'fade-out-left 0.5s ease-out',
         'loader': 'loader 1.5s linear infinite',
         'success-whto-small': 'success-whto-small 0.5s ease-out',
         'banner': 'banner-move 5s ease-out infinite',
@@ -62,6 +63,10 @@ module.exports = {
         'fade-out-right': {
           '0%': { opacity: '1', transform: 'translateX(0%)' },
           '100%': { opacity: '0', transform: 'translateX(100%)' },
+        },
+        'fade-out-left': {
+          '0%': { opacity: '1', transform: 'translateX(0%)' },
+          '100%': { opacity: '0', transform: 'translateX(-100%)' },
         },
         'loader': {
           '0%': { transform: 'translate3d(0, -1rem, 0)' , opacity: '0' },
