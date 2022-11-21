@@ -12,7 +12,7 @@ module.exports = {
                 "fixed-down": "fixed-down 1s ease-out",
                 "min-height": "min-height 1s ease-out",
                 shake: "shake 0.82s cubic-bezier(.36,.07,.19,.97) both",
-                "fade-in": "fade-in 0.5s ease-out",
+                "fade-in": "fade-in 1s ease-out",
                 "fade-in-forever": "fade-in-forever 3s ease-in infinite",
                 "fade-in-left": "fade-in-left 0.5s ease-out",
                 "fade-in-right": "fade-in-right 0.5s ease-out",

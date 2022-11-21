@@ -64,8 +64,8 @@ export function FloatingLabel({
     const valid = validate
     // clear the input when error
     const isArray = Array.isArray(error_message);
-    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300 `.concat(bg);
-    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-2 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300 `.concat(bg);
+    const invalid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-2 border-gray-300 focus-within:border-gray-500 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-red-300 `.concat(bg);
+    const valid_class_name = `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-2 border-gray-300 focus-within:border-gray-500 appearance-none  focus:outline-none focus:ring-0 peer focus:border-grey-500 border-grey-300 `.concat(bg);
     return (
         <div className="mb-2">
             <div class="relative mt-3">

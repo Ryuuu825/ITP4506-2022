@@ -70,7 +70,7 @@ export function DropDownListItem({  handler , context } , children) {
             onClick={() => {
                 handler( context );
             }}
-            className="hover:bg-gray-100 select-none px-4 py-2 text-sm text-gray-700 rounded-md"
+            className="hover:bg-gray-100 bg-gray-50 select-none px-4 py-2 text-sm text-gray-700 rounded-md"
         >
             {context}
         </div>
@@ -78,7 +78,7 @@ export function DropDownListItem({  handler , context } , children) {
 }
 
 export function DropDownItemDivider() {
-    return <div className="border-t border-gray-100 mt-3" />;
+    return <div className="border-t  bg-gray-100 p-1" />;
 }
 
 export function DropDownListHeader({ children }) {

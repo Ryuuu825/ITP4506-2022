@@ -20,7 +20,9 @@ import forgot_pw_img from "../asserts/forgot-pw-img.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/Button.css";
-import AuthCode from "react-auth-code-input";
+import Select from "react-select";
+import "../styles/registerform.css";
+import { ReactSpinner } from "react-spinkit";
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -635,6 +637,8 @@ export function SignUp() {
     const app = useApp();
     app.setDisableFooter(true);
 
+    const box = useRef(null);
+
     document.title = "Sign up";
 
     const [step, setStep] = useState(1);
@@ -650,8 +654,12 @@ export function SignUp() {
         window.addEventListener("click", onMouseClickOnOther);
     }, []);
 
+
     // step button state
     const [canNext, setCanNext] = useState(false);
+    const backBtn = useRef(null);
+    const nextBtn = useRef(null);
+
     // step 1
     const stepOne = useRef(null);
     const [emailValid, setEmailValid] = useState(true);
@@ -677,8 +685,12 @@ export function SignUp() {
             toast.error("Please enter your password");
             return;
         }
-        // test if first password is valid 
-        if (pwCheckListItem1Status == 0 || pwCheckListItem2Status == 0 || pwCheckListItem3Status == 0) {
+        // test if first password is valid
+        if (
+            pwCheckListItem1Status == 0 ||
+            pwCheckListItem2Status == 0 ||
+            pwCheckListItem3Status == 0
+        ) {
             toast.error("Please enter a valid password");
             return;
         }
@@ -775,19 +787,124 @@ export function SignUp() {
         );
     };
 
-
     // step 2
     const stepTwo = useRef(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const firstName = useRef("");
+    const [firstNameValid, setFirstNameValid] = useState(true);
+    const lastName = useRef("");
+    const [lastNameValid, setLastNameValid] = useState(true);
+    const sexual = useRef("m");
+    const phone = useRef("");
+    const phoneInput = useRef(null);
+    const dob = useRef();
+    const dobInput = useRef(null);
+    const [job, setJob] = useState("");
+    const jobInput = useRef(null);
 
-    const [dob, setDob] = useState(new Date());
+    const jobOptions = [
+        { value: "1", label: "Accounting" },
+        { value: "2", label: "Construction" },
+        { value: "3", label: "Education" },
+        { value: "4", label: "Engineering" },
+        { value: "5", label: "Finance" },
+        { value: "6", label: "IT" },
+        { value: "7", label: "Law" },
+        { value: "8", label: "Marketing" },
+        { value: "9", label: "Medical" },
+        { value: "10", label: "Sales" },
+    ];
+
+    const validStepTwo = () => {
+        setCanNext(false);
+
+        // test first name
+        if (firstName.current.length == 0 || firstName.current == "") {
+            toast.error("Please enter your first name");
+            setFirstNameValid(false);
+            return;
+        }
+        setFirstNameValid(true);
+
+        // test last name
+        if (lastName.current.length == 0 || lastName.current == "") {
+            toast.error("Please enter your last name");
+            setLastNameValid(false);
+            return;
+        }
+        setLastNameValid(true);
+
+        // test sexual
+        if (sexual.current.length == 0 || sexual.current == "") {
+            toast.error("Please enter your sexual");
+            return;
+        }
+
+        // test dob
+        console.log(dob.current);
+        if (
+            dob.current == null ||
+            dob.current.length == 0 ||
+            dob.current == ""
+        ) {
+            toast.error("Please enter your date of birth");
+            dobInput.current.classList.add("animate-shake");
+            setTimeout(() => {
+                dobInput.current.classList.remove("animate-shake");
+            }, 500);
+            return;
+        }
+
+        if (job == null || job == "") {
+            toast.error("Please enter your job");
+            jobInput.current.classList.add("animate-shake");
+            setTimeout(() => {
+                jobInput.current.classList.remove("animate-shake");
+            }, 500);
+
+            return;
+        }
+
+        // test phone
+        if (phone.current == "") {
+            toast.error("Please enter your phone");
+            phoneInput.current.classList.add("animate-shake");
+            setTimeout(() => {
+                phoneInput.current.classList.remove("animate-shake");
+            }, 500);
+
+            return;
+        }
+
+        if (phone.current.length != 8) {
+            toast.error("Please enter a valid phone");
+            phoneInput.current.classList.add("animate-shake");
+            setTimeout(() => {
+                phoneInput.current.classList.remove("animate-shake");
+            }, 500);
+
+            return;
+        }
+
+        setCanNext(true);
+    };
+
+    // step 3
+    const stepThree = useRef(null);
+    var Spinner = require("react-spinkit");
+
+    // step 4
+    const loader = useRef(null);
+    const stepFour = useRef(null);
+
 
 
     return (
         <div className="h-screen flex flex-col bg-blue-100">
-            <div className="flex w-full h-3/4  my-auto justify-center align-middle item-center">
-                <div className="relative box bg-white h-full w-3/5 rounded-lg shadow-lg overflow-hidden">
+            <div className=" animate-fade-in flex w-full h-3/4  my-auto justify-center align-middle item-center">
+                <div
+                    ref={box}
+                    className="relative box bg-white h-full w-3/5 rounded-lg shadow-lg "
+                >
                     <div className="flex flex-row w-full h-24 overflow-hidden items-center align-middle justify-center  ">
                         <img src={logo} className="h-12" alt="logo" />
                         <span className="text-2xl text-blue-700 font-semibold pl-5 pt-2">
@@ -832,7 +949,7 @@ export function SignUp() {
                                         </svg>
                                     </div>
                                     <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-primary">
-                                        Account 
+                                        Account
                                     </div>
                                 </div>
                                 <div
@@ -962,70 +1079,7 @@ export function SignUp() {
                                                     : "grey",
                                         }}
                                     >
-                                        Message
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex-auto border-t-2 transition duration-500 ease-in-out "
-                                    style={{
-                                        borderColor:
-                                            step > 3
-                                                ? "rgb(48 88 210)"
-                                                : "rgb(209 213 219)",
-                                    }}
-                                ></div>
-                                <div class="flex items-center text-gray-500 relative">
-                                    <div
-                                        class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
-                                        style={{
-                                            backgroundColor:
-                                                step === 4
-                                                    ? "rgb(48 88 210)"
-                                                    : "white",
-                                            color:
-                                                step === 4
-                                                    ? "white"
-                                                    : step >= 4
-                                                    ? "rgb(48 88 210)"
-                                                    : "grey",
-                                            borderColor:
-                                                step >= 4
-                                                    ? "rgb(48 88 210)"
-                                                    : "rgb(209 213 219)",
-                                        }}
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="100%"
-                                            height="100%"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="feather feather-database "
-                                        >
-                                            <ellipse
-                                                cx="12"
-                                                cy="5"
-                                                rx="9"
-                                                ry="3"
-                                            ></ellipse>
-                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                                        </svg>
-                                    </div>
-                                    <div
-                                        class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase "
-                                        style={{
-                                            color:
-                                                step >= 4
-                                                    ? "rgb(48 88 210)"
-                                                    : "grey",
-                                        }}
-                                    >
-                                        Confirm
+                                        Survery
                                     </div>
                                 </div>
                             </div>
@@ -1035,6 +1089,7 @@ export function SignUp() {
                     {/* For different Form */}
 
                     <div className=" h-3/6">
+                        {/* Form 1 */}
                         <div
                             ref={stepOne}
                             className=" step1 h-full w-full flex justify-center items-center align-middle"
@@ -1144,7 +1199,7 @@ export function SignUp() {
                                         {tooltipStatus == 1 && (
                                             <div
                                                 role="tooltip"
-                                                className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-200 p-4 rounded"
+                                                className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-100 p-4 rounded"
                                             >
                                                 <svg
                                                     className="absolute left-0 -ml-2 bottom-0 top-0 h-full "
@@ -1165,7 +1220,7 @@ export function SignUp() {
                                                         <g
                                                             id="Tooltips-"
                                                             transform="translate(-874.000000, -1029.000000)"
-                                                            fill="rgb(229 231 235)"
+                                                            fill="rgb(243 244 246)"
                                                         >
                                                             <g
                                                                 id="Group-3-Copy-16"
@@ -1234,139 +1289,668 @@ export function SignUp() {
                                             type="password"
                                             id={"r_password2"}
                                             handler={(e) => {
-                                                setPassword2(
-                                                    e.target.value
-                                                );
+                                                setPassword2(e.target.value);
                                             }}
                                             validate={password2Valid}
                                             error_message="Your passwords do not match"
                                         />
                                     </div>
                                 </div>
-                                {/* <AuthCode  allowedCharacters='numeric' length={5}
-                                inputClassName="border-2 border-gray-300 bg-white w-12 rounded-lg text-sm focus:outline-none"
-                                containerClassName="flex justify-center items-center"
-                                 /> */}
                             </div>
                         </div>
-                        <div ref={stepTwo} className="step2 hidden h-full w-full justify-center items-center align-middle">
+                        {/* Form 2 */}
+                        <div
+                            ref={stepTwo}
+                            className="step2 hidden h-full w-full justify-center items-center align-middle"
+                        >
                             <div className="w-7/12 flex flex-col justify-center items-center align-middle">
-                                    <div>
-                                        <h1 className="mt-2 mb-3">
-                                            Step Two
-                                        </h1>
-                                    </div>
-                                    <div className="w-full flex flex-col align-middle">
-                                        {/* Title, First Name, Last Name, Sexual, Jobs, Phone */}
-                                        
-                                        <div className="flex flex-row w-full justify-center align-middle items-center">
-                                            <div className="h-full w-8/12 relative">
+                                <div>
+                                    <h1 className="mt-2 mb-3">Step Two</h1>
+                                </div>
+                                <div className="w-full flex flex-col align-middle">
+                                    {/* Title, First Name, Last Name, Sexual, Jobs, Phone */}
+
+                                    <div className="flex flex-row w-full justify-center align-middle items-center">
+                                        <div className="h-full w-8/12 relative">
                                             <FloatingLabel
-                                                    placeholder={"First Name"}
-                                                    type="text"
-                                                    id={"fname"}
-                                                    handler={(e) => {
-                                                    }}
-                                                    validate={true}
-                                                    bg="bg-gray-50"
-                                                />
-                                            
+                                                placeholder={"First Name"}
+                                                type="text"
+                                                id={"fname"}
+                                                handler={(e) => {
+                                                    firstName.current =
+                                                        e.target.value;
+                                                }}
+                                                validate={firstNameValid}
+                                                bg="bg-gray-50"
+                                            />
+                                        </div>
+                                        <div className="h-full w-4/12 ml-3 relative">
+                                            <FloatingLabel
+                                                placeholder={"Last Name"}
+                                                type="text"
+                                                id={"lname"}
+                                                handler={(e) => {
+                                                    lastName.current =
+                                                        e.target.value;
+                                                }}
+                                                validate={lastNameValid}
+                                                bg="bg-gray-50"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-2 flex flex-row w-full">
+                                        <div className="">
+                                            <div className="flex flex-row text-gray-500">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                    ></path>
+                                                </svg>
+                                                <div className="text-sm ml-2 mb-2">
+                                                    Sexual*
+                                                </div>
                                             </div>
-                                            <div className="h-full w-4/12 ml-3 relative">
-                                                
-                                                <FloatingLabel
-                                                    placeholder={"Last Name"}
-                                                    type="text"
-                                                    id={"lname"}
-                                                    handler={(e) => {
-                                                    }}
-                                                    validate={true}
-                                                    bg="bg-gray-50"
-                                                />
+
+                                            <div
+                                                ref={sexual}
+                                                className="flex flex-row w-fit text-sm text-gray-900 bg-gray-50 overflow-hidden rounded-2xl border-2  appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg"
+                                            >
+                                                <div className="border-r border-gray-400 ">
+                                                    <input
+                                                        defaultChecked
+                                                        className="peer hidden"
+                                                        type="radio"
+                                                        name="sex"
+                                                        id="m"
+                                                        value="m"
+                                                        onChange={(e) => {
+                                                            sexual.current =
+                                                                e.target.value;
+                                                        }}
+                                                    />
+                                                    <div className=" py-3 px-2.5 select-none hover:bg-gray-100  peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                        <label
+                                                            htmlFor="m"
+                                                            className="px-2.5 cursor-pointer"
+                                                        >
+                                                            Male
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div className="">
+                                                    <input
+                                                        className="peer hidden"
+                                                        type="radio"
+                                                        name="sex"
+                                                        id="f"
+                                                        value="f"
+                                                        onChange={(e) => {
+                                                            sexual.current =
+                                                                e.target.value;
+                                                        }}
+                                                    />
+                                                    <div className=" py-3 px-2.5 select-none hover:bg-gray-100 cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                        <label
+                                                            htmlFor="f"
+                                                            className="py-3 px-2.5 cursor-pointer"
+                                                        >
+                                                            Female
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div className="border-l border-gray-400">
+                                                    <input
+                                                        className="peer hidden"
+                                                        type="radio"
+                                                        name="sex"
+                                                        id="n"
+                                                        value="n"
+                                                        onChange={(e) => {
+                                                            sexual.current =
+                                                                e.target.value;
+                                                        }}
+                                                    />
+                                                    <div className="py-3 px-2.5 select-none hover:bg-gray-100 cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
+                                                        <label
+                                                            htmlFor="n"
+                                                            className="py-3 px-2.5 cursor-pointer"
+                                                        >
+                                                            Non-Binary
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                                
                                         </div>
 
-                                        <div className="flex flex-row w-full">
-                                            <div className="">
-                                                <div className="text-sm  text-gray-500 mb-2">
-                                                    Sexual
-                                                </div>
-                                                <div className="flex flex-row w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2  appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg">
-                                                    <div className=" " >
-                                                        <input defaultChecked className="peer hidden" type="radio" name="sex" id="m" />
-                                                        <div className="rounded-lg py-3 px-2.5 select-none  peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
-                                                            <label htmlFor="m" className="py-3 px-2.5 cursor-pointer">
-                                                                Male 
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className=" " >
-                                                        <input className="peer hidden" type="radio" name="sex" id="f" />
-                                                        <div className="rounded-lg py-3 px-2.5 select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
-                                                            <label htmlFor="f" className="py-3 px-2.5 cursor-pointer">
-                                                                Female 
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="" >
-                                                        <input className="peer hidden" type="radio" name="sex" id="n" />
-                                                        <div className="rounded-lg py-3 px-2.5 select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm ">
-                                                            <label htmlFor="n" className="py-3 px-2.5 cursor-pointer">
-                                                                Non-Binary 
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                   
+                                        <div className="relative w-6/12 ml-auto">
+                                            <div className="flex flex-row  text-gray-500">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
+                                                    ></path>
+                                                </svg>
+                                                <div className="text-sm mb-2 ml-2">
+                                                    Date of Birth*
                                                 </div>
                                             </div>
 
-                                            <div className="relative w-6/12 ml-auto">
-                                                <div className="text-sm  text-gray-500 mb-2">
-                                                    Date of Birth
-                                                </div>
-                                                <div className="w-full">
+                                            <div className="w-full">
                                                 <div class="relative">
                                                     <input
+                                                        ref={dobInput}
                                                         type="date"
                                                         id={"dob"}
-                                                        max={new Date().toLocaleDateString("sv")}
-                                                        class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2  appearance-none  focus:outline-none focus:ring-2 focus:ring-blue-300 peer focus:border-blue-300 border-gray-300 shadow-lg"
-                                                        onChange={(e)=> {
-                                                            
+                                                        max={new Date().toLocaleDateString(
+                                                            "sv"
+                                                        )}
+                                                        class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2  appearance-none  focus:outline-none focus:ring-1 focus:ring-gray-600 peer focus:border-gray-600 border-gray-300 hover:border-gray-500 shadow-lg"
+                                                        onChange={(e) => {
+                                                            dob.current =
+                                                                e.target.value;
                                                         }}
                                                     />
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-3 flex flex-row w-full">
+                                        <div className="w-7/12 mr-5 z-[101]">
+                                            <div className="flex flex-row  text-gray-500">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                                    ></path>
+                                                </svg>
+                                                <div className="text-sm mb-2 ml-2">
+                                                    Job*
                                                 </div>
+                                            </div>
+
+                                            <div
+                                                ref={jobInput}
+                                                className="relative"
+                                            >
+                                                <Select
+                                                    className="basic-single relative"
+                                                    classNamePrefix="ive"
+                                                    isClearable={true}
+                                                    isSearchable={true}
+                                                    onChange={setJob}
+                                                    value={job}
+                                                    name="color"
+                                                    options={jobOptions}
+                                                    styles={{
+                                                        control: (
+                                                            base,
+                                                            state
+                                                        ) => ({
+                                                            ...base,
+                                                            border: "2px solid rgb(209 213 219)",
+                                                            borderRadius:
+                                                                "0.5rem",
+                                                            ":hover": {
+                                                                borderColor:
+                                                                    "rgb(107 114 128)",
+                                                            },
+                                                            boxShadow: "none",
+                                                            position:
+                                                                "relative",
+                                                            zIndex: "100",
+                                                            padding: "2px",
+                                                        }),
+                                                        option: (
+                                                            base,
+                                                            state
+                                                        ) => ({
+                                                            ...base,
+                                                            backgroundColor:
+                                                                state.isFocused
+                                                                    ? "rgb(58 110 216)"
+                                                                    : "white",
+                                                            color: state.isFocused
+                                                                ? "white"
+                                                                : "black",
+                                                            ":hover": {
+                                                                backgroundColor:
+                                                                    "rgb(58 110 216)",
+                                                                color: "white",
+                                                            },
+                                                            zIndex: "100",
+                                                        }),
+                                                        singleValue: (
+                                                            base,
+                                                            state
+                                                        ) => ({
+                                                            ...base,
+                                                            color: "black",
+                                                            position:
+                                                                "absolute",
+                                                        }),
+                                                    }}
+                                                />
                                             </div>
                                         </div>
 
+                                        <div className="w-5/12 ">
+                                            <div className="flex flex-row  text-gray-500">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                                    ></path>
+                                                </svg>{" "}
+                                                <div className="text-sm mb-2 ml-2">
+                                                    Phone Numbers*
+                                                </div>
+                                            </div>
+                                            <div
+                                                ref={phoneInput}
+                                                className="p-1 border-gray-300 hover:border-gray-500 w-full border-2 flex flex-row align-middle items-center rounded-xl overflow-hidden"
+                                            >
+                                                <div className=" px-3  border-r-2 select-none  border-gray-400">
+                                                    +852
+                                                </div>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input
+                                                    type="tel"
+                                                    className="p-1 border-none w-full focus:ring-0"
+                                                    onChange={(e) => {
+                                                        phone.current =
+                                                            e.target.value;
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Form 3 */}
+                        <div
+                            ref={stepThree}
+                            className="step3 hidden  h-full w-full justify-center items-center align-middle"
+                        >
+                            <div className="w-full flex flex-col justify-center items-center align-middle">
+                                {/* survery and ask user how frequecy they travel */}
+                                <div className="mt-5 w-6/12 flex flex-col justify-items-start align-middle">
+                                    <div>
+                                        <div className="text-2xl font-bold text-gray-700 text-center">
+                                            We are almost done!
+                                        </div>
+                                        <div className="text-gray-500 text-sm mt-2 text-center">
+                                            We need to know more about you for
+                                            provide better service.
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col mt-5 mr-20">
+                                        <div
+                                            className="text-gray-500 my-3 flex items-center"
+                                        >
+                                            <div className="flex flex-row align-middle items-center">
+                                                <svg class="w-4 h-4 mr-2 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <span className="">
+                                                    How often do you travel? (per
+                                                    year)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row algin-center items-center">
+                                            <input
+                                                type="radio"
+                                                name="freq"
+                                                id="freq1"
+                                            />
+                                            <label
+                                                className="text-gray-600 mx-3"
+                                                htmlFor="freq1"
+                                            >
+                                                1-2 times
+                                            </label>
+
+                                            <input
+                                                type="radio"
+                                                name="freq"
+                                                id="freq2"
+                                            />
+                                            <label
+                                                className="text-gray-600 mx-3"
+                                                htmlFor="freq2"
+                                            >
+                                                3-5 times
+                                            </label>
+
+                                            <input
+                                                type="radio"
+                                                name="freq"
+                                                id="freq3"
+                                            />
+                                            <label
+                                                className="text-gray-600 mx-3"
+                                                htmlFor="freq3"
+                                            >
+                                                6 times or more
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full flex flex-col mt-3 mr-20">
+                                    <div
+                                            className="text-gray-500 my-3 flex items-center"
+                                        >
+                                            <div className="flex flex-row align-middle items-center">
+                                            <svg class="w-4 h-4 text-black mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                                <span className="">
+                                                What is your purpose of travel?
+
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                         <div className="w-full flex flex-row algin-center items-center">
+                                            <div className="relative w-full z-[200]">
+                                            <Select
+                                                isMulti
+                                                name="colors"
+                                                options={
+                                                    [
+                                                        { value : "Business", label: "Business" },
+                                                        { value : "Leisure", label: "Leisure" },
+                                                        { value : "Family", label: "Family" },
+                                                        { value : "Study", label: "Study" },
+                                                        { value : "Others", label: "Others" },
+                                                    ]
+                                                }
+                                                className="basic-multi-select w-full focus:ring-0 "
+                                                classNamePrefix="ive"
+                                                styles={{
+                                                    control: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        border: "2px solid rgb(209 213 219)",
+                                                        borderRadius:
+                                                            "0.5rem",
+                                                        ":hover": {
+                                                            borderColor:
+                                                                "rgb(107 114 128)",
+                                                        },
+                                                        boxShadow: "none",
+                                                        position:
+                                                            "relative",
+                                                        zIndex: "101",
+                                                        padding: "2px",
+
+                                                    }),
+                                                    option: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        backgroundColor:
+                                                            state.isFocused
+                                                                ? "rgb(58 110 216)"
+                                                                : "white",
+                                                        color: state.isFocused
+                                                            ? "white"
+                                                            : "black",
+                                                        ":hover": {
+                                                            backgroundColor:
+                                                                "rgb(58 110 216)",
+                                                            color: "white",
+                                                        },
+                                                        zIndex: "101",
+                                                    }),
+                                                    singleValue: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        color: "black",
+                                                        position:
+                                                            "absolute",
+                                                    }),
+                                                }}
+                                            />
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div className="w-full flex flex-col mt-3 mr-20">
+                                            <div className="flex flex-row align-middle items-center mb-2">
+                                            <svg class="w-4 h-4 mr-2 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                <span className="">
+                                                    What is your purpose of travel?
+                                                </span>
+                                            </div>
+
+                                        <div className="w-full flex flex-row algin-center items-center">
+                                            <div className="relative w-full z-[199]">
+                                            <Select
+                                                isMulti
+                                                name="colors"
+                                                options={
+                                                    [
+                                                        { value : "Europe", label: "Europe" },
+                                                        { value : "Asia", label: "Asia" },
+                                                        { value : "North America", label: "North America" },
+                                                        { value : "South America", label: "South America" },
+                                                        { value : "Africa", label: "Africa" },
+                                                        { value : "Australia", label: "Australia" },
+                                                        { value : "Antarctica", label: "Antarctica" },
+                                                    ]
+                                                }
+                                                className="basic-multi-select w-full focus:ring-0 "
+                                                classNamePrefix="ive"
+                                                styles={{
+                                                    control: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        border: "2px solid rgb(209 213 219)",
+                                                        borderRadius:
+                                                            "0.5rem",
+                                                        ":hover": {
+                                                            borderColor:
+                                                                "rgb(107 114 128)",
+                                                        },
+                                                        boxShadow: "none",
+                                                        position:
+                                                            "relative",
+                                                        padding: "2px",
+
+                                                    }),
+                                                    option: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        backgroundColor:
+                                                            state.isFocused
+                                                                ? "rgb(58 110 216)"
+                                                                : "white",
+                                                        color: state.isFocused
+                                                            ? "white"
+                                                            : "black",
+                                                        ":hover": {
+                                                            backgroundColor:
+                                                                "rgb(58 110 216)",
+                                                            color: "white",
+                                                        },
+                                                    }),
+                                                    singleValue: (
+                                                        base,
+                                                        state
+                                                    ) => ({
+                                                        ...base,
+                                                        color: "black",
+                                                        position:
+                                                            "absolute",
+                                                    }),
+                                                }}
+                                            />
+                                            </div>                                        
+                                            </div>                                        
+                                            </div>                                        
+                                </div>
+                            </div>
+                        </div>
+                        {/* Form 4 */}
+                        <div className="step4 w-full h-full flex flex-col items-center justify-center">
+                            <div className="hidden flex-col justify-center align-middle items-center " ref={loader}>
+                                <Spinner name="pacman" />
+                                <span className="text-xl font-bold mt-5 text-gray-500">
+                                    Please wait while we are processing your request
+                                </span>
+                            </div>
+                            <div ref={stepFour} className="w-full hidden flex-col justify-center items-center align-middle">
+                                <div className=" text-green-700">
+                                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <div className="text-2xl font-bold text-center">
+                                    You Have Successfully Signed Up!
+                                </div>
+                                <div className=" whitespace-pre-wrap w-1/2 text-center mt-5 text-lg" >
+                                    <span>
+                                        We have sent you an email to
+                                        <span className="text-primary"> {email} </span>
+                                        with a link to verify your account. After receiving the email
+                                        please click on the link to verify your account.
+                                    </span>
+                                </div>
+                                <div className="border-t w-1/2 mt-4 mb-6 text-center">
+                                </div>
+                                <div className=" text-gray-500">
+                                    Go back to 
+                                    <Link to="/login">
+                                        <a className="text-primary ml-1">Login</a>
+                                    </Link>
+                                    {" "} page
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
 
                     <div className="z-[99] relative flex flex-row justify-center mt-12">
                         <div
+                            ref={backBtn}
                             onClick={() => {
+                                nextBtn.current.innerHTML =
+                                    "Next";
                                 if (step === 2) {
-                                    stepTwo.current.classList.add("animate-fade-out-right");
+                                    stepTwo.current.classList.add(
+                                        "animate-fade-out-right"
+                                    );
                                     setTimeout(() => {
                                         stepTwo.current.classList.add("hidden");
-                                        stepTwo.current.classList.remove("animate-fade-out-right");
-                                        stepOne.current.classList.remove("hidden");
-                                        stepOne.current.classList.add("animate-fade-in-left");
+                                        stepTwo.current.classList.remove(
+                                            "animate-fade-out-right"
+                                        );
+                                        stepOne.current.classList.remove(
+                                            "hidden"
+                                        );
+                                        stepOne.current.classList.add(
+                                            "animate-fade-in-left"
+                                        );
                                     }, 500);
 
                                     setTimeout(() => {
-                                        stepOne.current.classList.remove("animate-fade-in-left");
+                                        stepOne.current.classList.remove(
+                                            "animate-fade-in-left"
+                                        );
                                     }, 1000);
 
                                     setStep(1);
+                                } else if (step === 3) {
+                                    stepThree.current.classList.add(
+                                        "animate-fade-out-right"
+                                    );
+                                    setTimeout(() => {
+                                        stepThree.current.classList.add("hidden");
+                                        stepThree.current.classList.remove(
+                                            "animate-fade-out-right"
+                                        );
+                                        stepTwo.current.classList.remove(
+                                            "hidden"
+                                        );
+                                        stepTwo.current.classList.add(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 500);
+
+                                    setTimeout(() => {
+                                        stepTwo.current.classList.remove(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 1000);
+
+                                    setStep(2);
+                                } else {
+                                    // stepFour.current.classList.add(
+                                    //     "animate-fade-out-right"
+                                    // );
+                                    setTimeout(() => {
+                                        // stepFour.current.classList.add("hidden");
+                                        // stepFour.current.classList.remove(
+                                        //     "animate-fade-out-right"
+                                        // );
+                                        stepThree.current.classList.remove(
+                                            "hidden"
+                                        );
+                                        stepThree.current.classList.add(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 500);
+
+                                    setTimeout(() => {
+                                        stepThree.current.classList.remove(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 1000);
+
+                                    setStep(3);
                                 }
                             }}
                             className="btn text-center w-1/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-primary select-none  hover:text-white "
@@ -1375,8 +1959,11 @@ export function SignUp() {
                         </div>
 
                         <div
+                            ref={nextBtn}
                             onClick={() => {
+
                                 if (step === 1) {
+
                                     validStepOne();
                                     if (canNext) {
                                         stepOne.current.classList.add(
@@ -1406,7 +1993,74 @@ export function SignUp() {
                                             );
                                         }, 1000);
                                         setStep(2);
+                                        setCanNext(false);
                                     }
+                                } else if (step === 2) {
+                                    validStepTwo();
+                                    if (canNext) {
+                                        stepTwo.current.classList.add(
+                                            "animate-fade-out-left"
+                                        );
+                                        setTimeout(() => {
+                                            stepTwo.current.classList.add(
+                                                "hidden"
+                                            );
+                                            stepTwo.current.classList.remove(
+                                                "animate-fade-out-left"
+                                            );
+                                            stepThree.current.classList.remove(
+                                                "hidden"
+                                            );
+                                            stepThree.current.classList.add(
+                                                "flex"
+                                            );
+                                            stepThree.current.classList.add(
+                                                "animate-fade-in-right"
+                                            );
+                                            nextBtn.current.innerHTML =
+                                                "Create";
+                                        }, 500);
+
+                                        setTimeout(() => {
+                                            stepThree.current.classList.remove(
+                                                "animate-fade-in-right"
+                                            );
+                                        }, 1000);
+                                        setStep(3);
+                                        setCanNext(false);
+                                    }
+                                } else if (step === 3) {
+                                        // validStepThree();
+                                        stepThree.current.classList.add(
+                                            "animate-fade-out-left"
+                                        );
+                                        
+                                        setTimeout(() => {
+                                            stepThree.current.classList.add(
+                                                "hidden"
+                                            );
+                                            stepThree.current.classList.remove(
+                                                 "animate-fade-out-left"
+                                            );
+                                            loader.current.classList.remove("hidden");
+                                            loader.current.classList.add("flex");
+                                            nextBtn.current.classList.add(
+                                                "hidden"
+                                            );
+                                            backBtn.current.classList.add(
+                                                "hidden"
+                                            );
+                                        }, 500);
+
+                                        setTimeout(() => {
+                                           stepFour.current.classList.remove("hidden");
+                                           stepFour.current.classList.add("flex");
+                                            loader.current.classList.add(
+                                                "hidden"
+                                            );
+                                        }, 6500);
+                                        setStep(4);
+                                        setCanNext(false);
                                 }
                             }}
                             className="transition-colors text-center w-2/12 mx-12 buttom border inline-block p-2 rounded-lg shadow-lg text-white bg-primary select-none hover:bg-primary-dark"
