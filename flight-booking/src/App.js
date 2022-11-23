@@ -11,6 +11,7 @@ import Footor from "./layout/footer";
 import SearchBox from "./layout/FilterBox";
 import SearchPage from "./pages/SearchPage";
 import { ToastContainer } from "react-toastify";
+import TranscationPage from "./pages/TranscationPage";
 
 function Main() {
     const [count, setCount] = useState(0); // useState will cause re-render
@@ -36,6 +37,9 @@ function Main() {
                 <li>
                     <Link to="/search">SearchPage</Link>
                 </li>
+                <li>
+                    <Link to="/transcation">TranscationPage</Link>
+                </li>
             </ul>
         </div>
     );
@@ -60,6 +64,7 @@ function App() {
                         <Route  path="reset-pw" element={<OperatorResetPw />} />
                     </Route>
                     <Route path="/search/:dest/:date"  element={<SearchPage />} />
+                    <Route path="/transcation"  element={<TranscationPage />} />
                 </Routes>
                 <Footor />
             </AppProvider>

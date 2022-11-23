@@ -7,6 +7,8 @@ import DestinationBox from "../layout/DestinationBox";
 import TicketRecords from "../db/tickets.json";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Breadcrumb from "../component/Breadcrumb";
+import TicketDetail from "../layout/TicketDetail";
 
 export default function SearchPage() {
 	const [isShow, setIsShow] = useState(false);
@@ -20,6 +22,9 @@ export default function SearchPage() {
 	const [displayItem, setDisplayItem] = useState([]);
 	let { dest, date } = useParams();
 	const [filterCount, setFilterCount] = useState([]);
+	const [sort, setSort] = useState("best");
+	const [isShowDetail, setIsShowDetail] = useState(false);
+	const [selectInfo, setSelectInfo] = useState({});
 
 	let searchDate = {
 		"date": date,
@@ -69,22 +74,32 @@ export default function SearchPage() {
 				) : true;
 			});
 
-			const filterCountOutTime1	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
-			const filterCountOutTime2	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
-			const filterCountOutTime3	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "12:00" && d.outTime <= "17:59") });
-			const filterCountOutTime4	= filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "18:00" && d.outTime <= "23:59") });
-			const filterCountArrTime1	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "00:00" && ((d.arrivalTime).split(" "))[1] <= "05:59") });
-			const filterCountArrTime2	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "06:00" && ((d.arrivalTime).split(" "))[1] <= "11:59") });
-			const filterCountArrTime3	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "12:00" && ((d.arrivalTime).split(" "))[1] <= "17:59") });
-			const filterCountArrTime4	= filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") });
+			const filterCountOutTime1 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
+			const filterCountOutTime2 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
+			const filterCountOutTime3 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "12:00" && d.outTime <= "17:59") });
+			const filterCountOutTime4 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "18:00" && d.outTime <= "23:59") });
+			const filterCountArrTime1 = filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "00:00" && ((d.arrivalTime).split(" "))[1] <= "05:59") });
+			const filterCountArrTime2 = filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "06:00" && ((d.arrivalTime).split(" "))[1] <= "11:59") });
+			const filterCountArrTime3 = filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "12:00" && ((d.arrivalTime).split(" "))[1] <= "17:59") });
+			const filterCountArrTime4 = filteredTicketByFilterPrice.filter(d => { return (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") });
 
 			const filterCount = [filterCountOutTime1.length, filterCountOutTime2.length, filterCountOutTime3.length, filterCountOutTime4.length, filterCountArrTime1.length, filterCountArrTime2.length, filterCountArrTime3.length, filterCountArrTime4.length];
 			setFilterCount(filterCount);
 			// find min price
 			setMinPrice((isFilterTime ? Math.min(...filteredTicketByFilterTime.map(d => d.price)) : Math.min(...filteredTicket[0].ticket.map(d => d.price))));
 
-			setDisplayItem(filteredTicketByFilterTime);
-
+			if (sort === "best") {
+				setDisplayItem(filteredTicketByFilterTime.sort((a, b) => (a.price - b.price) > 0 ? 1 : -1 + ((new Date(a.arrivalTime)) - (new Date(date + " " + a.outTime))) - ((new Date(b.arrivalTime)) - (new Date(date + " " + b.outTime))) > 0 ? -1 : 1 + (a.stop - b.stop) > 0 ? -1 : 1));
+			} else if (sort === "cheapest") {
+				setDisplayItem(filteredTicketByFilterTime.sort((a, b) => a.price - b.price));
+			} else if (sort === "quickest") {
+				console.log("quickest");
+				setDisplayItem(filteredTicketByFilterTime.sort((a, b) =>
+					((new Date(a.arrivalTime)) - (new Date(date + " " + a.outTime))) - ((new Date(b.arrivalTime)) - (new Date(date + " " + b.outTime)))
+				));
+			} else {
+				setDisplayItem(filteredTicketByFilterTime);
+			}
 		} else {
 			setMaxPrice(0);
 			setMinPrice(0);
@@ -92,30 +107,36 @@ export default function SearchPage() {
 		}
 
 		setIsShow(true);
-	}, [destForm, currentPage, isFilterTime, isFilterPrice]);
+	}, [destForm, currentPage, isFilterTime, isFilterPrice, sort]);
 
 	return (
-		<div className="h-full bg-gray-100">
+		<div className="w-full h-full bg-gray-100">
+			{isShowDetail ? <div className="fixed z-50 w-full bg-black h-full" style={{"backgroundColor":"rgba(0,0,0,0.5)"}}><TicketDetail showDetail={isShowDetail} setIsShowDetail={setIsShowDetail} selectInfo={selectInfo} /></div> : " "}
 			<Nav />
+			<div className="flex flex-row w-4/5 mx-auto mt-3">
+				<Breadcrumb data={{ date, dest }} page={'search'} />
+			</div>
 			<div className="flex flex-row w-4/5 h-full mx-auto mt-3">
 				<form action="" className="flex flex-col w-3/12 mb-3">
 					<div className="flex flex-col w-full bg-white mb-3 shadow-md rounded-lg">
 						<DestinationBox setShow={setIsShow} setCurrentPage={setCurrentPage} dest={dest} date={date} setDestForm={setDestForm} destForm={destForm} />
 					</div>
 					<div className="flex flex-col w-full h-full bg-white shadow-md rounded-lg">
-						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={filterCount.slice(0,4)} destCount={filterCount.slice(4,8)} dest={destForm.dest} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
+						{isShow ? <FilterBox setIsFilterPrice={setIsFilterPrice} setIsFilterTime={setIsFilterTime} setCurrentPage={setCurrentPage} ticketCount={displayItem.length} locCount={filterCount.slice(0, 4)} destCount={filterCount.slice(4, 8)} dest={destForm.dest} min={minPrice} max={maxPrice} setDestForm={setDestForm} destForm={destForm} /> :
 							<div className="flex flex-col w-full h-screen bg-white shadow-md rounded-lg"></div>}
 					</div>
 				</form>
 				<div className="flex flex-col ml-3 w-9/12">
-					<SortTab />
+					<SortTab setSort={setSort} />
 					<div className="flex flex-col w-full">
 						{displayItem.length > 0 && isShow ?
 							displayItem.slice(startIndex + (currentPage * 12), endIndex + (currentPage * 12)).map((t) => (
-								<TicketInfo key={t.id} dest={dest} ticket={t} date={date} />
+								<TicketInfo key={t.id} dest={dest} ticket={t} date={date} setIsShowDetail={setIsShowDetail} setSelectInfo={setSelectInfo} />
 							))
-							: <div className="shadow-md flex items-center justify-center w-full mb-2 border rounded-lg border-gray-200 bg-white h-24">
-								<span>No Record Found</span>
+							:
+							<div className="shadow-md flex flex-col items-center justify-center w-full mb-2 border rounded-lg border-gray-200 bg-white h-24">
+								<strong>No matching flights found.</strong>
+								<span>Try removing some filters to see more results.</span>
 							</div>
 						}
 					</div>

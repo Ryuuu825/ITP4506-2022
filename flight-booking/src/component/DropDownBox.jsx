@@ -42,7 +42,7 @@ function AirportItem({ data, show, setSelected, setSelectedDest, setText }) {
 	const clickHandler = () => {
 		setSelected(data.code);
 		setSelectedDest(data.code);
-		setText(data.code + " - " + data.airport);
+		setText(data.code + " - " + data.area);
 		show(false);
 	};
 

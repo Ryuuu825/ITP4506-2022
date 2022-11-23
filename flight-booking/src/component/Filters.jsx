@@ -1,4 +1,8 @@
+import { useRef } from "react";
 import { useState, useEffect } from "react"
+import { Timepicker } from 'react-timepicker';
+import 'react-timepicker/timepicker.css';
+import Accordion from "./Accordion";
 
 export function PriceFilter({ setIsFilterPrice, setCurrentPage, min, max, setDestForm, destForm, setParams, params }) {
 	const [price, setPrice] = useState(max);
@@ -45,6 +49,12 @@ export function PriceFilter({ setIsFilterPrice, setCurrentPage, min, max, setDes
 }
 
 export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, destCount, destForm, setDestForm, setParams, params }) {
+	const [arriveTime, setArriveTime] = useState();
+	const [departTime, setDepartTime] = useState();
+	const [showDepartPicker, setShowDepartPicker] = useState(false);
+	const [showArrivePicker, setShowArrivePicker] = useState(false);
+	const departpicker = useRef()
+	const arrivepicker = useRef()
 	const depTimeHandler = (e) => {
 		let subData = JSON.parse(JSON.stringify(destForm));
 		subData.depTime[e.target.id] = e.target.value === "true" ? false : true;
@@ -68,6 +78,30 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 		setDestForm(subData);
 	}
 
+	useEffect(() => {
+		// close dropdown when click outside
+		const checkIfClickedOutside = e => {
+			// If the menu is open and the clicked target is not within the menu,
+			// then close the menu
+			if (showDepartPicker && departpicker.current && !departpicker.current.contains(e.target)) {
+				setShowDepartPicker(false)
+			}
+
+			if (showArrivePicker && arrivepicker.current && !arrivepicker.current.contains(e.target)) {
+				setShowArrivePicker(false)
+			}
+		}
+		document.addEventListener("mousedown", checkIfClickedOutside)
+		return () => {
+			// Cleanup the event listener
+			document.removeEventListener("mousedown", checkIfClickedOutside)
+		}
+	}, [showDepartPicker, showArrivePicker])
+
+	const timeHandler = (h, m) => {
+		console.log(h, m);
+	}
+
 	const timeSlots = ["12:00 AM - 05:59 AM", "06:00 AM - 11:59 AM", "12:00 PM - 05:59 PM", "06:00 PM - 11:59 PM"];
 	return (
 		<div className="w-10/12 mb-10">
@@ -79,25 +113,96 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 				<label className="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Flight Times:</label>
 			</div>
 
-			<label htmlFor="" className="text-sm">Depart from HKG</label>
-			{timeSlots.map((value, index) => {
-				return (
-					<div className="flex items-center" key={index} onChange={depTimeHandler}>
-						<CheckBox context={value} disabled={locCount[index]} id={index} />
-						<label className="grow text-end text-xs">{locCount[index]}</label>
-					</div>
-				);
-			})}
-			<br />
-			<label htmlFor="" className="text-sm"> Arrives to {dest}</label>
-			{timeSlots.map((value, index) => {
-				return (
-					<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-						<CheckBox context={value} disabled={destCount[index]} id={index} />
-						<label className="grow text-end text-xs">{destCount[index]}</label>
-					</div>
-				);
-			})}
+			<label htmlFor="" className="text-sm">Departure Time from HKG</label>
+			<div className="relative mb-2" ref={departpicker}>
+				<div className="flex absolute inset-y-0 right-2 items-center pl-3 pointer-events-none">
+					<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 7H11V12H16V14H9V7Z" fill="black" />
+						<path fillRule="evenodd" clipRule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z" fill="black" />
+					</svg>
+				</div>
+				<input type="text" onClick={(e) => { setShowDepartPicker(!showDepartPicker); }} readOnly value={departTime} className="w-full h-30 border-4 border-blue-300 bg-gray-50" />
+				{showDepartPicker ? <FlightTimePicker setTime={setDepartTime} setShow={setShowDepartPicker} title={"Departure Time from HKG"} /> : null}
+			</div>
+			<label htmlFor="" className="text-sm">Arrival Time to {dest}</label>
+			<div className="relative mb-8" ref={arrivepicker}>
+				<div className="flex absolute inset-y-0 right-2 items-center pl-3 pointer-events-none">
+					<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 7H11V12H16V14H9V7Z" fill="black" />
+						<path fillRule="evenodd" clipRule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z" fill="black" />
+					</svg>
+				</div>
+				<input type="text" onClick={(e) => { setShowArrivePicker(!showArrivePicker); }} readOnly value={arriveTime} className="w-full h-30 border-4 border-blue-300 bg-gray-50" />
+				{showArrivePicker ? <FlightTimePicker setTime={setArriveTime} setShow={setShowArrivePicker} title={`Arrival Time to ${dest}`} /> : null}
+			</div>
+			<div className="flex">
+				<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9 7H11V12H16V14H9V7Z" fill="black" />
+					<path fillRule="evenodd" clipRule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z" fill="black" />
+				</svg>
+				<label className="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Flight Times Range:</label>
+			</div>
+			<FilterAcordion alwaysOpen={true} title={"Depart from HKG"} children={
+				<>
+					{timeSlots.map((value, index) => {
+						return (
+							<div className="flex items-center" key={index} onChange={depTimeHandler}>
+								<CheckBox context={value} disabled={locCount[index]} id={index} />
+								<label className="grow text-end text-xs">{locCount[index]}</label>
+							</div>
+						);
+					})}
+				</>} />
+			<FilterAcordion title={`Arrives to ${dest}`} children={
+				<>
+					{timeSlots.map((value, index) => {
+						return (
+							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
+								<CheckBox context={value} disabled={destCount[index]} id={index} />
+								<label className="grow text-end text-xs">{destCount[index]}</label>
+							</div>
+						);
+					})}
+				</>} />
+
+			<div className="flex mt-4">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					viewBox="0 0 297 297" style={{ "enableBackground": "new 0 0 297 297", "width": "30px", height: "20" }}>
+					<path d="M207.173,138.996c-8.419-20.15-26.921-34.547-49.169-37.897V55.836c0-5.248-4.255-9.504-9.504-9.504
+	s-9.504,4.256-9.504,9.504v45.263c-22.248,3.351-40.75,17.747-49.168,37.897H9.504C4.256,138.996,0,143.251,0,148.5
+	c0,5.248,4.256,9.504,9.504,9.504h6.033c0.894,8.664,8.236,15.444,17.133,15.444c8.897,0,16.238-6.78,17.134-15.444h35.425
+	c-0.182,1.957-0.286,3.936-0.286,5.94c0,31.815,23.5,58.243,54.054,62.845v14.375c0,5.248,4.255,9.504,9.504,9.504
+	s9.504-4.256,9.504-9.504v-14.375c30.554-4.602,54.054-31.029,54.054-62.845c0-2.004-0.105-3.983-0.286-5.94h35.426
+	c0.895,8.664,8.235,15.444,17.133,15.444c8.897,0,16.238-6.78,17.133-15.444h6.033c5.248,0,9.504-4.256,9.504-9.504
+	c0-5.249-4.256-9.504-9.504-9.504H207.173z M148.5,119.394c24.564,0,44.55,19.985,44.55,44.551c0,0.05-0.004,0.098-0.004,0.148
+	c-17.316-6.013-52.182-14.188-89.091-0.335C104.057,139.278,123.998,119.394,148.5,119.394z M148.5,208.494
+	c-17.917,0-33.387-10.638-40.453-25.923c33.702-13.663,66.752-4.83,80.79,0.257C181.717,197.977,166.317,208.494,148.5,208.494z"/>
+				</svg>
+				<label className="ml-1 block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Airplane:</label>
+			</div>
+			<FilterAcordion alwaysOpen={true} title={`Narrow-body jet`} children={
+				<>
+					{['Airbus A320neo', 'Boeing 757', 'Airbus A220', 'Other'].map((value, index) => {
+						return (
+							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
+								<CheckBox context={value} disabled={6} id={index} />
+								<label className="grow text-end text-xs">{6}</label>
+							</div>
+						);
+					})}
+				</>} />
+
+				<FilterAcordion title={`Wide-body jet`} children={
+				<>
+					{['Airbus A350', 'Boeing 777', 'Boeing 787', 'Other'].map((value, index) => {
+						return (
+							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
+								<CheckBox context={value} disabled={6} id={index} />
+								<label className="grow text-end text-xs">{6}</label>
+							</div>
+						);
+					})}
+				</>} />
 		</div>
 	)
 }
@@ -121,6 +226,147 @@ export function CheckBox({ id, context, disabled }) {
 			>
 				{context}
 			</label>
+		</div>
+	);
+}
+export function FlightTimePicker({ h, m, setTime, setShow, title }) {
+	const [hour, setHour] = useState("00");
+	const [minute, setMinute] = useState("00");
+	const timeHandler = (h, m) => {
+		console.log(h, m);
+		setHour(h < 10 ? "0" + h : h);
+		setMinute(m < 10 ? "0" + m : m);
+	}
+
+	const setFlightTime = (e) => {
+		setTime(hour + ":" + minute);
+		setShow(false);
+	}
+
+	return (
+		<div className="absolute bg-white p-4 border rounded-xl shadow-md z-50">
+			<div className="my-2 flex"><strong>{title}</strong></div>
+			<Timepicker onChange={timeHandler} />
+			<button onClick={setFlightTime} className="w-full shadow-md rounded-lg inline-flex items-center justify-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+				Confirm
+			</button>
+		</div>
+	);
+}
+
+export function FlightTimeRange() {
+	return (
+		<div className="flex w-full m-auto items-center h-12 justify-center">
+			<div className="py-1 relative min-w-full">
+				<div className="h-2 bg-gray-200 rounded-full">
+					<div className="absolute h-2 rounded-full bg-blue-700 w-0" style={{ "width": "24.1935%", "left": "11.2903%" }}></div>
+					<div className="absolute h-4 flex items-center justify-center w-4 rounded-full bg-white shadow border border-gray-300 -ml-2 top-0 cursor-pointer" style={{ "left": "11.2903%" }}>
+						<div className="relative -mt-2 w-1">
+							<div className="absolute z-10 opacity-100 bottom-100 mb-2 left-0 min-w-full" style={{ "marginLeft": "-25px" }}>
+								<div className="relative shadow-md">
+									<div className="bg-black -mt-8 text-white truncate text-xs rounded py-1 px-4">$ 15</div>
+									<svg className="absolute text-black w-full h-2 left-0 top-100" x="0px" y="0px" viewBox="0 0 255 255">
+										<polygon className="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+									</svg>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="absolute h-4 flex items-center justify-center w-4 rounded-full bg-white shadow border border-gray-300 -ml-2 top-0 cursor-pointer" style={{ "left": "35.4839%" }}>
+						<div className="relative -mt-2 w-1">
+							<div className="absolute z-10 opacity-100 bottom-100 mb-2 left-0 min-w-full" style={{ "marginLeft": "-25px" }}>
+								<div className="relative shadow-md">
+									<div className="bg-black -mt-8 text-white truncate text-xs rounded py-1 px-4">$ 30</div>
+									<svg className="absolute text-black w-full h-2 left-0 top-100" x="0px" y="0px" viewBox="0 0 255 255">
+										<polygon className="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+									</svg>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="absolute text-gray-800 -ml-1 bottom-0 left-0 -mb-6">00:00</div>
+					<div className="absolute text-gray-800 -mr-1 bottom-0 right-0 -mb-6">24:00</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function FilterAcordion({ title, children, alwaysOpen }) {
+	const [open, setOpen] = useState(false);
+	const [height, setHeight] = useState(0);
+
+	const contentRef = useRef(null);
+
+	useEffect(() => {
+		if (alwaysOpen) {
+			setOpen(true);
+		}
+		setHeight(contentRef.current.scrollHeight);
+	}, []);
+
+	const toggleAccordion = () => {
+		setOpen(!open);
+	};
+
+
+	return (
+		<div className="w-full flex flex-col" >
+			<button
+				className={"w-full flex flex-row my-1 border-b"}
+				onClick={toggleAccordion}
+			>
+				<p className="ml-1 block mb-2 flex-1 text-start text-sm text-gray-900 dark:text-gray-300">{title}</p>
+				<span className="ml-3">
+					{!open ? (
+						<svg
+							className="w-5 h-5 "
+							// display only when parent is hovered
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="M19 9l-7 7-7-7"
+							></path>
+						</svg>
+					) : (
+						<svg
+							className="w-5 h-5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="M5 15l7-7 7 7"
+							></path>
+						</svg>
+					)}
+				</span>
+			</button>
+			<div
+				ref={contentRef}
+				style={{ height: `${open ? "150" : "0"}px` }}
+				className="transition-height duration-500 ease-in-out overflow-hidden w-full"
+			>
+				{open ? <div className="w-full z-50 px-2">{children}</div> : <div className="w-full z-50 p-2 invisible">{children}</div>}
+			</div>
+		</div>
+	);
+}
+
+export function AirplaneFilter() {
+	return (
+		<div>
+
 		</div>
 	);
 }

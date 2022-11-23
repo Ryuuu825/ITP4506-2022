@@ -216,7 +216,7 @@ export function LoginForm({ box }) {
                     />
                 </div>
 
-                <div className="text-sm text-black-500 mt-5">
+                <div className="text-sm text-black-500 mt-3">
                     By signing in, you agree to our
                     <span className="text-blue-600 cursor-pointer">
                         {" "}
@@ -284,12 +284,12 @@ export function LoginForm({ box }) {
                 content="Sign in"
                 color={"primary"}
                 disable={!inputed_all}
-                style="w-full mt-5"
+                style="w-full mt-3"
             >
                 Sign in
             </LoadingButton>
 
-            <div className="text-primary text-center text-sm mt-3">
+            <div className="text-primary text-center text-sm mt-2">
                 <span
                     onClick={() => {
                         box.current.classList.add("animate-fade-out-right");
@@ -303,7 +303,7 @@ export function LoginForm({ box }) {
                 </span>
             </div>
 
-            <div className="flex justify-center mt-5 text-center align-middle">
+            <div className="flex justify-center mt-2 text-center align-middle">
                 <span className="text-sm text-black-500">
                     Don't have an account?
                 </span>
