@@ -115,16 +115,15 @@ export function EconomyBox({ selectInfo }) {
 							<p className="text-sm font-bold ml-4">30kg</p>
 						</div>
 						<div className="flex flex-row items-center">
-							<svg version="1.1" id="Layer_1" className="mr-4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-								viewBox="0 0 512.001 512.001" style={{ "enableBackground": "new 0 0 512.001 512.001", "width": "30px" }}>
-								<g>
-									<g>
-										<path d="M401.327,219.485l-14.728-66.726h-162.74L191.758,0L65.892,27.013l67.866,321.185h129.817v100.548
-			c-26.888,5.439-49.761,23.809-60.696,49.862l30.801,12.927c5.666-13.502,16.643-23.583,29.895-28.228v28.695h33.404v-28.695
-			c13.252,4.645,24.228,14.727,29.894,28.228l30.801-12.927c-10.934-26.053-33.808-44.423-60.695-49.862V348.197h149.13v-0.001
-			V219.485H401.327z M237.881,219.483l-7.003-33.323h128.886l7.356,33.323H237.881z"/>
-									</g>
-								</g>
+							<svg version="1.1" className="-scale-x-100 mr-4" fill="currentColor" width="30px" height="30px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+								viewBox="0 0 240.235 240.235" style={{ "enableBackground": "new 0 0 240.235 240.235" }}>
+								<path d="M211.744,6.089C208.081,2.163,203.03,0,197.52,0h-15.143c-11.16,0-21.811,8.942-23.74,19.934l-0.955,5.436
+	c-0.96,5.47,0.332,10.651,3.639,14.589c3.307,3.938,8.186,6.106,13.74,6.106h19.561c2.714,0,5.339-0.542,7.778-1.504l-2.079,17.761
+	c-2.001-0.841-4.198-1.289-6.507-1.289h-22.318c-9.561,0-18.952,7.609-20.936,16.961l-19.732,93.027l-93.099-6.69
+	c-5.031-0.36-9.231,1.345-11.835,4.693c-2.439,3.136-3.152,7.343-2.009,11.847l10.824,42.618
+	c2.345,9.233,12.004,16.746,21.53,16.746h78.049h1.191h39.729c9.653,0,18.336-7.811,19.354-17.411l15.272-143.981
+	c0.087-0.823,0.097-1.634,0.069-2.437l5.227-44.648c0.738-1.923,1.207-3.967,1.354-6.087l0.346-4.97
+	C217.214,15.205,215.407,10.016,211.744,6.089z"/>
 							</svg>
 							<p className="text-sm grow">Seat selection</p>
 							<p className="text-sm ml-4 text-right text-green-700 font-bold w-48">Complimentary (Standard & Forward Zone Seats)</p>
@@ -163,25 +162,8 @@ export function EconomyBox({ selectInfo }) {
 							<p className="text-sm font-bold ml-4">HK$ 780</p>
 						</div>
 						<div className="flex flex-row items-center">
-							<svg version="1.1" id="Layer_1" className="mr-4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-								viewBox="0 0 490.429 490.429" style={{ "enableBackground": "new 0 0 490.429 490.429", "width": "30px" }}>
-								<g>
-									<g>
-										<g>
-											<path d="M136.041,415.881c-27.2,0-56.107-17.387-56.107-49.493v-241.6c0-29.547,18.773-50.24,45.653-50.24h163.2l-35.093,35.093
-				c-4.267,4.053-4.373,10.88-0.213,15.04c4.053,4.267,10.88,4.373,15.04,0.213c0.107-0.107,0.213-0.213,0.213-0.213l53.333-53.333
-				c4.16-4.16,4.16-10.88,0-15.04L268.734,2.975c-4.267-4.053-10.987-3.947-15.04,0.213c-3.947,4.16-3.947,10.667,0,14.827
-				l35.2,35.093h-163.2c-38.933,0.107-67.093,30.187-67.093,71.68v241.6c0,39.68,34.027,70.827,77.44,70.827
-				c5.867,0,10.667-4.8,10.667-10.667C146.708,420.681,141.908,415.881,136.041,415.881z"/>
-											<path d="M364.628,53.215c-5.867,0-10.667,4.8-10.667,10.667c0,5.867,4.8,10.667,10.667,10.667
-				c29.653,0,45.973,16.853,45.973,47.36v240.32c0,26.667-14.293,53.653-46.293,53.653H222.974l35.093-35.093
-				c4.053-4.267,3.947-10.987-0.213-15.04c-4.16-3.947-10.667-3.947-14.827,0l-53.333,53.333c-4.16,4.16-4.16,10.88,0,15.04
-				l53.333,53.333c4.267,4.053,10.987,3.947,15.04-0.213c3.947-4.16,3.947-10.667,0-14.827l-35.093-35.2h141.227
-				c39.787,0,67.627-30.827,67.627-74.987v-240.32C431.934,79.561,406.121,53.215,364.628,53.215z"/>
-										</g>
-									</g>
-								</g>
-							</svg>
+
+							<svg xmlns="http://www.w3.org/2000/svg" className="mr-4 feather feather-refresh-ccw" width="40px" height="30px" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
 							<p className="text-sm grow">Booking change fee<br />(a fare difference may apply)</p>
 							<p className="text-sm ml-4 text-right text-green-700 font-bold w-48">Complimentary</p>
 						</div>
@@ -229,16 +211,15 @@ export function PreEconomyBox({ selectInfo }) {
 							<p className="text-sm font-bold ml-4">35kg</p>
 						</div>
 						<div className="flex flex-row items-center">
-							<svg version="1.1" id="Layer_1" className="mr-4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-								viewBox="0 0 512.001 512.001" style={{ "enableBackground": "new 0 0 512.001 512.001", "width": "30px" }}>
-								<g>
-									<g>
-										<path d="M401.327,219.485l-14.728-66.726h-162.74L191.758,0L65.892,27.013l67.866,321.185h129.817v100.548
-			c-26.888,5.439-49.761,23.809-60.696,49.862l30.801,12.927c5.666-13.502,16.643-23.583,29.895-28.228v28.695h33.404v-28.695
-			c13.252,4.645,24.228,14.727,29.894,28.228l30.801-12.927c-10.934-26.053-33.808-44.423-60.695-49.862V348.197h149.13v-0.001
-			V219.485H401.327z M237.881,219.483l-7.003-33.323h128.886l7.356,33.323H237.881z"/>
-									</g>
-								</g>
+							<svg version="1.1" className="-scale-x-100 mr-4" fill="currentColor" width="30px" height="30px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+								viewBox="0 0 240.235 240.235" style={{ "enableBackground": "new 0 0 240.235 240.235" }}>
+								<path d="M211.744,6.089C208.081,2.163,203.03,0,197.52,0h-15.143c-11.16,0-21.811,8.942-23.74,19.934l-0.955,5.436
+	c-0.96,5.47,0.332,10.651,3.639,14.589c3.307,3.938,8.186,6.106,13.74,6.106h19.561c2.714,0,5.339-0.542,7.778-1.504l-2.079,17.761
+	c-2.001-0.841-4.198-1.289-6.507-1.289h-22.318c-9.561,0-18.952,7.609-20.936,16.961l-19.732,93.027l-93.099-6.69
+	c-5.031-0.36-9.231,1.345-11.835,4.693c-2.439,3.136-3.152,7.343-2.009,11.847l10.824,42.618
+	c2.345,9.233,12.004,16.746,21.53,16.746h78.049h1.191h39.729c9.653,0,18.336-7.811,19.354-17.411l15.272-143.981
+	c0.087-0.823,0.097-1.634,0.069-2.437l5.227-44.648c0.738-1.923,1.207-3.967,1.354-6.087l0.346-4.97
+	C217.214,15.205,215.407,10.016,211.744,6.089z"/>
 							</svg>
 							<p className="text-sm grow">Seat selection</p>
 							<p className="text-sm ml-4 text-right text-green-800 font-bold w-48">Complimentary (Standard & Forward Zone Seats)</p>
@@ -277,30 +258,13 @@ export function PreEconomyBox({ selectInfo }) {
 							<p className="text-sm font-bold ml-4">HK$ 780</p>
 						</div>
 						<div className="flex flex-row items-center">
-							<svg version="1.1" id="Layer_1" className="mr-4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-								viewBox="0 0 490.429 490.429" style={{ "enableBackground": "new 0 0 490.429 490.429", "width": "30px" }}>
-								<g>
-									<g>
-										<g>
-											<path d="M136.041,415.881c-27.2,0-56.107-17.387-56.107-49.493v-241.6c0-29.547,18.773-50.24,45.653-50.24h163.2l-35.093,35.093
-				c-4.267,4.053-4.373,10.88-0.213,15.04c4.053,4.267,10.88,4.373,15.04,0.213c0.107-0.107,0.213-0.213,0.213-0.213l53.333-53.333
-				c4.16-4.16,4.16-10.88,0-15.04L268.734,2.975c-4.267-4.053-10.987-3.947-15.04,0.213c-3.947,4.16-3.947,10.667,0,14.827
-				l35.2,35.093h-163.2c-38.933,0.107-67.093,30.187-67.093,71.68v241.6c0,39.68,34.027,70.827,77.44,70.827
-				c5.867,0,10.667-4.8,10.667-10.667C146.708,420.681,141.908,415.881,136.041,415.881z"/>
-											<path d="M364.628,53.215c-5.867,0-10.667,4.8-10.667,10.667c0,5.867,4.8,10.667,10.667,10.667
-				c29.653,0,45.973,16.853,45.973,47.36v240.32c0,26.667-14.293,53.653-46.293,53.653H222.974l35.093-35.093
-				c4.053-4.267,3.947-10.987-0.213-15.04c-4.16-3.947-10.667-3.947-14.827,0l-53.333,53.333c-4.16,4.16-4.16,10.88,0,15.04
-				l53.333,53.333c4.267,4.053,10.987,3.947,15.04-0.213c3.947-4.16,3.947-10.667,0-14.827l-35.093-35.2h141.227
-				c39.787,0,67.627-30.827,67.627-74.987v-240.32C431.934,79.561,406.121,53.215,364.628,53.215z"/>
-										</g>
-									</g>
-								</g>
-							</svg>
+
+							<svg xmlns="http://www.w3.org/2000/svg" className="mr-4 feather feather-refresh-ccw" width="40px" height="30px" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
 							<p className="text-sm grow">Booking change fee<br />(a fare difference may apply)</p>
 							<p className="text-sm ml-4 text-right text-green-700 font-bold w-48">Complimentary</p>
 						</div>
 						<div className="flex flex-row items-center">
-							<svg width="64px" height="64px" className="mr-4" viewBox="0 0 64 64" style={{ "fill": "black", "stroke": "#000", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "2px", "width": "30px" }} xmlns="http://www.w3.org/2000/svg"><defs>
+							<svg width="30px" height="30px" className="mr-4" viewBox="0 0 64 64" style={{ "fill": "black", "stroke": "#000", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "2px" }} xmlns="http://www.w3.org/2000/svg"><defs>
 							</defs><title /><g data-name="Layer 40" id="Layer_40"><rect height="36.11" rx="2.83" ry="2.83" width="61.63" x="1.2" y="1.14" /><polygon style={{ "fill": "white", "stroke": "black", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "2px" }} points="45.54 28.3 36.44 19.2 45.54 10.1 41.03 5.59 31.93 14.68 22.83 5.59 18.32 10.1 27.42 19.2 18.32 28.3 22.83 32.81 31.93 23.71 41.03 32.81 45.54 28.3" /><rect height="25.67" width="6.5" x="28.71" y="37.25" /></g></svg>
 							<p className="text-sm grow">Not show fee</p>
 							<p className="text-sm ml-4 text-right font-bold w-48">HK$ 1340</p>
