@@ -9,8 +9,9 @@ import {
 } from "../component/DropDown";
 
 import logo from "../logo.svg";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 let SidebarCurrentPos = 0;
 
@@ -59,7 +60,10 @@ function Sidebar() {
                                 </form>
                             </li>
                             <li>
-                                <a className="cursor-pointer text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
+                                <Link
+                                    to="/admin"
+                                    className="cursor-pointer text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+                                >
                                     <svg
                                         className="w-6 h-6  text-gray-500 group-hover:text-gray-900 transition duration-75"
                                         fill="currentColor"
@@ -72,7 +76,7 @@ function Sidebar() {
                                     <span className="ml-3 select-none">
                                         Dashboard
                                     </span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a className="cursor-pointer text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
@@ -94,7 +98,10 @@ function Sidebar() {
                                 </a>
                             </li>
                             <li>
-                                <a className="cursor-pointer text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <Link
+                                    to="/admin/users"
+                                    className="cursor-pointer text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                                >
                                     <svg
                                         className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                         fill="currentColor"
@@ -110,7 +117,7 @@ function Sidebar() {
                                     <span className="ml-3 flex-1 whitespace-nowrap select-none">
                                         Users
                                     </span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a className="text-base cursor-pointer text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
@@ -359,7 +366,9 @@ function Template({ children }) {
                     id="main-content"
                     className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64"
                 >
-                    {children}
+                    <main>
+                        <div className="pt-6 px-4">{children}</div>
+                    </main>
                 </div>
             </div>
         </div>
@@ -373,621 +382,579 @@ export function AdminPageIndex() {
 
     const CTX = () => {
         return (
-            <main>
-                <div className="pt-6 px-4">
-                    <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex-shrink-0">
-                                    <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                        $34,343,456
-                                    </span>
-                                    <h3 className="text-base font-normal text-gray-500">
-                                        Sales this month
-                                    </h3>
-                                </div>
-                                <div className="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                                    12.5%
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
+            <div>
+                <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex-shrink-0">
+                                <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                    $34,343,456
+                                </span>
+                                <h3 className="text-base font-normal text-gray-500">
+                                    Sales this month
+                                </h3>
                             </div>
-                            <div id="main-chart">
-                                {/* use chartjs */}
-
-                                <div className="chart-container">
-                                    <h2
-                                        style={{ textAlign: "center" }}
-                                        className="text-2xl"
-                                    >
-                                        Sales of Flight Tickets
-                                    </h2>
-                                    <Line
-                                        data={{
-                                            labels: [
-                                                "January",
-                                                "February",
-                                                "March",
-                                                "April",
-                                                "May",
-                                                "June",
-                                                "July",
-                                                "August",
-                                                "September",
-                                                "October",
-                                                "November",
-                                                "December",
-                                            ],
-                                            datasets: [
-                                                {
-                                                    label: "Economy",
-                                                    backgroundColor:
-                                                        "rgba(255,99,132,0.2)",
-                                                    borderColor:
-                                                        "rgba(255,99,132,1)",
-                                                    borderWidth: 1,
-                                                    hoverBackgroundColor:
-                                                        "rgba(255,99,132,0.4)",
-                                                    hoverBorderColor:
-                                                        "rgba(255,99,132,1)",
-                                                    data: [
-                                                        32, 39, 10, 23, 25, 70,
-                                                        100, 60, 50, 30, 50,
-                                                        110,
-                                                    ],
-                                                },
-                                                {
-                                                    label: "Business",
-                                                    backgroundColor:
-                                                        "rgba(54, 162, 235, 0.2)",
-                                                    borderColor:
-                                                        "rgba(54, 162, 235, 1)",
-                                                    borderWidth: 1,
-                                                    hoverBackgroundColor:
-                                                        "rgba(54, 162, 235, 0.4)",
-                                                    hoverBorderColor:
-                                                        "rgba(54, 162, 235, 1)",
-                                                    data: [
-                                                        24, 30, 20, 17, 20, 60,
-                                                        80, 50, 56, 27, 37, 92,
-                                                    ],
-                                                },
-                                            ],
-                                        }}
-                                        width={100}
-                                        height={50}
-                                    />
-                                </div>
+                            <div className="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+                                12.5%
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
                             </div>
                         </div>
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                            <div className="mb-4 flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                        Popular Flight Searches
-                                    </h3>
-                                    <span className="text-base font-normal text-gray-500">
-                                        This is a list of the most popular
-                                        flight searches
-                                    </span>
-                                </div>
-                                <div className="flex-shrink-0">
-                                    <a className="text-sm font-medium text-primary-700 hover:bg-gray-100 rounded-lg p-2">
-                                        View all
-                                    </a>
-                                </div>
+                        <div id="main-chart">
+                            {/* use chartjs */}
+
+                            <div className="chart-container">
+                                <h2
+                                    style={{ textAlign: "center" }}
+                                    className="text-2xl"
+                                >
+                                    Sales of Flight Tickets
+                                </h2>
+                                <Line
+                                    data={{
+                                        labels: [
+                                            "January",
+                                            "February",
+                                            "March",
+                                            "April",
+                                            "May",
+                                            "June",
+                                            "July",
+                                            "August",
+                                            "September",
+                                            "October",
+                                            "November",
+                                            "December",
+                                        ],
+                                        datasets: [
+                                            {
+                                                label: "Economy",
+                                                backgroundColor:
+                                                    "rgba(255,99,132,0.2)",
+                                                borderColor:
+                                                    "rgba(255,99,132,1)",
+                                                borderWidth: 1,
+                                                hoverBackgroundColor:
+                                                    "rgba(255,99,132,0.4)",
+                                                hoverBorderColor:
+                                                    "rgba(255,99,132,1)",
+                                                data: [
+                                                    32, 39, 10, 23, 25, 70, 100,
+                                                    60, 50, 30, 50, 110,
+                                                ],
+                                            },
+                                            {
+                                                label: "Business",
+                                                backgroundColor:
+                                                    "rgba(54, 162, 235, 0.2)",
+                                                borderColor:
+                                                    "rgba(54, 162, 235, 1)",
+                                                borderWidth: 1,
+                                                hoverBackgroundColor:
+                                                    "rgba(54, 162, 235, 0.4)",
+                                                hoverBorderColor:
+                                                    "rgba(54, 162, 235, 1)",
+                                                data: [
+                                                    24, 30, 20, 17, 20, 60, 80,
+                                                    50, 56, 27, 37, 92,
+                                                ],
+                                            },
+                                        ],
+                                    }}
+                                    width={100}
+                                    height={50}
+                                />
                             </div>
-                            <div className="flex flex-col mt-8">
-                                <div className="overflow-x-auto rounded-lg">
-                                    <div className="align-middle inline-block min-w-full">
-                                        <div className="shadow overflow-hidden sm:rounded-lg">
-                                            <table className="min-w-full divide-y divide-gray-200">
-                                                <thead className="bg-gray-50">
-                                                    <tr>
-                                                        <th
-                                                            scope="col"
-                                                            className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Destination
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            No. of Searches
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="bg-white overflow-hidden h-50">
-                                                    {[
-                                                        {
-                                                            destination:
-                                                                "London",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "New York",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Paris",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Tokyo",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Sydney",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Dubai",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Singapore",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination:
-                                                                "Hong Kong",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                        {
-                                                            destination: "Rome",
-                                                            searches:
-                                                                Math.round(
-                                                                    Math.random() *
-                                                                        1000
-                                                                ),
-                                                        },
-                                                    ]
-                                                        .sort(
-                                                            (a, b) =>
-                                                                b.searches -
-                                                                a.searches
-                                                        )
-                                                        .map((item, index) => {
-                                                            if (
-                                                                index % 2 ==
-                                                                0
-                                                            ) {
-                                                                return (
-                                                                    <tr
-                                                                        key={
-                                                                            index
+                        </div>
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                        <div className="mb-4 flex items-center justify-between">
+                            <div>
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                    Popular Flight Searches
+                                </h3>
+                                <span className="text-base font-normal text-gray-500">
+                                    This is a list of the most popular flight
+                                    searches
+                                </span>
+                            </div>
+                            <div className="flex-shrink-0">
+                                <a className="text-sm font-medium text-primary-700 hover:bg-gray-100 rounded-lg p-2">
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+                        <div className="flex flex-col mt-8">
+                            <div className="overflow-x-auto rounded-lg">
+                                <div className="align-middle inline-block min-w-full">
+                                    <div className="shadow overflow-hidden sm:rounded-lg">
+                                        <table className="min-w-full divide-y divide-gray-200">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th
+                                                        scope="col"
+                                                        className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                    >
+                                                        Destination
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                    >
+                                                        No. of Searches
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="bg-white overflow-hidden h-50">
+                                                {[
+                                                    {
+                                                        destination: "London",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "New York",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "Paris",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "Tokyo",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "Sydney",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "Dubai",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination:
+                                                            "Singapore",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination:
+                                                            "Hong Kong",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                    {
+                                                        destination: "Rome",
+                                                        searches: Math.round(
+                                                            Math.random() * 1000
+                                                        ),
+                                                    },
+                                                ]
+                                                    .sort(
+                                                        (a, b) =>
+                                                            b.searches -
+                                                            a.searches
+                                                    )
+                                                    .map((item, index) => {
+                                                        if (index % 2 == 0) {
+                                                            return (
+                                                                <tr key={index}>
+                                                                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                        {
+                                                                            item.destination
                                                                         }
-                                                                    >
-                                                                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                                            {
-                                                                                item.destination
-                                                                            }
-                                                                        </td>
-                                                                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                                            {
-                                                                                item.searches
-                                                                            }
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            } else {
-                                                                return (
-                                                                    <tr
-                                                                        key={
-                                                                            index
+                                                                    </td>
+                                                                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                        {
+                                                                            item.searches
                                                                         }
-                                                                        className="bg-gray-50"
-                                                                    >
-                                                                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                                            {
-                                                                                item.destination
-                                                                            }
-                                                                        </td>
-                                                                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                                            {
-                                                                                item.searches
-                                                                            }
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            }
-                                                        })}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <tr
+                                                                    key={index}
+                                                                    className="bg-gray-50"
+                                                                >
+                                                                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                        {
+                                                                            item.destination
+                                                                        }
+                                                                    </td>
+                                                                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                        {
+                                                                            item.searches
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        }
+                                                    })}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                            <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                        {Math.round(Math.random() * 100 + 23)}
-                                    </span>
-                                    <h3 className="text-base font-normal text-gray-500">
-                                        User signups this week
-                                    </h3>
-                                </div>
-                                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                                    14.6%
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
+                </div>
+                <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                    {Math.round(Math.random() * 100 + 23)}
+                                </span>
+                                <h3 className="text-base font-normal text-gray-500">
+                                    User signups this week
+                                </h3>
                             </div>
-                        </div>
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                            <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                        {Math.round(
-                                            Math.random() * 100 + 34023
-                                        )}
-                                    </span>
-                                    <h3 className="text-base font-normal text-gray-500">
-                                        Visitors this week
-                                    </h3>
-                                </div>
-                                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                                    32.9%
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                            <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                        {Math.round(
-                                            Math.random() * 100 + 37789
-                                        )}
-                                    </span>
-                                    <h3 className="text-base font-normal text-gray-500">
-                                        URL clicks this week
-                                    </h3>
-                                </div>
-                                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
-                                    -2.7%
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
+                            <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+                                14.6%
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
-                        <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-xl font-bold leading-none text-gray-900">
-                                    Assigned to me
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                    {Math.round(Math.random() * 100 + 34023)}
+                                </span>
+                                <h3 className="text-base font-normal text-gray-500">
+                                    Visitors this week
                                 </h3>
-                                <a
-                                    href="#"
-                                    className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
-                                >
-                                    View all
-                                </a>
                             </div>
-                            <div className="flow-root">
-                                <ul
-                                    role="list"
-                                    className="divide-y divide-gray-200"
+                            <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+                                32.9%
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <li className="py-3 sm:py-4 hover:bg-gray-100 p-3 rounded-lg">
-                                        <div className="flex items-center space-x-4">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    className="h-8 w-8 rounded-full"
-                                                    src="https://demo.themesberg.com/windster/images/users/neil-sims.png"
-                                                    alt="Neil image"
-                                                />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium text-gray-900 truncate">
-                                                    Please update the price for
-                                                    the new Business class
-                                                    ticket
-                                                </p>
-                                                <p className="text-sm text-gray-500 truncate">
-                                                    Neil Sims
-                                                </p>
-                                            </div>
-                                            <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                                                <svg
-                                                    className="w-5 h-5 mr-2"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                                                        clip-rule="evenodd"
-                                                    ></path>
-                                                </svg>
-                                                2 days
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li className="py-3 sm:py-4 hover:bg-gray-100 p-3 rounded-lg">
-                                        <div className="flex items-center space-x-4">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    className="h-8 w-8 rounded-full"
-                                                    src="https://demo.themesberg.com/windster/images/users/bonnie-green.png"
-                                                    alt="Neil image"
-                                                />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="pr-1 text-sm font-medium text-gray-900 truncate flex flex-row">
-                                                    Reset the password for the
-                                                    staff{" "}
-                                                    <div
-                                                        ref={name}
-                                                        onClick={function () {
-                                                            const NAME =
-                                                                "Bonnie Green";
-                                                            name.current.innerHTML =
-                                                                NAME;
-                                                            name.current.classList.add(
-                                                                "underline"
-                                                            );
-                                                        }}
-                                                        className="ml-1 text-cyan-600 cursor-pointer select-none"
-                                                    >
-                                                        [name hidden]
-                                                    </div>
-                                                </div>
-                                                <p className="text-sm text-gray-500 truncate">
-                                                    Neil Sims
-                                                </p>
-                                            </div>
-                                            <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                                                <svg
-                                                    className="w-5 h-5 mr-2"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                                                        clip-rule="evenodd"
-                                                    ></path>
-                                                </svg>
-                                                4 days
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
                             </div>
                         </div>
-                        <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                            <h3 className="text-xl leading-none font-bold text-gray-900 mb-10">
-                                Acquisition Overview
-                            </h3>
-                            <div className="block w-full overflow-x-auto">
-                                <table className="items-center w-full bg-transparent border-collapse">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                                                Top Channels
-                                            </th>
-                                            <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                                                Users
-                                            </th>
-                                            <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-100">
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                                Organic Search
-                                            </th>
-                                            <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                                5,649
-                                            </td>
-                                            <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        30%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-cyan-600 h-2 rounded-sm w-1/3"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                                Referral
-                                            </th>
-                                            <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                                4,025
-                                            </td>
-                                            <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        24%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-orange-300 h-2 rounded-sm w-[24%]"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                                Direct
-                                            </th>
-                                            <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                                3,105
-                                            </td>
-                                            <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        18%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-teal-400 h-2 rounded-sm w-[18%]"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                                Social
-                                            </th>
-                                            <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                                1251
-                                            </td>
-                                            <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        12%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-pink-600 h-2 rounded-sm w-[12%]"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                                Other
-                                            </th>
-                                            <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                                734
-                                            </td>
-                                            <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        9%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-indigo-600 h-2 rounded-sm w[9%]"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="text-gray-500">
-                                            <th className="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 pb-0 text-left">
-                                                Email
-                                            </th>
-                                            <td className="border-t-0 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4 pb-0">
-                                                456
-                                            </td>
-                                            <td className="border-t-0 align-middle text-xs whitespace-nowrap p-4 pb-0">
-                                                <div className="flex items-center">
-                                                    <span className="mr-2 text-xs font-medium">
-                                                        7%
-                                                    </span>
-                                                    <div className="relative w-full">
-                                                        <div className="w-full bg-gray-200 rounded-sm h-2">
-                                                            <div className="bg-purple-500 h-2 rounded-sm w[7%]"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                    {Math.round(Math.random() * 100 + 37789)}
+                                </span>
+                                <h3 className="text-base font-normal text-gray-500">
+                                    URL clicks this week
+                                </h3>
+                            </div>
+                            <div className="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
+                                -2.7%
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
+                <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+                    <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-xl font-bold leading-none text-gray-900">
+                                Assigned to me
+                            </h3>
+                            <a
+                                href="#"
+                                className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
+                            >
+                                View all
+                            </a>
+                        </div>
+                        <div className="flow-root">
+                            <ul
+                                role="list"
+                                className="divide-y divide-gray-200"
+                            >
+                                <li className="py-3 sm:py-4 hover:bg-gray-100 p-3 rounded-lg">
+                                    <div className="flex items-center space-x-4">
+                                        <div className="flex-shrink-0">
+                                            <img
+                                                className="h-8 w-8 rounded-full"
+                                                src="https://demo.themesberg.com/windster/images/users/neil-sims.png"
+                                                alt="Neil image"
+                                            />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium text-gray-900 truncate">
+                                                Please update the price for the
+                                                new Business class ticket
+                                            </p>
+                                            <p className="text-sm text-gray-500 truncate">
+                                                Neil Sims
+                                            </p>
+                                        </div>
+                                        <div className="inline-flex items-center text-base font-semibold text-gray-900">
+                                            <svg
+                                                className="w-5 h-5 mr-2"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                                                    clip-rule="evenodd"
+                                                ></path>
+                                            </svg>
+                                            2 days
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="py-3 sm:py-4 hover:bg-gray-100 p-3 rounded-lg">
+                                    <div className="flex items-center space-x-4">
+                                        <div className="flex-shrink-0">
+                                            <img
+                                                className="h-8 w-8 rounded-full"
+                                                src="https://demo.themesberg.com/windster/images/users/bonnie-green.png"
+                                                alt="Neil image"
+                                            />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="pr-1 text-sm font-medium text-gray-900 truncate flex flex-row">
+                                                Reset the password for the staff{" "}
+                                                <div
+                                                    ref={name}
+                                                    onClick={function () {
+                                                        const NAME =
+                                                            "Bonnie Green";
+                                                        name.current.innerHTML =
+                                                            NAME;
+                                                        name.current.classList.add(
+                                                            "underline"
+                                                        );
+                                                    }}
+                                                    className="ml-1 text-cyan-600 cursor-pointer select-none"
+                                                >
+                                                    [name hidden]
+                                                </div>
+                                            </div>
+                                            <p className="text-sm text-gray-500 truncate">
+                                                Neil Sims
+                                            </p>
+                                        </div>
+                                        <div className="inline-flex items-center text-base font-semibold text-gray-900">
+                                            <svg
+                                                className="w-5 h-5 mr-2"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                                                    clip-rule="evenodd"
+                                                ></path>
+                                            </svg>
+                                            4 days
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                        <h3 className="text-xl leading-none font-bold text-gray-900 mb-10">
+                            Acquisition Overview
+                        </h3>
+                        <div className="block w-full overflow-x-auto">
+                            <table className="items-center w-full bg-transparent border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                                            Top Channels
+                                        </th>
+                                        <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                                            Users
+                                        </th>
+                                        <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                            Organic Search
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                            5,649
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    30%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-cyan-600 h-2 rounded-sm w-1/3"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                            Referral
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                            4,025
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    24%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-orange-300 h-2 rounded-sm w-[24%]"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                            Direct
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                            3,105
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    18%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-teal-400 h-2 rounded-sm w-[18%]"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                            Social
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                            1251
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    12%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-pink-600 h-2 rounded-sm w-[12%]"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                            Other
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                            734
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    9%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-indigo-600 h-2 rounded-sm w[9%]"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="text-gray-500">
+                                        <th className="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 pb-0 text-left">
+                                            Email
+                                        </th>
+                                        <td className="border-t-0 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4 pb-0">
+                                            456
+                                        </td>
+                                        <td className="border-t-0 align-middle text-xs whitespace-nowrap p-4 pb-0">
+                                            <div className="flex items-center">
+                                                <span className="mr-2 text-xs font-medium">
+                                                    7%
+                                                </span>
+                                                <div className="relative w-full">
+                                                    <div className="w-full bg-gray-200 rounded-sm h-2">
+                                                        <div className="bg-purple-500 h-2 rounded-sm w[7%]"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     };
     return (
@@ -997,17 +964,281 @@ export function AdminPageIndex() {
     );
 }
 
-
 export function AdminPageAccountManagement() {
+    const table = useRef(null);
+
+    const names = ["John Doe", "User", "User23"];
+
+    const states = ["Active", "Offline"];
+
+    const emailStarts = ["john", "user", "user123"];
+
+    const emailEnds = [
+        "@gmail.com",
+        "@yahoo.com",
+        "@hotmail.com",
+        "@vtc.edu.hk.com",
+    ];
+
+    const Row = ({ name, email, state, role }) => {
+        return (
+            <tr className="hover:bg-gray-100 select-none">
+                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {name}
+                </th>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                    <div className="flex flex-row items-center">
+                        {state === "Active" ? (
+                            <div
+                                className=" bg-green-700
+                    rounded-full w-3 h-3 mr-2"
+                            ></div>
+                        ) : (
+                            <div
+                                className=" bg-red-700
+                    rounded-full w-3 h-3 mr-2"
+                            ></div>
+                        )}
+                        {state}
+                    </div>
+                </td>
+                <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {role}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {email}
+                </td>
+                <td class="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <div className="cursor-pointer">
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                sctroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                            ></path>
+                        </svg>
+                    </div>
+                </td>
+            </tr>
+        );
+    };
+
+
     const CTX = () => {
         return (
             <>
+                <main>
+                    <div className="body-font text-4xl p-3 font-semibold  text-blueGray-700">
+                        Users
+                    </div>
+                    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+                        <div class="rounded-t mb-0 px-4 py-3 border-0">
+                            <div class="flex flex-row flex-wrap items-center justify-between">
+                                <div class="relative px-4 max-w-full ">
+                                    <h3 class="font-semibold text-base text-blueGray-700">
+                                        Account Management
+                                    </h3>
+                                </div>
+                                <div class="relative px-4 max-w-full">
+                                    <div class=" bg-primary cursor-pointer flex flex-row items-center text-white active:primary text-xs font-bold uppercase px-3 py-1.5 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                                            ></path>
+                                        </svg>
+                                        <span class="ml-2">Add User</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block w-full overflow-scroll h-[500px]">
+                            <table class="items-center bg-transparent w-full border-collapse ">
+                                <thead>
+                                    <tr>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Users
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            State
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Role
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Email
+                                        </th>
+                                        <th class=" bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody ref={table} className="">
+                                    {[
+                                        {
+                                            name: "Admin",
+                                            state: "Active",
+                                            role: "Admin",
+                                            email: "123@gmail.com",
+                                        },
+                                        {
+                                            name: "Admin123",
+                                            state: "Active",
+                                            role: "Admin",
+                                            email: "456@gmail.com",
+                                        },
+                                        {
+                                            name: "Operator",
+                                            state: "Active",
+                                            role: "Operator",
+                                            email: "staff-1@ive-airline.org",
+                                        },
+                                        {
+                                            name: "Operator12321",
+                                            state: "Active",
+                                            role: "Operator",
+                                            email: "staff-123@ive-airline.org",
+                                        },
+                                        {
+                                            name: "Operator176",
+                                            state: "Offline",
+                                            role: "Operator",
+                                            email: "staff-13233@ive-airline.org",
+                                        },
+                                        {
+                                            name: "Lee Kai Ming",
+                                            state: "Offline",
+                                            role: "Operator",
+                                            email: "ken@stu.vtc.edu.hk",
+                                        },
+                                        {
+                                            name: "Pan Bin Bin",
+                                            state: "Active",
+                                            role: "Admin",
+                                            email: "staff-1@ive-airline.org",
+                                        },
+                                    ].map((item, index) => {
+                                        return (
+                                            <Row
+                                                key={index}
+                                                name={item.name}
+                                                state={item.state}
+                                                role={item.role}
+                                                email={item.email}
+                                            />
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                            {/* Load more */}
+                            <div
+                                className="w-full flex justify-center py-5 "
+                                onClick={() => {
+                                    for (let i = 0; i < 5; i++) {
+                                        // random generate a new user
+                                        const newUser = {
+                                            name: names[
+                                                Math.floor(
+                                                    Math.random() * names.length
+                                                )
+                                            ],
+                                            state: states[
+                                                Math.floor(
+                                                    Math.random() *
+                                                        states.length
+                                                )
+                                            ],
+                                            role: "Users",
+                                            email:
+                                                emailStarts[
+                                                    Math.floor(
+                                                        Math.random() *
+                                                            emailStarts.length
+                                                    )
+                                                ] +
+                                                emailEnds[
+                                                    Math.floor(
+                                                        Math.random() *
+                                                            emailEnds.length
+                                                    )
+                                                ],
+                                        };
+
+                                        // add to the table
+                                        table.current.innerHTML += `
+                                        <tr class="hover:bg-gray-100 select-none">
+                                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                            ${newUser.name}
+                                        </th>
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            <div class="flex flex-row items-center">
+                                                ${
+                                                    newUser.state === "Active"
+                                                        ? "<div class=' bg-green-700 rounded-full w-3 h-3 mr-2'></div>"
+                                                        : "<div class=' bg-red-700 rounded-full w-3 h-3 mr-2'></div>"
+                                                }
+                                                ${newUser.state}
+                                            </div>
+                                        </td>
+                                        <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            ${newUser.role}
+                                        </td>
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            ${newUser.email}
+                                        </td>
+                                        <td class="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <div class="cursor-pointer">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        sctroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                                                    ></path>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    `;
+                                    }
+                                }}
+                            >
+                                <div className="bg-primary w-fit select-none hover:bg-primary-800 text-white font-bold py-2 px-4 rounded absolute bottom-4 shadow-2xl">
+                                    Load More
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
             </>
         );
-    }
+    };
     return (
         <Template>
             <CTX />
         </Template>
-    )
-};
+    );
+}

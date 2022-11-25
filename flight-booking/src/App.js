@@ -12,7 +12,7 @@ import SearchBox from "./layout/FilterBox";
 import SearchPage from "./pages/SearchPage";
 import { ToastContainer } from "react-toastify";
 import TranscationPage from "./pages/TranscationPage";
-import { AdminPageIndex } from "./pages/adminpage";
+import { AdminPageAccountManagement, AdminPageIndex } from "./pages/adminpage";
 
 function Main() {
 
@@ -65,6 +65,7 @@ function App() {
                     </Route>
                     <Route path="/admin">
                         <Route index element={<AdminPageIndex />} />
+                        <Route path="users" element={<AdminPageAccountManagement />} />
                     </Route>
                     <Route path="/search/:dest/:date"  element={<SearchPage />} />
                     <Route path="/transcation"  element={<TranscationPage />} />
