@@ -1927,7 +1927,7 @@ export function SignUp() {
                                     }, 1000);
 
                                     setStep(2);
-                                } else {
+                                } else if (step === 4) {
                                     // stepFour.current.classList.add(
                                     //     "animate-fade-out-right"
                                     // );
