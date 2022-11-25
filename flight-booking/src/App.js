@@ -12,9 +12,9 @@ import SearchBox from "./layout/FilterBox";
 import SearchPage from "./pages/SearchPage";
 import { ToastContainer } from "react-toastify";
 import TranscationPage from "./pages/TranscationPage";
+import { AdminPageIndex } from "./pages/adminpage";
 
 function Main() {
-    const [count, setCount] = useState(0); // useState will cause re-render
 
     return (
         <div className="App">
@@ -62,6 +62,9 @@ function App() {
                     <Route path="/forgot-pw" element={<ForgotPassword />} />
                     <Route path="/operator">
                         <Route  path="reset-pw" element={<OperatorResetPw />} />
+                    </Route>
+                    <Route path="/admin">
+                        <Route index element={<AdminPageIndex />} />
                     </Route>
                     <Route path="/search/:dest/:date"  element={<SearchPage />} />
                     <Route path="/transcation"  element={<TranscationPage />} />
