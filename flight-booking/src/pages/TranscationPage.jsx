@@ -321,9 +321,8 @@ function TopBox({ data }) {
 	const [height, setHeight] = useState(135);
 
 	return (
-		<div style={{ "height": height + "px" }} className="overflow-hidden transition-height duration-1000 ease-in-out">
-			<div  className=" flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full "
-			style={{ "backgroundColor": "#003366" }}
+			<div  className=" flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full overflow-hidden transition-height duration-1000 ease-in-out"
+			style={{ "backgroundColor": "#003366" , "height": height + "px" }}
 		>
 			<div className="flex flex-row w-4/5">
 				<label className="text-xl font-bold m-auto border px-4 py-2">Flight</label>
@@ -460,7 +459,6 @@ function TopBox({ data }) {
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	);
 }
