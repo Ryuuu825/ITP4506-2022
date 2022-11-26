@@ -12,6 +12,9 @@ import logo from "../logo.svg";
 import React, { useState } from "react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import Modal from "../component/Modal";
+import ConfirmModal from "../component/Modal";
 
 let SidebarCurrentPos = 0;
 
@@ -980,7 +983,103 @@ export function AdminPageAccountManagement() {
         "@vtc.edu.hk.com",
     ];
 
-    const Row = ({ name, email, state, role }) => {
+    const [items, setItems] = useState([
+        {
+            name: "Admin",
+            state: "Active",
+            role: "Admin",
+            email: "123@gmail.com",
+        },
+        {
+            name: "Admin123",
+            state: "Active",
+            role: "Admin",
+            email: "456@gmail.com",
+        },
+        {
+            name: "Operator",
+            state: "Active",
+            role: "Operator",
+            email: "staff-1@ive-airline.org",
+        },
+        {
+            name: "Operator12321",
+            state: "Active",
+            role: "Operator",
+            email: "staff-123@ive-airline.org",
+        },
+        {
+            name: "Operator176",
+            state: "Offline",
+            role: "Operator",
+            email: "staff-13233@ive-airline.org",
+        },
+        {
+            name: "Lee Kai Ming",
+            state: "Offline",
+            role: "Operator",
+            email: "ken@stu.vtc.edu.hk",
+        },
+        {
+            name: "Pan Bin Bin",
+            state: "Active",
+            role: "Admin",
+            email: "staff-1@ive-airline.org",
+        },
+        {
+            name: "Cheng Yat Ming",
+            state: "Active",
+            role: "Admin",
+            email: "adminkj@ive.vtc.edu.hk",
+        },
+        {
+            name: "Cheng Siu Ming",
+            state: "Active",
+            role: "Operator",
+            email: "aOperatorkj@ive.vtc.edu.hk",
+        },
+        {
+            name: "Chan Tsz Yan",
+            state: "Active",
+            role: "User",
+            email: "users@ive.vtc.edu.hk",
+        },
+        {
+            name: "Test Admin",
+            state: "Active",
+            role: "Admin",
+            email: "testcasefile@ive.vtc.edu.hk",
+        },
+        {
+            name: "Lai Yat Jai",
+            state: "Active",
+            role: "Operator",
+            email: "laijar@ive.vtc.edu.hk",
+        },
+    ]);
+    useEffect(() => {}, [items]);
+
+    const Row = ({ name, email, state, role, emailRef, modal }) => {
+        const [showDropDown, setShowDropDown] = useState(false);
+        const d = useRef(null);
+        // click outside to close dropdown
+        useEffect(() => {
+            const handleClickOutside = (event) => {
+                if (
+                    // if click anywhere is not d
+                    d.current &&
+                    !d.current.contains(event.target) &&
+                    showDropDown
+                ) {
+                    setShowDropDown(false);
+                }
+            };
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [showDropDown]);
+
         return (
             <tr className="hover:bg-gray-100 select-none">
                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
@@ -1009,7 +1108,13 @@ export function AdminPageAccountManagement() {
                     {email}
                 </td>
                 <td class="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <div className="cursor-pointer">
+                    <div
+                        ref={d}
+                        className="cursor-pointer"
+                        onClick={() => {
+                            setShowDropDown(!showDropDown);
+                        }}
+                    >
                         <svg
                             class="w-5 h-5"
                             fill="none"
@@ -1024,20 +1129,43 @@ export function AdminPageAccountManagement() {
                                 d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
                             ></path>
                         </svg>
+                        {showDropDown && (
+                            <div className="absolute bg-white rounded-md shadow-md w-32 mt-2">
+                                <div
+                                    className="cursor-pointer hover:bg-gray-100 p-2"
+                                    onClick={() => {
+                                        emailRef.current = email;
+                                        modal(true);
+                                    }}
+                                >
+                                    Delete
+                                </div>
+                                <div
+                                    className="cursor-pointer hover:bg-gray-100 p-2"
+                                    onClick={() => {}}
+                                >
+                                    Edit
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </td>
             </tr>
         );
     };
 
-
     const CTX = () => {
+        const [showModal, setShowModal] = useState(false);
+
+        const email = useRef(null);
+
         return (
             <>
                 <main>
                     <div className="body-font text-4xl p-3 font-semibold  text-blueGray-700">
                         Users
                     </div>
+
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                         <div class="rounded-t mb-0 px-4 py-3 border-0">
                             <div class="flex flex-row flex-wrap items-center justify-between">
@@ -1068,21 +1196,188 @@ export function AdminPageAccountManagement() {
                             </div>
                         </div>
 
-                        <div class="block w-full overflow-scroll h-[500px]">
+                        <div class="block w-full overflow-scroll h-[583px]">
+                            <ConfirmModal
+                                onClose={() => {
+                                    setShowModal(!showModal);
+                                }}
+                                show={showModal}
+                                onConfirm={() => {
+                                    console.log(email.current);
+                                    setItems(
+                                        items.filter((item) => {
+                                            return item.email !== email.current;
+                                        })
+                                    );
+                                }}
+                            >
+                                <div className="text-2xl">
+                                    Do you want to delete this user?
+                                </div>
+                            </ConfirmModal>
                             <table class="items-center bg-transparent w-full border-collapse ">
                                 <thead>
                                     <tr>
                                         <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                            Users
+                                            <div className="flex flex-row items-center">
+                                                <span className="mr-1">
+                                                    Users
+                                                </span>
+                                                <div
+                                                    className="cursor-pointer"
+                                                    onClick={() => {
+                                                        const temp = [...items];
+                                                        temp.sort((a, b) => {
+                                                            if (a.name < b.name)
+                                                                return -1;
+                                                            if (a.name > b.name)
+                                                                return 1;
+                                                            return 0;
+                                                        });
+                                                        setItems(temp);
+                                                    }}
+                                                >
+                                                    <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 9l-7 7-7-7"
+                                                        ></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                            State
+                                            <div className="flex flex-row items-center">
+                                                <span className="mr-1">
+                                                    State
+                                                </span>
+                                                <div
+                                                    className="cursor-pointer"
+                                                    onClick={() => {
+                                                        // sort the state
+
+                                                        const temp = [...items];
+                                                        temp.sort((a, b) => {
+                                                            if (
+                                                                a.state <
+                                                                b.state
+                                                            ) {
+                                                                return -1;
+                                                            }
+                                                            if (
+                                                                a.state >
+                                                                b.state
+                                                            ) {
+                                                                return 1;
+                                                            }
+                                                            return 0;
+                                                        });
+
+                                                        setItems(temp);
+                                                    }}
+                                                >
+                                                    <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 9l-7 7-7-7"
+                                                        ></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                            Role
+                                            <div className="flex flex-row items-center">
+                                                <span className="mr-1">
+                                                    Role
+                                                </span>
+                                                <div
+                                                    className="cursor-pointer"
+                                                    onClick={() => {
+                                                        const temp = [...items];
+                                                        temp.sort((a, b) => {
+                                                            if (a.role < b.role)
+                                                                return -1;
+                                                            if (a.role > b.role)
+                                                                return 1;
+                                                            return 0;
+                                                        });
+                                                        setItems(temp);
+                                                    }}
+                                                >
+                                                    <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 9l-7 7-7-7"
+                                                        ></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                            Email
+                                            <div className="flex flex-row items-center">
+                                                <span className="mr-1">
+                                                    Email
+                                                </span>
+                                                <div
+                                                    className="cursor-pointer"
+                                                    onClick={() => {
+                                                        const temp = [...items];
+                                                        temp.sort((a, b) => {
+                                                            if (
+                                                                a.email <
+                                                                b.email
+                                                            )
+                                                                return -1;
+                                                            if (
+                                                                a.email >
+                                                                b.email
+                                                            )
+                                                                return 1;
+                                                            return 0;
+                                                        });
+                                                        setItems(temp);
+                                                    }}
+                                                >
+                                                    <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 9l-7 7-7-7"
+                                                        ></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th class=" bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Actions
@@ -1091,50 +1386,7 @@ export function AdminPageAccountManagement() {
                                 </thead>
 
                                 <tbody ref={table} className="">
-                                    {[
-                                        {
-                                            name: "Admin",
-                                            state: "Active",
-                                            role: "Admin",
-                                            email: "123@gmail.com",
-                                        },
-                                        {
-                                            name: "Admin123",
-                                            state: "Active",
-                                            role: "Admin",
-                                            email: "456@gmail.com",
-                                        },
-                                        {
-                                            name: "Operator",
-                                            state: "Active",
-                                            role: "Operator",
-                                            email: "staff-1@ive-airline.org",
-                                        },
-                                        {
-                                            name: "Operator12321",
-                                            state: "Active",
-                                            role: "Operator",
-                                            email: "staff-123@ive-airline.org",
-                                        },
-                                        {
-                                            name: "Operator176",
-                                            state: "Offline",
-                                            role: "Operator",
-                                            email: "staff-13233@ive-airline.org",
-                                        },
-                                        {
-                                            name: "Lee Kai Ming",
-                                            state: "Offline",
-                                            role: "Operator",
-                                            email: "ken@stu.vtc.edu.hk",
-                                        },
-                                        {
-                                            name: "Pan Bin Bin",
-                                            state: "Active",
-                                            role: "Admin",
-                                            email: "staff-1@ive-airline.org",
-                                        },
-                                    ].map((item, index) => {
+                                    {items.map((item, index) => {
                                         return (
                                             <Row
                                                 key={index}
@@ -1142,6 +1394,8 @@ export function AdminPageAccountManagement() {
                                                 state={item.state}
                                                 role={item.role}
                                                 email={item.email}
+                                                emailRef={email}
+                                                modal={setShowModal}
                                             />
                                         );
                                     })}
@@ -1151,6 +1405,7 @@ export function AdminPageAccountManagement() {
                             <div
                                 className="w-full flex justify-center py-5 "
                                 onClick={() => {
+                                    const temp = [];
                                     for (let i = 0; i < 5; i++) {
                                         // random generate a new user
                                         const newUser = {
@@ -1182,48 +1437,10 @@ export function AdminPageAccountManagement() {
                                         };
 
                                         // add to the table
-                                        table.current.innerHTML += `
-                                        <tr class="hover:bg-gray-100 select-none">
-                                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                                            ${newUser.name}
-                                        </th>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            <div class="flex flex-row items-center">
-                                                ${
-                                                    newUser.state === "Active"
-                                                        ? "<div class=' bg-green-700 rounded-full w-3 h-3 mr-2'></div>"
-                                                        : "<div class=' bg-red-700 rounded-full w-3 h-3 mr-2'></div>"
-                                                }
-                                                ${newUser.state}
-                                            </div>
-                                        </td>
-                                        <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            ${newUser.role}
-                                        </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            ${newUser.email}
-                                        </td>
-                                        <td class="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <div class="cursor-pointer">
-                                                <svg
-                                                    class="w-5 h-5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        sctroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                                                    ></path>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    `;
+                                        temp.push(newUser);
                                     }
+
+                                    setItems([...items, ...temp]);
                                 }}
                             >
                                 <div className="bg-primary w-fit select-none hover:bg-primary-800 text-white font-bold py-2 px-4 rounded absolute bottom-4 shadow-2xl">
