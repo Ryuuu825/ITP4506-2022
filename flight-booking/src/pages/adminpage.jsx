@@ -16,7 +16,12 @@ import { useEffect } from "react";
 import { FloatingLabel } from "../component/Form";
 import { Button } from "flowbite-react";
 
+import ToggleSwitch from "../component/toggleswitch";
+
 import { Modal } from "flowbite-react";
+import Breadcrumb from "../component/Breadcrumb";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let SidebarCurrentPos = 0;
 
@@ -369,9 +374,9 @@ function Template({ children }) {
                 ></div>
                 <div
                     id="main-content"
-                    className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64"
+                    className="h-full w-full bg-gray-50 relative lg:ml-64"
                 >
-                    <main className="h-[95vh] w-full">
+                    <main className=" w-full">
                         <div className="pt-6 px-4 h-full w-full">
                             {children}
                         </div>
@@ -390,7 +395,7 @@ export function AdminPageIndex() {
     const CTX = () => {
         return (
             <div>
-                <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+                <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 ">
                     <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex-shrink-0">
@@ -1160,8 +1165,9 @@ export function AdminPageAccountManagement() {
 
     const CTX = () => {
         const [showModal, setShowModal] = useState(false);
-        const [confirmDeleteUserModal, setConfirmDeleteUserModal] = useState(false);
-        
+        const [confirmDeleteUserModal, setConfirmDeleteUserModal] =
+            useState(false);
+
         const email = useRef(null);
 
         return (
@@ -1180,7 +1186,8 @@ export function AdminPageAccountManagement() {
                                     </h3>
                                 </div>
                                 <div class="relative px-4 max-w-full">
-                                    <Button class=" bg-primary cursor-pointer flex flex-row items-center text-white active:primary text-xs font-bold uppercase px-3 py-1.5 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    <Button
+                                        class=" bg-primary cursor-pointer flex flex-row items-center text-white active:primary text-xs font-bold uppercase px-3 py-1.5 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         onClick={() => {
                                             setShowModal(true);
                                         }}
@@ -1206,52 +1213,75 @@ export function AdminPageAccountManagement() {
                         </div>
 
                         <div class="block w-full overflow-scroll h-[75vh]">
-                        <Modal show={showModal} onClose={()=>{setShowModal(false)}}>
-                            <Modal.Header>
-                                <div class="text-3xl pt-3 leading-6 font-bold text-gray-900">
-                                    Add Operator Account
-                                </div>
-                            </Modal.Header>
-                            <Modal.Body className="bg-gray-50">
-                                <AdminPageAccountManagement_AddUser />
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button color="gray" onClick={() => {
-                                        setShowModal(false);
-                                    }}>
-                                    Back
-                                </Button>
-                                <Button 
-                                    className="bg-primary"
-                                    onClick={() => {
-                                        setShowModal(false);
-                                    }}
-                                >Create</Button>
-                            </Modal.Footer>
-                        </Modal>
+                            <Modal
+                                show={showModal}
+                                onClose={() => {
+                                    setShowModal(false);
+                                }}
+                            >
+                                <Modal.Header>
+                                    <div class="text-3xl pt-3 leading-6 font-bold text-gray-900">
+                                        Add Operator Account
+                                    </div>
+                                </Modal.Header>
+                                <Modal.Body className="bg-gray-50">
+                                    <AdminPageAccountManagement_AddUser />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button
+                                        color="gray"
+                                        onClick={() => {
+                                            setShowModal(false);
+                                        }}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        className="bg-primary"
+                                        onClick={() => {
+                                            setShowModal(false);
+                                        }}
+                                    >
+                                        Create
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
 
-                        <Modal show={confirmDeleteUserModal} onClose={()=>{setConfirmDeleteUserModal(false)}}>
-                            <Modal.Header>
-                                Are you sure you want to delete this user?
-                            </Modal.Header>
-                            <Modal.Footer>
-                                
-                                <Button color="gray"
-                                    onClick={() => {
-                                        setConfirmDeleteUserModal(false);
-                                    }}
-                                >
-                                    Back
-                                </Button>
-                                <Button 
-                                    className="bg-red-700 hover:bg-red-800"
-                                    onClick={() => {
-                                        setConfirmDeleteUserModal(false);
-                                        setItems(items.filter((item) => item.email !== email.current));
-                                    }}
-                                >Delete</Button>
-                            </Modal.Footer>
-                        </Modal>
+                            <Modal
+                                show={confirmDeleteUserModal}
+                                onClose={() => {
+                                    setConfirmDeleteUserModal(false);
+                                }}
+                            >
+                                <Modal.Header>
+                                    Are you sure you want to delete this user?
+                                </Modal.Header>
+                                <Modal.Footer>
+                                    <Button
+                                        color="gray"
+                                        onClick={() => {
+                                            setConfirmDeleteUserModal(false);
+                                        }}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        className="bg-red-700 hover:bg-red-800"
+                                        onClick={() => {
+                                            setConfirmDeleteUserModal(false);
+                                            setItems(
+                                                items.filter(
+                                                    (item) =>
+                                                        item.email !==
+                                                        email.current
+                                                )
+                                            );
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                             <table class="items-center bg-transparent w-full border-collapse ">
                                 <thead>
                                     <tr>
@@ -1432,7 +1462,9 @@ export function AdminPageAccountManagement() {
                                                 role={item.role}
                                                 email={item.email}
                                                 emailRef={email}
-                                                modal={setConfirmDeleteUserModal}
+                                                modal={
+                                                    setConfirmDeleteUserModal
+                                                }
                                             />
                                         );
                                     })}
@@ -1497,7 +1529,7 @@ export function AdminPageAccountManagement() {
     );
 }
 
-export function AdminPageAccountManagement_AddUser() {
+function AdminPageAccountManagement_AddUser() {
     const CTX = () => {
         const email = useRef("");
         const password = useRef("");
@@ -1594,210 +1626,203 @@ export function AdminPageAccountManagement_AddUser() {
         return (
             <>
                 <div className="h-full w-full ">
-                    
                     <div className="h-full w-full flex justify-center items-center">
                         <div className="w-full h-3/4">
-                                <div className="flex h-full w-full bg-gray-50  rounded-lg mt-4">
-                                    {/* email, password, role (radio) */}
-                                    <div className="flex flex-col mx-auto h-full p-4 w-3/4">
-                                        <div className="flex flex-col w-full mt-5">
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Email
-                                                </div>
-                                                <div className="w-full">
-                                                    <FloatingLabel
-                                                        placeholder={"Email"}
-                                                        type="email"
-                                                        handler={(e) => {
-                                                            email.current =
-                                                                e.value;
-                                                        }}
-                                                        validate={emailValid}
-                                                        error_message="Email format is not valid"
-                                                    />
-                                                </div>
+                            <div className="flex h-full w-full bg-gray-50  rounded-lg mt-4">
+                                {/* email, password, role (radio) */}
+                                <div className="flex flex-col mx-auto h-full p-4 w-3/4">
+                                    <div className="flex flex-col w-full mt-5">
+                                        <div>
+                                            <div className="text-xl font-bold">
+                                                Email
                                             </div>
-
-                                            <div>
-                                                <div className="text-xl font-bold mt-5">
-                                                    Password
-                                                </div>
-                                                <div
-                                                    className="w-full relative"
-                                                    id="password"
-                                                    onMouseEnter={() => {
-                                                        setTooltipStatus(1);
+                                            <div className="w-full">
+                                                <FloatingLabel
+                                                    placeholder={"Email"}
+                                                    type="email"
+                                                    handler={(e) => {
+                                                        email.current = e.value;
                                                     }}
-                                                >
-                                                    <FloatingLabel
-                                                        placeholder={"Password"}
-                                                        type="password"
-                                                        id={"r_password"}
-                                                        handler={(e) => {
+                                                    validate={emailValid}
+                                                    error_message="Email format is not valid"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-xl font-bold mt-5">
+                                                Password
+                                            </div>
+                                            <div
+                                                className="w-full relative"
+                                                id="password"
+                                                onMouseEnter={() => {
+                                                    setTooltipStatus(1);
+                                                }}
+                                            >
+                                                <FloatingLabel
+                                                    placeholder={"Password"}
+                                                    type="password"
+                                                    id={"r_password"}
+                                                    handler={(e) => {
+                                                        setPwCheckListItem1Status(
+                                                            false
+                                                        );
+                                                        setPwCheckListItem2Status(
+                                                            false
+                                                        );
+                                                        setPwCheckListItem3Status(
+                                                            false
+                                                        );
+                                                        setPwCheckListItem4Status(
+                                                            false
+                                                        );
+                                                        setPwCheckListItem5Status(
+                                                            false
+                                                        );
+
+                                                        if (
+                                                            e.target.value
+                                                                .length >= 8
+                                                        ) {
                                                             setPwCheckListItem1Status(
-                                                                false
+                                                                true
                                                             );
-                                                            setPwCheckListItem2Status(
-                                                                false
-                                                            );
+                                                        }
+
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[a-z]/g
+                                                            )
+                                                        ) {
                                                             setPwCheckListItem3Status(
-                                                                false
+                                                                true
                                                             );
+                                                        }
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[A-Z]/g
+                                                            )
+                                                        ) {
+                                                            setPwCheckListItem2Status(
+                                                                true
+                                                            );
+                                                        }
+
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[0-9]/g
+                                                            )
+                                                        ) {
                                                             setPwCheckListItem4Status(
-                                                                false
+                                                                true
                                                             );
+                                                        }
+
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+                                                            )
+                                                        ) {
                                                             setPwCheckListItem5Status(
-                                                                false
+                                                                true
                                                             );
+                                                        }
 
-                                                            if (
-                                                                e.target.value
-                                                                    .length >= 8
-                                                            ) {
-                                                                setPwCheckListItem1Status(
-                                                                    true
-                                                                );
-                                                            }
-
-                                                            if (
-                                                                e.target.value.match(
-                                                                    /[a-z]/g
-                                                                )
-                                                            ) {
-                                                                setPwCheckListItem3Status(
-                                                                    true
-                                                                );
-                                                            }
-                                                            if (
-                                                                e.target.value.match(
-                                                                    /[A-Z]/g
-                                                                )
-                                                            ) {
-                                                                setPwCheckListItem2Status(
-                                                                    true
-                                                                );
-                                                            }
-
-                                                            if (
-                                                                e.target.value.match(
-                                                                    /[0-9]/g
-                                                                )
-                                                            ) {
-                                                                setPwCheckListItem4Status(
-                                                                    true
-                                                                );
-                                                            }
-
-                                                            if (
-                                                                e.target.value.match(
-                                                                    /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-                                                                )
-                                                            ) {
-                                                                setPwCheckListItem5Status(
-                                                                    true
-                                                                );
-                                                            }
-
-                                                            password.current =
-                                                                e.target.value;
-                                                        }}
-                                                        validate={true}
-                                                        error_message="Password must be at least 8 characters"
-                                                    />
-                                                    {tooltipStatus == 1 && (
-                                                        <div
-                                                            role="tooltip"
-                                                            className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-100 p-4 rounded"
+                                                        password.current =
+                                                            e.target.value;
+                                                    }}
+                                                    validate={true}
+                                                    error_message="Password must be at least 8 characters"
+                                                />
+                                                {tooltipStatus == 1 && (
+                                                    <div
+                                                        role="tooltip"
+                                                        className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-100 p-4 rounded"
+                                                    >
+                                                        <svg
+                                                            className="absolute left-0 -ml-2 bottom-0 top-0 h-full "
+                                                            width="9px"
+                                                            height="16px"
+                                                            viewBox="0 0 9 16"
+                                                            version="1.1"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlnsXlink="http://www.w3.org/1999/xlink"
                                                         >
-                                                            <svg
-                                                                className="absolute left-0 -ml-2 bottom-0 top-0 h-full "
-                                                                width="9px"
-                                                                height="16px"
-                                                                viewBox="0 0 9 16"
-                                                                version="1.1"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                            <g
+                                                                id="Page-1"
+                                                                stroke="none"
+                                                                strokeWidth={1}
+                                                                fill="none"
+                                                                fillRule="evenodd"
                                                             >
                                                                 <g
-                                                                    id="Page-1"
-                                                                    stroke="none"
-                                                                    strokeWidth={
-                                                                        1
-                                                                    }
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
+                                                                    id="Tooltips-"
+                                                                    transform="translate(-874.000000, -1029.000000)"
+                                                                    fill="rgb(243 244 246)"
                                                                 >
                                                                     <g
-                                                                        id="Tooltips-"
-                                                                        transform="translate(-874.000000, -1029.000000)"
-                                                                        fill="rgb(243 244 246)"
+                                                                        id="Group-3-Copy-16"
+                                                                        transform="translate(850.000000, 975.000000)"
                                                                     >
                                                                         <g
-                                                                            id="Group-3-Copy-16"
-                                                                            transform="translate(850.000000, 975.000000)"
+                                                                            id="Group-2"
+                                                                            transform="translate(24.000000, 0.000000)"
                                                                         >
-                                                                            <g
-                                                                                id="Group-2"
-                                                                                transform="translate(24.000000, 0.000000)"
-                                                                            >
-                                                                                <polygon
-                                                                                    id="Triangle"
-                                                                                    transform="translate(4.500000, 62.000000) rotate(-90.000000) translate(-4.500000, -62.000000) "
-                                                                                    points="4.5 57.5 12.5 66.5 -3.5 66.5"
-                                                                                />
-                                                                            </g>
+                                                                            <polygon
+                                                                                id="Triangle"
+                                                                                transform="translate(4.500000, 62.000000) rotate(-90.000000) translate(-4.500000, -62.000000) "
+                                                                                points="4.5 57.5 12.5 66.5 -3.5 66.5"
+                                                                            />
                                                                         </g>
                                                                     </g>
                                                                 </g>
-                                                            </svg>
-                                                            <div className="font-bold text-black pb-3 ">
-                                                                Password must be
-                                                                at least
-                                                            </div>
-                                                            <Checker
-                                                                message={
-                                                                    "8 characters"
-                                                                }
-                                                                type={
-                                                                    pwCheckListItem1Status
-                                                                }
-                                                            />
-                                                            <Checker
-                                                                message={
-                                                                    "1 uppercase letter"
-                                                                }
-                                                                type={
-                                                                    pwCheckListItem2Status
-                                                                }
-                                                            />
-                                                            <Checker
-                                                                message={
-                                                                    "1 lowercase letter"
-                                                                }
-                                                                type={
-                                                                    pwCheckListItem3Status
-                                                                }
-                                                            />
-                                                            <Checker
-                                                                message={
-                                                                    "1 number"
-                                                                }
-                                                                type={
-                                                                    pwCheckListItem4Status
-                                                                }
-                                                            />
-                                                            <Checker
-                                                                message={
-                                                                    "1 special character"
-                                                                }
-                                                                type={
-                                                                    pwCheckListItem5Status
-                                                                }
-                                                            />
+                                                            </g>
+                                                        </svg>
+                                                        <div className="font-bold text-black pb-3 ">
+                                                            Password must be at
+                                                            least
                                                         </div>
-                                                    )}{" "}
-                                                </div>
+                                                        <Checker
+                                                            message={
+                                                                "8 characters"
+                                                            }
+                                                            type={
+                                                                pwCheckListItem1Status
+                                                            }
+                                                        />
+                                                        <Checker
+                                                            message={
+                                                                "1 uppercase letter"
+                                                            }
+                                                            type={
+                                                                pwCheckListItem2Status
+                                                            }
+                                                        />
+                                                        <Checker
+                                                            message={
+                                                                "1 lowercase letter"
+                                                            }
+                                                            type={
+                                                                pwCheckListItem3Status
+                                                            }
+                                                        />
+                                                        <Checker
+                                                            message={"1 number"}
+                                                            type={
+                                                                pwCheckListItem4Status
+                                                            }
+                                                        />
+                                                        <Checker
+                                                            message={
+                                                                "1 special character"
+                                                            }
+                                                            type={
+                                                                pwCheckListItem5Status
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}{" "}
                                             </div>
                                         </div>
                                     </div>
@@ -1805,11 +1830,423 @@ export function AdminPageAccountManagement_AddUser() {
                             </div>
                         </div>
                     </div>
+                </div>
             </>
         );
     };
 
+    return <CTX />;
+}
+
+export function AdminPageSetting() {
+    const CTX = () => {
+        const ratebar = useRef();
+        return (
+            <div className="bg-gray-50 w-full p-2">
+                <nav
+                    className="mt-3 flex w-full px-5 py-3 text-gray-700 border border-gray-200 shadow-md rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700"
+                    aria-label="Breadcrumb"
+                >
+                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                        <li className="inline-flex items-center">
+                            <a
+                                href="#"
+                                className="hover:underline hover:font-bold hover:text-blue-700 inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                            >
+                                <svg
+                                    className="w-4 h-4 mr-2"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <Link className="flex items-center">
+                                <svg
+                                    className="w-6 h-6 text-gray-400"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clipRule="evenodd"
+                                    ></path>
+                                </svg>
+                                <label className="ml-1 hover:underline hover:font-bold hover:text-blue-700 cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                                    Admin
+                                </label>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="flex items-center">
+                                <svg
+                                    className="w-6 h-6 text-gray-400"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clipRule="evenodd"
+                                    ></path>
+                                </svg>
+                                <label className="ml-1 hover:underline hover:font-bold hover:text-blue-700 cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                                    Settings
+                                </label>
+                            </Link>
+                        </li>
+                    </ol>
+                </nav>
+
+                <div className="text-3xl font-bold my-7 mb-5">
+                    User Settings
+                </div>
+
+                <div className="flex-col flex">
+                    <div>
+                        <div className="flex flex-row w-full">
+                            <div className="w-4/12">
+                                <div>
+                                    {/* icon */}
+                                    <div className="flex flex-row items-center rounded-sm bg-white p-5 ">
+                                        <div>
+                                            <img
+                                                className="w-24 h-24 rounded-full mr-2 cursor-pointer"
+                                                src="https://avatars.githubusercontent.com/u/85796869?v=4"
+                                                alt="profile"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col ml-3">
+                                            <div className="text-2xl font-bold">
+                                                Admin
+                                            </div>
+                                            <div className="text-gray-500">
+                                                Software Engineer
+                                            </div>
+                                            <Button
+                                                className="mt-2"
+                                                onClick={() => {
+                                                    console.log("clicked");
+                                                }}
+                                            >
+                                                <svg
+                                                    class="w-5 h-5 mr-2"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                                                    ></path>
+                                                </svg>
+                                                Change Profile Picture
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-5 w-full">
+                                    <div className="flex flex-col bg-white p-5 w-full">
+                                        <div className="text-2xl font-bold">
+                                            Language & Time
+                                        </div>
+                                        <div className="flex flex-row mt-5 w-full">
+                                            <div className="flex flex-col mr-5 w-full">
+                                                <div className="text-gray-500">
+                                                    Select Language
+                                                </div>
+                                                <select
+                                                    className="mb-3 mt-2 border border-gray-300 rounded-md p-2 w-full"
+                                                    name="language"
+                                                    id="language"
+                                                >
+                                                    <option value="English">
+                                                        English
+                                                    </option>
+                                                    <option value="Hindi">
+                                                        Hindi
+                                                    </option>
+                                                    <option value="Marathi">
+                                                        Marathi
+                                                    </option>
+                                                    <option value="Chinese">
+                                                        中文
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row mt-5 w-full">
+                                            <div className="flex flex-col mr-5 w-full">
+                                                <div className="text-gray-500">
+                                                    Time Zone
+                                                </div>
+                                                <select
+                                                    className="mb-4 mt-2 border border-gray-300 rounded-md p-2 w-full"
+                                                    name="timezone"
+                                                    id="timezone"
+                                                >
+                                                    <option value="IST">
+                                                        IST
+                                                    </option>
+                                                    <option value="GMT">
+                                                        GMT
+                                                    </option>
+                                                    <option value="CST">
+                                                        CST
+                                                    </option>
+                                                    <option value="PST">
+                                                        PST
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <Button
+                                            className="mt-5 w-fit"
+                                            onClick={() => {}}
+                                        >
+                                            Save Changes
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-8/12">
+                                {/* password information */}
+                                <div className="ml-5">
+                                    <div className="flex flex-col bg-white p-5 w-full">
+                                        <div className="text-2xl font-bold">
+                                            Password Information
+                                        </div>
+                                        <div className="flex flex-row flex-wrap mt-5 w-full">
+                                            <div className="flex flex-col mr-5 w-5/12">
+                                                <div className="text-gray-500">
+                                                    Current Password
+                                                </div>
+                                                <FloatingLabel
+                                                    placeholder={"Password"}
+                                                    type="password"
+                                                    id={"r_password"}
+                                                    bg={"bg-gray-100"}
+                                                    validate={true}
+                                                />
+                                            </div>
+                                            <div className="flex flex-col mr-5 w-5/12">
+                                                <div className="text-gray-500">
+                                                    New Password
+                                                </div>
+                                                <FloatingLabel
+                                                    placeholder={"Password"}
+                                                    type="password"
+                                                    id={"r_password"}
+                                                    bg={"bg-gray-100"}
+                                                    handler={(e) => {
+                                                        // rate the password strength , from 0 to 4, 0 being the weakest, starting to 1 when the password is 8 characters long
+                                                        let passwordStrength = 0;
+
+                                                        // check if the password contains a number
+                                                        if (
+                                                            e.target.value.match(
+                                                                /\d/
+                                                            )
+                                                        ) {
+                                                            passwordStrength++;
+                                                        }
+
+                                                        // check if the password contains a lowercase letter
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[a-z]/
+                                                            )
+                                                        ) {
+                                                            passwordStrength++;
+                                                        }
+
+                                                        // check if the password contains an uppercase letter
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[A-Z]/
+                                                            )
+                                                        ) {
+                                                            passwordStrength++;
+                                                        }
+
+                                                        // check if the password contains a special character
+                                                        if (
+                                                            e.target.value.match(
+                                                                /[^a-zA-Z\d]/
+                                                            )
+                                                        ) {
+                                                            passwordStrength++;
+                                                        }
+
+                                                        if (
+                                                            e.target.value
+                                                                .length <= 8
+                                                        ) {
+                                                            passwordStrength = 0;
+                                                        }
+
+                                                        ratebar.current.value =
+                                                            passwordStrength;
+                                                    }}
+                                                    validate={true}
+                                                />
+                                            </div>
+                                            <div className="flex flex-col mr-5 mt-3 w-5/12">
+                                                <div className="text-gray-500">
+                                                    Comfirm Password
+                                                </div>
+                                                <FloatingLabel
+                                                    placeholder={"Confirm Password"}
+                                                    type="password"
+                                                    id={"r_password"}
+                                                    bg={"bg-gray-100"}
+                                                    validate={true}
+                                                />
+                                            </div>
+                                        </div>
+                                        {/* password requirements */}
+                                        <meter
+                                            value="0"
+                                            min="0"
+                                            max="4"
+                                            className="w-5/12"
+                                            ref={ratebar}
+                                            high="3"
+                                            low="2"
+                                            optimum="4"
+                                        ></meter>
+                                        <div className="flex flex-row flex-wrap mt-5 w-full">
+                                            <div className="flex flex-col mr-5 w-5/12">
+                                                <div className="text-black">
+                                                    Password Requirements:
+                                                </div>
+                                                <div className="text-gray-500">
+                                                    Ensure that these
+                                                    requirements are met:
+                                                </div>
+                                                <div className="flex flex-row mt-2">
+                                                    <div className="flex flex-col ml-5">
+                                                        <div className="text-gray-500">
+                                                            Minimum 8 characters
+                                                        </div>
+                                                        <div className="text-gray-500">
+                                                            Minimum 1 uppercase
+                                                            character
+                                                        </div>
+                                                        <div className="text-gray-500">
+                                                            Minimum 1 lowercase
+                                                            character
+                                                        </div>
+                                                        <div className="text-gray-500">
+                                                            Minimum 1 number
+                                                        </div>
+                                                        <div className="text-gray-500">
+                                                            Minimum 1 special
+                                                            character
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <Button
+                                            className="mt-5 w-fit"
+                                            onClick={() => {
+                                                toast.success(
+                                                    "Password Changed Successfully"
+                                                );
+                                            }}
+                                        >
+                                            Save Changes
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-5">
+                        <div className="flex flex-col bg-white p-5 w-full">
+                            <div className="text-2xl font-bold">
+                                Alert & Notification
+                            </div>
+                            <div>
+                                You can set up the Git to get notification
+                            </div>
+                            <ul className="mt-4">
+                                <li className="border-b pb-2">
+                                    <div className="flex flex-row justify-between items-center align-middle">
+                                        <div className="flex flex-col">
+                                            <div className="text-black text-xl font-semibold">
+                                                Company News
+                                            </div>
+                                            <div className="text-gray-500">
+                                                Get the latest news from the
+                                                company
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <ToggleSwitch id="tw1" />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="border-b pb-2 mt-2">
+                                    <div className="flex flex-row justify-between items-center align-middle">
+                                        <div className="flex flex-col">
+                                            <div className="text-black text-xl font-semibold">
+                                                New Meeting
+                                            </div>
+                                            <div className="text-gray-500">
+                                                Get an email when a new meeting
+                                                is scheduled
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <ToggleSwitch id="tw2" checked />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="border-b pb-2 mt-2">
+                                    <div className="flex flex-row justify-between items-center align-middle">
+                                        <div className="flex flex-col">
+                                            <div className="text-black text-xl font-semibold">
+                                                New assignment
+                                            </div>
+                                            <div className="text-gray-500">
+                                                Get an notification when a new
+                                                job is assigned to you
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <ToggleSwitch id="tw3" />
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <Button className="mt-5 w-fit" onClick={() => {
+                                toast.success("Settings Saved Successfully")
+                            }}>
+                                Save Changes
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
     return (
-        <CTX />
+        <Template>
+            <CTX />
+        </Template>
     );
 }
