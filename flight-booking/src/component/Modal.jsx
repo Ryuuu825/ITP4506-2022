@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default class ConfirmModal extends React.Component {
+export class ConfirmModal extends React.Component {
   onClose = e => {
     this.props.onClose && this.props.onClose(e);
   };
@@ -46,3 +46,27 @@ ConfirmModal.propTypes = {
     show: PropTypes.bool.isRequired
 };
   
+
+export class Modal extends React.Component {
+  onClose = e => {
+    this.props.onClose && this.props.onClose(e);
+  };
+  render() {
+    if (!this.props.show) {
+      return null;
+    }
+    return (
+      <div className="absolute z-[102] bg-black p-3 h-[90%] w-full opacity-70" id="modal">
+        <div className="mx-auto w-full h-full text-center flex flex-col items-center justify-center">
+          {this.props.children}
+        </div>
+        
+      </div>
+    );
+  }
+}
+
+Modal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired
+};

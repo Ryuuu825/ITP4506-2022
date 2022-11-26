@@ -11,10 +11,11 @@ import {
 import logo from "../logo.svg";
 import React, { useState } from "react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Modal from "../component/Modal";
-import ConfirmModal from "../component/Modal";
+import {ConfirmModal} from "../component/Modal";
+import { FloatingLabel } from "../component/Form";
 
 let SidebarCurrentPos = 0;
 
@@ -369,8 +370,10 @@ function Template({ children }) {
                     id="main-content"
                     className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64"
                 >
-                    <main>
-                        <div className="pt-6 px-4">{children}</div>
+                    <main className="h-[95vh] w-full">
+                        <div className="pt-6 px-4 h-full w-full">
+                            {children}
+                        </div>
                     </main>
                 </div>
             </div>
@@ -1196,7 +1199,7 @@ export function AdminPageAccountManagement() {
                             </div>
                         </div>
 
-                        <div class="block w-full overflow-scroll h-[583px]">
+                        <div class="block w-full overflow-scroll h-[75vh]">
                             <ConfirmModal
                                 onClose={() => {
                                     setShowModal(!showModal);
@@ -1453,6 +1456,342 @@ export function AdminPageAccountManagement() {
             </>
         );
     };
+    return (
+        <Template>
+            <CTX />
+        </Template>
+    );
+}
+
+export function AdminPageAccountManagement_AddUser() {
+    
+
+    const CTX = () => {
+        const email = useRef("");
+        const password = useRef("");
+        const [emailValid, setEmailValid] = useState(true);
+
+        // pwCheckListItem
+        const [pwCheckListItem1Status, setPwCheckListItem1Status] = useState(0);
+        const [pwCheckListItem2Status, setPwCheckListItem2Status] = useState(0);
+        const [pwCheckListItem3Status, setPwCheckListItem3Status] = useState(0);
+        const [pwCheckListItem4Status, setPwCheckListItem4Status] = useState(0);
+        const [pwCheckListItem5Status, setPwCheckListItem5Status] = useState(0);
+
+        const [tooltipStatus, setTooltipStatus] = useState(0);
+        const Kick = () => {
+            return (
+                <>
+                    <svg
+                        class="h-4 w-4 text-green"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        {" "}
+                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                        <path d="M5 12l5 5l10 -10" />
+                    </svg>
+                </>
+            );
+        };
+
+        const Cross = () => {
+            return (
+                <>
+                    <svg
+                        class="h-4 w-4 text-red-500"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        {" "}
+                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                        <line x1="18" y1="6" x2="6" y2="18" />{" "}
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </>
+            );
+        };
+
+        const Checker = ({ type, message }) => {
+            return (
+                <>
+                    {type ? (
+                        <div className="flex valid">
+                            <Kick />
+                            <p className="ml-2 text-xs leading-4  pb-3">
+                                {message}
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="flex invalid">
+                            <Cross />
+                            <p className="ml-2 text-xs leading-4 invalid pb-3">
+                                {message}
+                            </p>
+                        </div>
+                    )}
+                </>
+            );
+        };
+
+        useEffect(() => {
+            const onMouseClickOnOther = (e) => {
+                if (!document.getElementById("r_password").contains(e.target)) {
+                    setTooltipStatus(0);
+                }
+            };
+            window.addEventListener("click", onMouseClickOnOther);
+        }, []);
+
+        return (
+            <>
+                <div className="h-full w-full ">
+                    <div className="h-full w-full flex justify-center items-center">
+                        <div className="w-1/2 h-3/4">
+                            <div className="flex flex-col h-fit w-full">
+                                <div className="text-4xl font-bold">
+                                    Add Operator Account
+                                </div>
+
+                                <div className="flex h-full w-full bg-gray-100 border rounded-lg mt-4">
+                                    {/* email, password, role (radio) */}
+                                    <div className="flex flex-col mx-auto h-full p-4 w-3/4">
+                                        <div className="flex flex-col w-full mt-5">
+                                            <div>
+                                                <div className="text-xl font-bold">
+                                                    Email
+                                                </div>
+                                                <div className="w-full">
+                                                    <FloatingLabel
+                                                        placeholder={"Email"}
+                                                        type="email"
+                                                        handler={(e) => {
+                                                            email.current = e.value;
+                                                        }}
+                                                        validate={emailValid}
+                                                        error_message="Email format is not valid"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                 <div className="text-xl font-bold mt-5">
+                                                    Password
+                                                </div>
+                                                <div
+                                                    className="w-full relative"
+                                                    id="password"
+                                                    onMouseEnter={() => {
+                                                        setTooltipStatus(1);
+                                                    }}
+                                                >
+                                                    <FloatingLabel
+                                                        placeholder={"Password"}
+                                                        type="password"
+                                                        id={"r_password"}
+                                                        handler={(e) => {
+                                                            setPwCheckListItem1Status(
+                                                                false
+                                                            );
+                                                            setPwCheckListItem2Status(
+                                                                false
+                                                            );
+                                                            setPwCheckListItem3Status(
+                                                                false
+                                                            );
+                                                            setPwCheckListItem4Status(
+                                                                false
+                                                            );
+                                                            setPwCheckListItem5Status(
+                                                                false
+                                                            );
+
+                                                            if (
+                                                                e.target.value
+                                                                    .length >= 8
+                                                            ) {
+                                                                setPwCheckListItem1Status(
+                                                                    true
+                                                                );
+                                                            }
+
+                                                            if (
+                                                                e.target.value.match(
+                                                                    /[a-z]/g
+                                                                )
+                                                            ) {
+                                                                setPwCheckListItem3Status(
+                                                                    true
+                                                                );
+                                                            }
+                                                            if (
+                                                                e.target.value.match(
+                                                                    /[A-Z]/g
+                                                                )
+                                                            ) {
+                                                                setPwCheckListItem2Status(
+                                                                    true
+                                                                );
+                                                            }
+
+                                                            if (
+                                                                e.target.value.match(
+                                                                    /[0-9]/g
+                                                                )
+                                                            ) {
+                                                                setPwCheckListItem4Status(
+                                                                    true
+                                                                );
+                                                            }
+
+                                                            if (
+                                                                e.target.value.match(
+                                                                    /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+                                                                )
+                                                            ) {
+                                                                setPwCheckListItem5Status(
+                                                                    true
+                                                                );
+                                                            }
+
+                                                            password.current =
+                                                                e.target.value;
+                                                        }}
+                                                        validate={true}
+                                                        error_message="Password must be at least 8 characters"
+                                                    />
+                                                    {tooltipStatus == 1 && (
+                                                        <div
+                                                            role="tooltip"
+                                                            className="z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out  left-full  ml-8 shadow-lg bg-gray-100 p-4 rounded"
+                                                        >
+                                                            <svg
+                                                                className="absolute left-0 -ml-2 bottom-0 top-0 h-full "
+                                                                width="9px"
+                                                                height="16px"
+                                                                viewBox="0 0 9 16"
+                                                                version="1.1"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                            >
+                                                                <g
+                                                                    id="Page-1"
+                                                                    stroke="none"
+                                                                    strokeWidth={1}
+                                                                    fill="none"
+                                                                    fillRule="evenodd"
+                                                                >
+                                                                    <g
+                                                                        id="Tooltips-"
+                                                                        transform="translate(-874.000000, -1029.000000)"
+                                                                        fill="rgb(243 244 246)"
+                                                                    >
+                                                                        <g
+                                                                            id="Group-3-Copy-16"
+                                                                            transform="translate(850.000000, 975.000000)"
+                                                                        >
+                                                                            <g
+                                                                                id="Group-2"
+                                                                                transform="translate(24.000000, 0.000000)"
+                                                                            >
+                                                                                <polygon
+                                                                                    id="Triangle"
+                                                                                    transform="translate(4.500000, 62.000000) rotate(-90.000000) translate(-4.500000, -62.000000) "
+                                                                                    points="4.5 57.5 12.5 66.5 -3.5 66.5"
+                                                                                />
+                                                                            </g>
+                                                                        </g>
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                            <div className="font-bold text-black pb-3 ">
+                                                                Password must be at
+                                                                least
+                                                            </div>
+                                                            <Checker
+                                                                message={
+                                                                    "8 characters"
+                                                                }
+                                                                type={
+                                                                    pwCheckListItem1Status
+                                                                }
+                                                            />
+                                                            <Checker
+                                                                message={
+                                                                    "1 uppercase letter"
+                                                                }
+                                                                type={
+                                                                    pwCheckListItem2Status
+                                                                }
+                                                            />
+                                                            <Checker
+                                                                message={
+                                                                    "1 lowercase letter"
+                                                                }
+                                                                type={
+                                                                    pwCheckListItem3Status
+                                                                }
+                                                            />
+                                                            <Checker
+                                                                message={"1 number"}
+                                                                type={
+                                                                    pwCheckListItem4Status
+                                                                }
+                                                            />
+                                                            <Checker
+                                                                message={
+                                                                    "1 special character"
+                                                                }
+                                                                type={
+                                                                    pwCheckListItem5Status
+                                                                }
+                                                            />
+                                                        </div>
+                                                    )}{" "}
+                                                </div>
+                                            </div>
+
+                                            <div className="flex mt-5">
+                                                {/* Back, Create */}
+
+                                                <div className="flex-1 mt-3 flex flex-row justify-center">
+                                                    <Link
+                                                        to="/admin/users"
+                                                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                                                    >
+                                                        Back
+                                                    </Link>
+                                                    <Link
+                                                        to="/admin/users"
+                                                        className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center ml-3"
+                                                    >
+                                                        Create
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    };
+
     return (
         <Template>
             <CTX />

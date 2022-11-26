@@ -720,7 +720,6 @@ export function SignUp() {
     const [pwCheckListItem5Status, setPwCheckListItem5Status] = useState(0);
 
     const Checker = ({ type, message }) => {
-        console.log(type);
         return (
             <>
                 {type ? (
