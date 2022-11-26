@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SeatForm({ passengers, setPassengers, setForm, form, setStep, step }) {
 	const [seatCount, setSeatCount] = useState(2);
@@ -37,9 +39,9 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 			setSelectedSeat([...selectedSeat, e.target.value]);
 			setSeatCount(seatCount - 1);
 		} else if (e.target.className === unavail) {
-			alert("This seat is not available");
+			toast.error("This seat is not available");
 		} else if (seatCount === 0) {
-			alert("You have selected all your seats");
+			toast.error("You have selected all your seats");
 		}
 	}
 
