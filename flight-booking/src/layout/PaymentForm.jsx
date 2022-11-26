@@ -239,15 +239,15 @@ function CreditCard() {
 						Expiry Date&nbsp;<label className="text-red-600">*</label>
 					</label>
 					<div className="relative">
-						<input type="month" max={new Date().toISOString().split('T')[0]} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
+						<input type="month" max={new Date().getMonth > 10 ? new Date().getFullYear() + "-0" + (new Date().getMonth()+1) : new Date().getFullYear() + "-" + (new Date().getMonth()+1)} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
 					</div>
 				</div>
-				<div className="flex flex-col w-1/2">
+				<div className="flex flex-col w-1/3">
 					<label className="flex flex-row">
 						CVV&nbsp;<label className="text-red-600">*</label>
 					</label>
 					<div className="relative">
-						<input type="text" maxLength={4} min={3} pattern="^[0-9]{3, 4}$" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
+						<input type="text" maxLength={4} min={3} pattern="^[0-9]{3, 4}$" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
 					</div>
 				</div>
 			</div>
