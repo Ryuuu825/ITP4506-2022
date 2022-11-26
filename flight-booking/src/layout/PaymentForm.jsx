@@ -3,11 +3,18 @@ import { useState, useRef, useEffect } from "react";
 import Moment from "react-moment";
 import moment from 'moment';
 import airports from "../db/airport.json";
+import ax from "../asserts/ax.png";
+import dc from "../asserts/dc.png";
+import mc from "../asserts/mc.png";
+import tp from "../asserts/tp.png";
+import vi from "../asserts/vi.png";
+import paypal from "../asserts/card-paypal.png";
+import union from "../asserts/card-unionpay.png";
 
 export default function PaymentForm({ data, payment, setPayment, setStep, step }) {
 	const fullOutTime = new Date(data.date + " " + data.ticket.outTime);
 	const duration = moment(data.ticket.arrivalTime).diff(fullOutTime, "hours") + "h " + moment(data.ticket.arrivalTime).diff(fullOutTime, "minutes") % 60 + "m";
-
+	const [selectMethod, setSelectMethod] = useState(1);
 	const setNextFormHandler = (e) => {
 		setStep(step + 1);
 	}
@@ -17,7 +24,7 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 	}
 
 	return (
-		<div className="flex w-4/5 mx-auto flex-col justify-start items-start">
+		<div className="flex w-4/5 mx-auto flex-col justify-start items-start animate-fade-in duration-1000">
 			<h1 className="my-4 text-3xl font-bold tracking-tight text-blue-900 dark:text-white">
 				Review your booking
 			</h1>
@@ -25,10 +32,10 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 				<Accordion
 					title={`1. Flight HKG - ${data.dest}`}
 					alwaysOpen={true}
-					h={150}
+					h={200}
 					content={
-						<div className="flex flex-row w-full">
-							<div className="flex flex-col flex-2 p-2 w-full">
+						<div className="p-4 flex flex-row w-full bg-gray-100">
+							<div className="flex bg-white flex-col flex-2 p-2 w-full">
 								<div className="flex flex-row items-center justify-center p-2 ">
 									<div className="flex flex-col p-2">
 										<p className="text-base font-bold"><Moment format="MMM DD">{data.date}</Moment></p>
@@ -75,8 +82,8 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 					title={`2. Passengers and Seats`}
 					h={200}
 					content={
-						<div className="flex flex-row">
-							<div className="flex flex-col mr-4 w-1/2 border-gray-800 shadow-lg border-gray-600 rounded-md">
+						<div className="flex flex-row mt-2">
+							<div className="flex flex-col mr-4 w-1/2 border-gray-800 shadow-md border-gray-600 rounded-md">
 								<label className="font-bold border-b-2 bg-blue-800 text-white rounded-t-md p-2">Adult 1:</label>
 								<div className="flex w-full py-2 px-4">
 									<label className="font-bold w-1/2">Name:&nbsp;</label><label className="ml-10 underline">Mr Ben Poon</label>
@@ -85,7 +92,7 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 									<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">10A</label>
 								</div>
 							</div>
-							<div className="flex flex-col mr-4 w-1/2 border-gray-800 shadow-lg border-gray-600 rounded-md">
+							<div className="flex flex-col mr-4 w-1/2 border-gray-800 shadow-md border-gray-600 rounded-md">
 								<label className="font-bold border-b-2 bg-blue-800 text-white rounded-t-md p-2">Child 1:</label>
 								<div className="flex w-full px-4 py-2">
 									<label className="font-bold w-1/2">Name:&nbsp;</label><label className="ml-10 underline">Mr Kee Lee</label>
@@ -93,7 +100,7 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 								<div className="flex w-full px-4 py-2">
 									<label className="font-bold w-1/2">Date of Birth:&nbsp;</label><label className="ml-10 underline">2011 - 01 - 02</label>
 								</div>
-								<div className="flex w-full px-4 py-2">
+								<div className="flex w-full px-4 pb-4 pt-2">
 									<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">10B</label>
 								</div>
 							</div>
@@ -103,17 +110,17 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 
 				<Accordion
 					title={`3. Add-ons`}
-					h={350}
+					h={380}
 					content={
-						<div className="flex flex-row">
-							<div className="flex flex-col mr-4 w-full border-gray-800 shadow-lg border-gray-600 rounded-md">
+						<div className="flex flex-row mt-2">
+							<div className="flex flex-col mr-4 w-full border-gray-800 shadow-md border-gray-600 rounded-md">
 								<label className="font-bold border-b-2 bg-blue-800 text-white rounded-t-md p-2">Meal Reservation:</label>
-								<div className="flex flex-col w-full mt-2 pb-2 border-b px-4">
+								<div className="flex flex-col w-full mt-4 pb-4 border-b px-4">
 									<label className="font-bold">Food 1:&nbsp;</label>
 									<label className="ml-10 text-xm">Hong Kong-style seafood curry rice</label>
 									<label className="font-bold">Extra Fare: </label><label className="ml-10">HK$ 0</label>
 								</div>
-								<div className="flex flex-col w-full mt-2 px-4">
+								<div className="flex flex-col w-full my-4 px-4">
 									<label className="font-bold">Food 2:&nbsp;</label>
 									<label className="ml-10 text-xm">Piri piri ling fish with grilled lime and mojo verde sauce, charred baby corn, steamed kale, coconut rice</label>
 									<label className="font-bold">Extra Fare: </label><label className="ml-10">HK$ 100</label>
@@ -125,24 +132,63 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 
 				<Accordion
 					title={`4. Cost Breakdown`}
-					h={200}
+					alwaysOpen={true}
+					h={230}
 					content={
-						<>
-							<Paragraph>
-								If you've got a trip in mind but you're not
-								ready to book yet, you can save your search and
-								we'll send you an email when the price drops.
-							</Paragraph>
-							<Paragraph>
-								You can also follow us on
-								<span className="text-primary">
-								</span>
-								to get the latest news and updates.
-							</Paragraph>
-						</>
+						<div className="w-full p-4 bg-gray-100">
+							<div className="p-4 bg-white flex flex-col">
+								<p className="flex flex-row"><label className="font-bold grow">Flight fare</label>	<label>HK$ {parseInt(data.ticket.price - 582 + data.ticket.price * 0.7 - 582).toLocaleString()}</label></p>
+								<p className="flex flex-row my-1"><label className="font-bold grow">Taxes and fees</label> <label>HK$ {582 * 2}</label></p>
+								<p className="flex flex-row"><label className="font-bold grow">Add-ons fare</label> <label>HK$ 100</label></p>
+								<p className="flex flex-row mt-1 pt-4 border-t"><label className="font-bold grow">Total </label> <label className="font-bold text-3xl">HK$ {(data.ticket.price + parseInt(data.ticket.price * 0.7) + 100).toLocaleString()}</label></p>
+							</div>
+						</div>
 					}
 				/>
 			</div>
+
+			<h1 className="my-4 text-3xl font-bold tracking-tight text-blue-900 dark:text-white">
+				Select payment method
+			</h1>
+			<div className="px-8 w-full">
+				<div className="w-full p-8 flex justify-between">
+					<div onClick={() => setSelectMethod(1)} className={selectMethod === 1 ? "w-1/3 h-40 flex flex-col justify-center items-center mr-4 p-4 rounded border-2 shadow-md border-blue-600 border-blue-600" : "w-1/3 h-40 flex flex-col justify-center items-center mr-4 p-4 rounded border-2 shadow-md opacity-50"}>
+						<span className="text-sm mx-auto text-center font-semibold mb-4">Credit/Debit Card</span>
+						<ul className="flex flex-row items-center">
+							<li className="mx-1"><img src={vi} alt="VI" /></li>
+							<li className="mx-1"><img src={mc} alt="MS" /></li>
+							<li className="mx-1"><img src={ax} alt="AX" /></li>
+							<li className="mx-1"><img src={dc} alt="DC" /></li>
+							<li className="mx-1"><img src={tp} alt="TP" /></li>
+						</ul>
+					</div>
+					<div onClick={() => setSelectMethod(2)} className={selectMethod === 2 ? "w-1/3 h-40 flex flex-col justify-center items-center mr-4 p-4 rounded border-2 shadow-md border-blue-600" : "w-1/3 h-40 flex flex-col justify-center items-center mr-4 p-4 rounded border-2 shadow-md opacity-50"}>
+						<span className="text-sm mx-auto text-center font-semibold mb-4">PayPal</span>
+						<ul className="flex flex-row items-center">
+							<li className="mx-1"><img src={paypal} alt="PayPal" /></li>
+						</ul>
+					</div>
+					<div onClick={() => setSelectMethod(3)} className={selectMethod === 3 ? "w-1/3 h-40 flex flex-col justify-center items-center p-4 border-2 rounded shadow-md border-blue-600" : "w-1/3 h-40 flex flex-col justify-center items-center p-4 rounded border-2 shadow-md opacity-50"}>
+						<span className="text-sm mx-auto text-center font-semibold mb-4">UnionPay</span>
+						<ul className="flex flex-row items-center">
+							<li className="mx-1 w-9"><img src={union} alt="Union" /></li>
+						</ul>
+					</div>
+				</div>
+				<div className="p-8 w-full bg-blue-50 text-blue-800 shadow-md">
+					<div className="flex flex-row justify-between items-center">
+						<label className="font-bold text-xl">Total to be paid now</label>
+						<div className="flex items-end flex-col">
+							<label className="text-3xl font-bold">HK$ {(data.ticket.price + parseInt(data.ticket.price * 0.7) + 100).toLocaleString()}</label>
+							<label className="text-sm">Includes discounts, taxed and surcharges</label>
+						</div>
+					</div>
+				</div>
+				<div className="w-full">
+					{selectMethod === 1 ? <CreditCard /> : selectMethod === 2 ? <PayPal /> : selectMethod === 3 ? <UnionPay /> : null}
+				</div>
+			</div>
+
 			<div className="w-full mx-auto flex flex-row">
 				<div className="flex flex-row justify-start mt-8">
 					<button onClick={setPreFormHandler} className="flex flew-row p-4 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold rounded">
@@ -155,6 +201,79 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 					</button>
 				</div>
 			</div>
+		</div>
+	);
+}
+
+function CreditCard() {
+	return (
+		<div className="w-full p-8 border-2">
+			<label className="text-sm"><label className="text-red-600">*</label> Required</label>
+			<div className="flex flex-row mt-4">
+				<div className="flex flex-col w-1/2 mr-4">
+					<label className="flex flex-row">
+						Name on Credit/Debit card&nbsp;<label className="text-red-600">*</label>
+					</label>
+					<div className="grow relative">
+						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+						</div>
+						<input type="text" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name on card" />
+					</div>
+				</div>
+				<div className="flex flex-col w-1/2">
+					<label className="flex flex-row">
+						Credit/Debit card number&nbsp;<label className="text-red-600">*</label>
+					</label>
+					<div className="grow relative">
+						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+						</div>
+						<input type="text" required id="input-group-1" pattern="^\d+$" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Credit/Debit card number" />
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-row mt-4 w-1/2">
+				<div className="flex flex-col w-1/2 mr-4">
+					<label className="flex flex-row">
+						Expiry Date&nbsp;<label className="text-red-600">*</label>
+					</label>
+					<div className="relative">
+						<input type="month" max={new Date().toISOString().split('T')[0]} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
+					</div>
+				</div>
+				<div className="flex flex-col w-1/2">
+					<label className="flex flex-row">
+						CVV&nbsp;<label className="text-red-600">*</label>
+					</label>
+					<div className="relative">
+						<input type="text" maxLength={4} min={3} pattern="^[0-9]{3, 4}$" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function PayPal() {
+	return (
+		<div className="w-full border-2 p-8">
+			<p>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Any additional charges must be paid by credit card (excluding UnionPay, which can only be used as an online payment mode), or in cash. For in-person payments, charges must be paid in cash only.
+			</p>
+			<p>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By choosing to pay with PayPal, you'll be directed to PayPal website to complete your payment. Once payment is accepted, you'll automatically return to iveairline.com.
+			</p>
+		</div>
+	);
+}
+
+function UnionPay() {
+	return (
+		<div className="w-full border-2 p-8">
+			<p>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When you pay with UnionPay, you'll be directed to the UnionPay website to complete your payment. Once payment is accepted, you'll automatically return to iveairline.com. Tickets bought using UnionPay cannot be changed or cancelled online. Please contact our Contact Centre for assistance.
+			</p>
 		</div>
 	);
 }
@@ -225,8 +344,8 @@ export function Accordion({ title, content, h, alwaysOpen }) {
 				className="transition-height duration-500 ease-in-out overflow-hidden w-full"
 
 			>
-				<div className="text-black font-normal text-xl pt-2 " >
-					{open ? <div className="w-11/12 ml-5 mb-5 relative" >{content}</div> : ""}
+				<div className="text-black font-normal text-xl" >
+					{open ? <div className="mb-5 relative" >{content}</div> : ""}
 				</div>
 			</div>
 		</div>

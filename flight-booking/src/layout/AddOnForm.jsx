@@ -16,7 +16,7 @@ export default function AddOnForm({ passengers, setPassengers, setForm, form, se
 	}
 
 	return (
-		<div className="w-full h-screen p-8 animate-fade-in duration-1000">
+		<div className="w-full p-8 animate-fade-in duration-1000">
 			<div className="w-4/5 flex flex-row mx-auto items-center">
 				<h1 className="grow mb-4 text-3xl font-bold tracking-tight text-blue-900 dark:text-white">
 					Add-Ons
@@ -28,7 +28,7 @@ export default function AddOnForm({ passengers, setPassengers, setForm, form, se
 			</div>
 			<div className="w-4/5 mx-auto pr-8 flex flex-row border rounded-xl shadow-md ">
 				<img className="rounded-l-lg" src={meal} alt="" width={400} height={400} />
-				<div className="flex flex-col m-4">
+				<div className="flex grow flex-col m-4">
 					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 						Airline Meal Reservation
 					</h5>
@@ -43,7 +43,7 @@ export default function AddOnForm({ passengers, setPassengers, setForm, form, se
 
 			<div className="w-4/5 mx-auto pr-8 flex my-8 flex-row border rounded-xl shadow-md ">
 				<img className="rounded-l-lg" src={car} alt="" width={400} height={400} />
-				<div className="flex flex-col m-4">
+				<div className="flex grow flex-col m-4">
 					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 						Airport Shuttle Service
 					</h5>
