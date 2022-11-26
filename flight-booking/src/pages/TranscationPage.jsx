@@ -14,10 +14,12 @@ import PassengersForm from "../layout/PassengersForm";
 import { useRef } from "react";
 import SeatForm from "../layout/SeatForm";
 import AddOnForm from "../layout/AddOnForm";
+import PaymentForm from "../layout/PaymentForm";
 
 export default function TranscationPage() {
 	const location = useLocation();
 	const [topFixed, setTopFixed] = useState(null);
+	const [showTop, setShowTop] = useState(true);
 	let selectInfo = location.state.selectInfo;
 	const date = selectInfo.date;
 	const dest = selectInfo.dest;
@@ -43,16 +45,16 @@ export default function TranscationPage() {
 	return (
 		<div className="w-full h-full bg-gray-100 pb-2">
 			<Breadcrumb data={{ date, dest }} page={'search'} />
-			{topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox refs={topbox} data={selectInfo} /></div> : <TopBox data={selectInfo} />}
+			{showTop ? topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox refs={topbox} data={selectInfo} /></div> : <TopBox data={selectInfo} /> : ""}
 			<div style={{ "marginTop": topFixed ? "189px" : "0px" }}></div>
 			<div className={"flex flex-row w-4/5 mx-auto my-4"}>
-				<TranscationBox data={selectInfo} passengers={passengers} setPassengers={setPassengers} />
+				<TranscationBox setShowTop={setShowTop} data={selectInfo} passengers={passengers} setPassengers={setPassengers} />
 			</div>
 		</div>
 	);
 }
 
-function TranscationBox({ data, passengers, setPassengers }) {
+function TranscationBox({ setShowTop, data, passengers, setPassengers }) {
 	const [step, setStep] = useState(1);
 	const [form, setForm] = useState(null);
 	const [formData, setFormData] = useState({
@@ -64,13 +66,20 @@ function TranscationBox({ data, passengers, setPassengers }) {
 	useEffect(() => {
 		if (step === 1) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setShowTop(true);
 			setForm(<PassengersForm form={formData} setForm={setFormData} setStep={setStep} step={step} data={data} setPassengers={setPassengers} passengers={passengers} />);
 		} else if (step === 2) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setShowTop(true);
 			setForm(<SeatForm data={data} form={formData} setForm={setFormData} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		} else if (step === 3) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
-			setForm(<AddOnForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step}/>);
+			setShowTop(true);
+			setForm(<AddOnForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
+		} else if (step === 4) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setShowTop(false);
+			setForm(<PaymentForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		}
 	}, [step]);
 
@@ -89,7 +98,7 @@ function ProgressNav({ setStep, step }) {
 				<div className="flex items-center">
 					<div className="flex items-center text-white relative">
 						<div
-							className="cursor-pointer rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2"
+							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2"
 							style={{
 								backgroundColor:
 									step === 1
@@ -162,7 +171,7 @@ function ProgressNav({ setStep, step }) {
 					></div>
 					<div className="flex items-center text-gray-500 relative">
 						<div
-							className="cursor-pointer rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
 							style={{
 								backgroundColor:
 									step === 2
@@ -214,7 +223,7 @@ function ProgressNav({ setStep, step }) {
 					></div>
 					<div className="flex items-center text-gray-500 relative">
 						<div
-							className="cursor-pointer rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
 							style={{
 								backgroundColor:
 									step === 3
@@ -256,8 +265,8 @@ function ProgressNav({ setStep, step }) {
 						}}
 					></div>
 					<div className="flex items-center text-gray-500 relative">
-						<div
-							className="cursor-pointer rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
+						<div onClick={()=>setStep(4)}
+							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
 							style={{
 								backgroundColor:
 									step === 4
@@ -321,8 +330,8 @@ function TopBox({ data }) {
 	const [height, setHeight] = useState(135);
 
 	return (
-			<div  className=" flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full overflow-hidden transition-height duration-1000 ease-in-out"
-			style={{ "backgroundColor": "#003366" , "height": height + "px" }}
+		<div className=" flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full overflow-hidden transition-height duration-1000 ease-in-out"
+			style={{ "backgroundColor": "#003366", "height": height + "px" }}
 		>
 			<div className="flex flex-row w-4/5">
 				<label className="text-xl font-bold m-auto border px-4 py-2">Flight</label>
@@ -354,7 +363,7 @@ function TopBox({ data }) {
 									<path fill="none" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5597" d="M43.174,31.3231l11.1493-4.4864c1.3266-0.5338,2.7434-0.7839,4.1727-0.74c3.6995,0.1136,10.3898,0.6672,8.0573,3.2304 c-3.1706,3.4839-25.4249,12.196-32.0018,14.6509s-14.7118,3.7502-20.337,3.8591c-4.9236,0.0953,0.5896-2.8912,0.5896-2.8912 s6.2557-3.55,9.0249-4.7568l2.7841-1.2132" />
 								</g>
 							</svg>
-							<p className="text-sm">OC110</p>
+							<p className="text-sm w-full text-center border-t pt-2 border-white">OC110</p>
 							<p className="text-xs">{data.ticket.stop > 0 ? data.ticket.stop + " stop" : "Direct" + " - " + duration}</p>
 						</div>
 						<div className="flex flex-col p-2">

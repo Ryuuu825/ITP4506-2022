@@ -19,9 +19,9 @@ export default function Accordion({ title, content, alwaysOpen }) {
 
 
     return (
-        <div className="w-full flex flex-col " >
+        <div className="w-full flex flex-col" >
             <button
-                className={"w-full flex flex-row py-3 "}
+                className={"w-full flex flex-row items-center py-3 border-b"}
                 onClick={toggleAccordion}
             >
                 <p className="peer text-2xl font-semibold mt-3  text-left mr-auto">{title}</p>

@@ -16,14 +16,14 @@ export default function Nav({ name }) {
                 <NavLink className="flex items-center justify-center " to="/">
                     <PageLogo />
                 </NavLink>
-                <div className="ml-auto">
+                <div className="ml-auto text-blue-800">
                     <ul className="flex flex-row justify-around items-center pt-2">
                         <li className="mx-3">
                             <NavLink
                                 to="/"
                                 className="text-xl text-gray-800 font-semibold"
                                 style={({ isActive }) => {
-                                    return isActive ? { color: "#3058D2" } : {};
+                                    return isActive ? { color: "#1E429F" } : {};
                                 }}
                             >
                                 Home
@@ -33,7 +33,7 @@ export default function Nav({ name }) {
                             <NavLink
                                 className="text-xl text-gray-800"
                                 style={({ isActive }) => {
-                                    return isActive ? { color: "#3058D2" } : {};
+                                    return isActive ? { color: "#1E429F" } : {};
                                 }}
                             >
                                 My trips
@@ -43,7 +43,7 @@ export default function Nav({ name }) {
                             <NavLink
                                 className="text-xl text-gray-800"
                                 style={({ isActive }) => {
-                                    return isActive ? { color: "#3058D2" } : {};
+                                    return isActive ? { color: "#1E429F" } : {};
                                 }}
                             >
                                 Helps
