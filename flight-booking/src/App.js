@@ -13,6 +13,7 @@ import SearchPage from "./pages/SearchPage";
 import { ToastContainer } from "react-toastify";
 import TranscationPage from "./pages/TranscationPage";
 import { AdminPageAccountManagement, AdminPageAccountManagement_AddUser, AdminPageIndex, AdminPageSetting } from "./pages/adminpage";
+import MyTrip from "./pages/mytrip";
 
 function Main() {
 
@@ -60,6 +61,7 @@ function App() {
                     <Route path="/index" element={<LandingPage />} />
                     <Route path="/create-account" element={<SignUp />} />
                     <Route path="/forgot-pw" element={<ForgotPassword />} />
+                    <Route path="/my/trip" element={<MyTrip />} />
                     <Route path="/operator">
                         <Route path="reset-pw" element={<OperatorResetPw />} />
                     </Route>

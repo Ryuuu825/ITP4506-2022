@@ -19,7 +19,6 @@ import { Button } from "flowbite-react";
 import ToggleSwitch from "../component/toggleswitch";
 
 import { Modal } from "flowbite-react";
-import Breadcrumb from "../component/Breadcrumb";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
