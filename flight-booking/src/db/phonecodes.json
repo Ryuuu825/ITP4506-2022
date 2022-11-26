@@ -567,13 +567,6 @@
       "phoneCode": "+94"
    },
    {
-      "countryCode":"SG", 
-      "countryNameTw": "新加坡", 
-      "countryNameCn":"新加坡",
-      "countryNameEn":"Singapore",
-      "phoneCode": "+65"
-   },
-   {
       "countryCode":"SD", 
       "countryNameTw": "蘇丹", 
       "countryNameCn":"苏丹",

@@ -10,8 +10,10 @@ import { HKExpress_SVG, AirChina_SVG } from "../component/SVGPath";
 import Moment from "react-moment";
 import moment from 'moment';
 import airports from "../db/airport.json";
-import PassengersForm from "../layout/TranscationForm";
+import PassengersForm from "../layout/PassengersForm";
 import { useRef } from "react";
+import SeatForm from "../layout/SeatForm";
+import AddOnForm from "../layout/AddOnForm";
 
 export default function TranscationPage() {
 	const location = useLocation();
@@ -20,7 +22,7 @@ export default function TranscationPage() {
 	const date = selectInfo.date;
 	const dest = selectInfo.dest;
 	const [passengers, setPassengers] = useState({
-		"adults":[], "children":[], "infants":[]
+		"adults": [], "children": [], "infants": []
 	});
 	const topbox = useRef();
 	useEffect(() => {
@@ -41,9 +43,9 @@ export default function TranscationPage() {
 	return (
 		<div className="w-full h-full bg-gray-100 pb-2">
 			<Breadcrumb data={{ date, dest }} page={'search'} />
-			{topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox ref={topbox} data={selectInfo}/></div> : <TopBox data={selectInfo} />}
-			<div style={{"marginTop": topFixed?"189px":"0px"}}></div>
-			<div className={"flex flex-row w-4/5 h-screen mx-auto my-4"}>
+			{topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox refs={topbox} data={selectInfo} /></div> : <TopBox data={selectInfo} />}
+			<div style={{ "marginTop": topFixed ? "189px" : "0px" }}></div>
+			<div className={"flex flex-row w-4/5 mx-auto my-4"}>
 				<TranscationBox data={selectInfo} passengers={passengers} setPassengers={setPassengers} />
 			</div>
 		</div>
@@ -52,17 +54,34 @@ export default function TranscationPage() {
 
 function TranscationBox({ data, passengers, setPassengers }) {
 	const [step, setStep] = useState(1);
+	const [form, setForm] = useState(null);
+	const [formData, setFormData] = useState({
+		"passengers": [],
+		"seats": []
+	});
+
+	useEffect(() => {
+		if (step === 1) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setForm(<PassengersForm form={formData} setForm={setFormData} setStep={setStep} step={step} data={data} setPassengers={setPassengers} passengers={passengers} />);
+		} else if (step === 2) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setForm(<SeatForm data={data} form={formData} setForm={setFormData} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
+		} else if (step === 3) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			setForm(<AddOnForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step}/>);
+		}
+	}, [step]);
 
 	return (
-		<div className="flex flex-col p-4 bg-white rounded-lg shadow-lg mb-3 w-full h-full">
+		<div className="flex flex-col p-4 pb-8 bg-white rounded-lg shadow-lg mb-3 w-full h-full">
 			<ProgressNav setStep={setStep} step={step} />
-			<PassengersForm data={data} setPassengers={setPassengers} passengers={passengers}/>
+			{form}
 		</div>
 	);
 }
 
-function ProgressNav() {
-	const [step, setStep] = useState(3);
+function ProgressNav({ setStep, step }) {
 	return (
 		<div className="w-10/12 mx-auto pb-2 border-b">
 			<div className="mx-4 p-4 mb-6">
