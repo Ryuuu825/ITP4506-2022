@@ -315,10 +315,15 @@ function TopBox({ data }) {
 
 	const showDetailHandler = () => {
 		setShowDetail(!showDetail);
+		setHeight(showDetail ? 135 : 370);
 	}
 
+	const [height, setHeight] = useState(135);
+
 	return (
-		<div style={{ "backgroundColor": "#003366" }} className="flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full">
+		<div  className="overflow-hidden flex flex-col justify-center border-t shadow-gray-400 text-gray-200 items-center w-full transition-height duration-1000 ease-in-out"
+			style={{ "backgroundColor": "#003366" , "height": height + "px" }}
+		>
 			<div className="flex flex-row w-4/5">
 				<label className="text-xl font-bold m-auto border px-4 py-2">Flight</label>
 				<div className="flex flex-col flex-2 p-2 w-8/12">
