@@ -77,7 +77,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 				<div className="flex grow flex-row justify-end mt-8">
 					<button onClick={setFormHandler} className="flex flex-row ml-2 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 rounded">
 						Next
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-4 feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="ml-4 feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 					</button>
 				</div>
 			</div>
@@ -108,7 +108,7 @@ function PassengerInfo({ index }) {
 	const onChangeLastName = (e) => {
 		setLastName(e.target.value);
 	}
-	
+
 	return (
 		<div className="mt-8 flex flex-col border p-8 border-blue-800 animate-fade-in">
 			<label className="flex flex-row items-center text-2xl text-blue-900 font-bold mx-auto">
@@ -168,7 +168,7 @@ function PassengerInfo({ index }) {
 							<div className="w-3/4 flex flex-row">
 								{selectedAge === 2 ? <select onChange={(e) => setYear(e.target.value)} value={year} className="border p-3 pr-8 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 									{
-										[...Array(10).keys()].map((v,k) => (
+										[...Array(10).keys()].map((v, k) => (
 											<option key={k} value={2020 - v}>{2020 - v}</option>
 										))
 									}

@@ -11,19 +11,19 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 			let r = Math.random(2);
 			if (r < 0.5) {
 				if(selectedSeat.indexOf(document.getElementsByTagName('input')[i].value) !== -1) {
-					document.getElementsByTagName('input')[i].className = "text-sm text-white w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
+					document.getElementsByTagName('input')[i].className = "text-sm text-white text-center w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
 					continue;
 				}
-				document.getElementsByTagName('input')[i].className = "text-sm w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
+				document.getElementsByTagName('input')[i].className = "text-sm text-center w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
 				setUnAvailSeat([...unAvailSeat, document.getElementsByTagName('input')[i].value]);
 			}
 		}
 	}, [])
 
 	const selectSeat = (e) => {
-		let choose = "text-sm text-white w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
-		let avail = "text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600";
-		let unavail = "text-sm w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
+		let choose = "text-sm text-white text-center w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
+		let avail = "text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600";
+		let unavail = "text-sm text-center w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
 		console.log(seatCount);
 		if (e.target.className === choose) {
 			e.target.className = avail;
@@ -111,18 +111,18 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 						<div key={code} className='w-fit flex flex-row mx-auto justify-center items-center mt-1'>
 							<div className='mr-4'>{code}</div>
 							<div className="flex flex-row">
-								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "A"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
-								<div onClick={selectSeat} className="mr-8"><input disabled value={code.toString() + "B"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "A"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-8"><input disabled value={code.toString() + "B"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
 							</div>
 							<div className="flex flex-row">
-								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "C"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
-								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "D"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
-								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "E"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
-								<div onClick={selectSeat} className="mr-8"><input disabled value={code.toString() + "F"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "C"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "D"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "E"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-8"><input disabled value={code.toString() + "F"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
 							</div>
 							<div className="flex flex-row">
-								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "G"} className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
-								<div onClick={selectSeat}><input value={code.toString() + "H"} disabled className='text-sm text-white bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat} className="mr-2"><input disabled value={code.toString() + "G"} className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
+								<div onClick={selectSeat}><input value={code.toString() + "H"} disabled className='text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600' /></div>
 							</div>
 						</div>
 						: ""
@@ -131,11 +131,11 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 
 			<div className="w-full flex flex-row">
 				<div className="flex flex-row justify-start mt-8">
-					<button onClick={setPreFormHandler} className="flex flew-row p-4 pl-0 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold rounded">
+					<button onClick={setPreFormHandler} className="flex flew-row p-4 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold rounded">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="mr-4 feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</button>
 				</div>
 				<div className="flex grow flex-row justify-end mt-8">
-					<button onClick={setNextFormHandler} className="flex flex-row ml-2 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 pr-0 rounded">
+					<button onClick={setNextFormHandler} className="flex flex-row ml-2 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 rounded">
 						Next
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="ml-4 feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 					</button>
