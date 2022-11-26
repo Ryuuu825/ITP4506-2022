@@ -16,7 +16,7 @@ export class ConfirmModal extends React.Component {
 
           <div className="flex flex-row justify-center mt-4">
             <div
-                className=" bg-red-700 select-none text-white px-4 py-2 rounded-md cursor-pointer"
+                className=" bg-green-700 select-none text-white px-4 py-2 rounded-md cursor-pointer"
                 onClick={() => {
                     this.onClose();
                 }}
@@ -24,7 +24,7 @@ export class ConfirmModal extends React.Component {
                 Cancel
             </div>
             <div
-                className="bg-green-700 select-none text-white px-4 py-2 rounded-md cursor-pointer ml-2"
+                className="bg-red-700 select-none text-white px-4 py-2 rounded-md cursor-pointer ml-2"
                 onClick={() => {
                     this.props.onConfirm();
                     this.onClose();

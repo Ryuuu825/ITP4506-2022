@@ -13,9 +13,10 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Modal from "../component/Modal";
-import {ConfirmModal} from "../component/Modal";
 import { FloatingLabel } from "../component/Form";
+import { Button } from "flowbite-react";
+
+import { Modal } from "flowbite-react";
 
 let SidebarCurrentPos = 0;
 
@@ -1159,7 +1160,8 @@ export function AdminPageAccountManagement() {
 
     const CTX = () => {
         const [showModal, setShowModal] = useState(false);
-
+        const [confirmDeleteUserModal, setConfirmDeleteUserModal] = useState(false);
+        
         const email = useRef(null);
 
         return (
@@ -1178,7 +1180,11 @@ export function AdminPageAccountManagement() {
                                     </h3>
                                 </div>
                                 <div class="relative px-4 max-w-full">
-                                    <div class=" bg-primary cursor-pointer flex flex-row items-center text-white active:primary text-xs font-bold uppercase px-3 py-1.5 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                    <Button class=" bg-primary cursor-pointer flex flex-row items-center text-white active:primary text-xs font-bold uppercase px-3 py-1.5 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        onClick={() => {
+                                            setShowModal(true);
+                                        }}
+                                    >
                                         <svg
                                             class="w-6 h-6"
                                             fill="none"
@@ -1194,30 +1200,58 @@ export function AdminPageAccountManagement() {
                                             ></path>
                                         </svg>
                                         <span class="ml-2">Add User</span>
-                                    </div>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="block w-full overflow-scroll h-[75vh]">
-                            <ConfirmModal
-                                onClose={() => {
-                                    setShowModal(!showModal);
-                                }}
-                                show={showModal}
-                                onConfirm={() => {
-                                    console.log(email.current);
-                                    setItems(
-                                        items.filter((item) => {
-                                            return item.email !== email.current;
-                                        })
-                                    );
-                                }}
-                            >
-                                <div className="text-2xl">
-                                    Do you want to delete this user?
+                        <Modal show={showModal} onClose={()=>{setShowModal(false)}}>
+                            <Modal.Header>
+                                <div class="text-3xl pt-3 leading-6 font-bold text-gray-900">
+                                    Add Operator Account
                                 </div>
-                            </ConfirmModal>
+                            </Modal.Header>
+                            <Modal.Body className="bg-gray-50">
+                                <AdminPageAccountManagement_AddUser />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button color="gray" onClick={() => {
+                                        setShowModal(false);
+                                    }}>
+                                    Back
+                                </Button>
+                                <Button 
+                                    className="bg-primary"
+                                    onClick={() => {
+                                        setShowModal(false);
+                                    }}
+                                >Create</Button>
+                            </Modal.Footer>
+                        </Modal>
+
+                        <Modal show={confirmDeleteUserModal} onClose={()=>{setConfirmDeleteUserModal(false)}}>
+                            <Modal.Header>
+                                Are you sure you want to delete this user?
+                            </Modal.Header>
+                            <Modal.Footer>
+                                
+                                <Button color="gray"
+                                    onClick={() => {
+                                        setConfirmDeleteUserModal(false);
+                                    }}
+                                >
+                                    Back
+                                </Button>
+                                <Button 
+                                    className="bg-red-700 hover:bg-red-800"
+                                    onClick={() => {
+                                        setConfirmDeleteUserModal(false);
+                                        setItems(items.filter((item) => item.email !== email.current));
+                                    }}
+                                >Delete</Button>
+                            </Modal.Footer>
+                        </Modal>
                             <table class="items-center bg-transparent w-full border-collapse ">
                                 <thead>
                                     <tr>
@@ -1398,7 +1432,7 @@ export function AdminPageAccountManagement() {
                                                 role={item.role}
                                                 email={item.email}
                                                 emailRef={email}
-                                                modal={setShowModal}
+                                                modal={setConfirmDeleteUserModal}
                                             />
                                         );
                                     })}
@@ -1464,8 +1498,6 @@ export function AdminPageAccountManagement() {
 }
 
 export function AdminPageAccountManagement_AddUser() {
-    
-
     const CTX = () => {
         const email = useRef("");
         const password = useRef("");
@@ -1553,19 +1585,19 @@ export function AdminPageAccountManagement_AddUser() {
                 }
             };
             window.addEventListener("click", onMouseClickOnOther);
+
+            return () => {
+                window.removeEventListener("click", onMouseClickOnOther);
+            };
         }, []);
 
         return (
             <>
                 <div className="h-full w-full ">
+                    
                     <div className="h-full w-full flex justify-center items-center">
-                        <div className="w-1/2 h-3/4">
-                            <div className="flex flex-col h-fit w-full">
-                                <div className="text-4xl font-bold">
-                                    Add Operator Account
-                                </div>
-
-                                <div className="flex h-full w-full bg-gray-100 border rounded-lg mt-4">
+                        <div className="w-full h-3/4">
+                                <div className="flex h-full w-full bg-gray-50  rounded-lg mt-4">
                                     {/* email, password, role (radio) */}
                                     <div className="flex flex-col mx-auto h-full p-4 w-3/4">
                                         <div className="flex flex-col w-full mt-5">
@@ -1578,7 +1610,8 @@ export function AdminPageAccountManagement_AddUser() {
                                                         placeholder={"Email"}
                                                         type="email"
                                                         handler={(e) => {
-                                                            email.current = e.value;
+                                                            email.current =
+                                                                e.value;
                                                         }}
                                                         validate={emailValid}
                                                         error_message="Email format is not valid"
@@ -1587,7 +1620,7 @@ export function AdminPageAccountManagement_AddUser() {
                                             </div>
 
                                             <div>
-                                                 <div className="text-xl font-bold mt-5">
+                                                <div className="text-xl font-bold mt-5">
                                                     Password
                                                 </div>
                                                 <div
@@ -1689,7 +1722,9 @@ export function AdminPageAccountManagement_AddUser() {
                                                                 <g
                                                                     id="Page-1"
                                                                     stroke="none"
-                                                                    strokeWidth={1}
+                                                                    strokeWidth={
+                                                                        1
+                                                                    }
                                                                     fill="none"
                                                                     fillRule="evenodd"
                                                                 >
@@ -1717,8 +1752,8 @@ export function AdminPageAccountManagement_AddUser() {
                                                                 </g>
                                                             </svg>
                                                             <div className="font-bold text-black pb-3 ">
-                                                                Password must be at
-                                                                least
+                                                                Password must be
+                                                                at least
                                                             </div>
                                                             <Checker
                                                                 message={
@@ -1745,7 +1780,9 @@ export function AdminPageAccountManagement_AddUser() {
                                                                 }
                                                             />
                                                             <Checker
-                                                                message={"1 number"}
+                                                                message={
+                                                                    "1 number"
+                                                                }
                                                                 type={
                                                                     pwCheckListItem4Status
                                                                 }
@@ -1762,39 +1799,17 @@ export function AdminPageAccountManagement_AddUser() {
                                                     )}{" "}
                                                 </div>
                                             </div>
-
-                                            <div className="flex mt-5">
-                                                {/* Back, Create */}
-
-                                                <div className="flex-1 mt-3 flex flex-row justify-center">
-                                                    <Link
-                                                        to="/admin/users"
-                                                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-                                                    >
-                                                        Back
-                                                    </Link>
-                                                    <Link
-                                                        to="/admin/users"
-                                                        className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center ml-3"
-                                                    >
-                                                        Create
-                                                    </Link>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </>
         );
     };
 
     return (
-        <Template>
-            <CTX />
-        </Template>
+        <CTX />
     );
 }
