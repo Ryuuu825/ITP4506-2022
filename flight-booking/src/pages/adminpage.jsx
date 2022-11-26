@@ -130,6 +130,30 @@ function Sidebar() {
                                 </Link>
                             </li>
                             <li>
+                                <Link
+                                    to="/"
+                                    className="cursor-pointer text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                                        ></path>
+                                    </svg>
+                                    <span className="ml-3 flex-1 whitespace-nowrap select-none">
+                                        Landing Page
+                                    </span>
+                                </Link>
+                            </li>
+                            <li>
                                 <a className="text-base cursor-pointer text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg
                                         className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
@@ -2107,7 +2131,9 @@ export function AdminPageSetting() {
                                                     Comfirm Password
                                                 </div>
                                                 <FloatingLabel
-                                                    placeholder={"Confirm Password"}
+                                                    placeholder={
+                                                        "Confirm Password"
+                                                    }
                                                     type="password"
                                                     id={"r_password"}
                                                     bg={"bg-gray-100"}
@@ -2233,9 +2259,14 @@ export function AdminPageSetting() {
                                     </div>
                                 </li>
                             </ul>
-                            <Button className="mt-5 w-fit" onClick={() => {
-                                toast.success("Settings Saved Successfully")
-                            }}>
+                            <Button
+                                className="mt-5 w-fit"
+                                onClick={() => {
+                                    toast.success(
+                                        "Settings Saved Successfully"
+                                    );
+                                }}
+                            >
                                 Save Changes
                             </Button>
                         </div>
