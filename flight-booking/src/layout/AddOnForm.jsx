@@ -19,32 +19,29 @@ export default function AddOnForm({ passengers, setPassengers, setForm, form, se
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="ml-2 feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 				</h1>
 			</div>
-			<h1 className="w-4/5 mb-4 mx-auto text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				Reserve Meal
-			</h1>
 			<div className="w-4/5 mx-auto pr-8 flex flex-row border rounded-xl shadow-md ">
 				<img className="rounded-l-lg" src={meal} alt="" width={400} height={400} />
 				<div className="flex flex-col m-4">
 					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-						Noteworthy technology acquisitions 2021
+						Airline Meal Reservation
 					</h5>
 					<p className="font-normal text-gray-700 dark:text-gray-400">
-						Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+						We will provide each passenger with a free in-flight meal. If there are additional needs, we can provide you with more in-flight meal options, and the price will vary according to your choice.
 					</p>
+					<div className="flex flex-row items-center mt-4">
+						<button >Choose Meal</button>
+					</div>
 				</div>
 			</div>
 
-			<h1 className="w-4/5 my-4 mx-auto text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				Reserve Cars
-			</h1>
-			<div className="w-4/5 mx-auto pr-8 flex flex-row border rounded-xl shadow-md ">
+			<div className="w-4/5 mx-auto pr-8 flex my-8 flex-row border rounded-xl shadow-md ">
 				<img className="rounded-l-lg" src={car} alt="" width={400} height={400} />
 				<div className="flex flex-col m-4">
 					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-						Noteworthy technology acquisitions 2021
+						Airport Shuttle Service
 					</h5>
 					<p className="font-normal text-gray-700 dark:text-gray-400">
-						Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+						We provide airport shuttle service, if necessary, please choose this additional service.
 					</p>
 				</div>
 			</div>

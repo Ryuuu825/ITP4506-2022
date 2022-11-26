@@ -266,7 +266,7 @@ export function PreEconomyBox({ selectInfo }) {
 						<div className="flex flex-row items-center">
 							<svg width="30px" height="30px" className="mr-4" viewBox="0 0 64 64" style={{ "fill": "black", "stroke": "#000", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "2px" }} xmlns="http://www.w3.org/2000/svg"><defs>
 							</defs><title /><g data-name="Layer 40" id="Layer_40"><rect height="36.11" rx="2.83" ry="2.83" width="61.63" x="1.2" y="1.14" /><polygon style={{ "fill": "white", "stroke": "black", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "2px" }} points="45.54 28.3 36.44 19.2 45.54 10.1 41.03 5.59 31.93 14.68 22.83 5.59 18.32 10.1 27.42 19.2 18.32 28.3 22.83 32.81 31.93 23.71 41.03 32.81 45.54 28.3" /><rect height="25.67" width="6.5" x="28.71" y="37.25" /></g></svg>
-							<p className="text-sm grow">Not show fee</p>
+							<p className="text-sm grow">No show fee</p>
 							<p className="text-sm ml-4 text-right font-bold w-48">HK$ 1340</p>
 						</div>
 					</div>
