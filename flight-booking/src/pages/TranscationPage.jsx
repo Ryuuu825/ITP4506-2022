@@ -269,7 +269,7 @@ function ProgressNav({ setStep, step }) {
 						}}
 					></div>
 					<div className="flex items-center text-gray-500 relative">
-						<div onClick={() => setStep(4)}
+						<div
 							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
 							style={{
 								backgroundColor:
