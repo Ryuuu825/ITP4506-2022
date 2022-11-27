@@ -1757,17 +1757,17 @@ export function SignUp() {
                                 <div className=" text-gray-500">
                                     Go back to
                                     <Link to="/login">
-                                        <a className="text-primary ml-1">
+                                        <a className="text-primary ml-1 font-semibold">
                                             Login
                                         </a>
                                     </Link>{" "}
                                     page
                                 </div>
 
-                                <div className="text-base text-gray-500 flex flex-row items-center">
+                                <div className="text-base text-gray-500 flex flex-row items-center mt-4">
                                     Please rate your experience
                                     <div
-                                        className="underline inline-block text-primary cursor-pointer"
+                                        className="underline inline-block text-primary cursor-pointer ml-3 scale-110"
                                         onClick={() => {
                                             toast.success(
                                                 "Thank you for your feedback"
