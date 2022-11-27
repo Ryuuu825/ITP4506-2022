@@ -42,7 +42,9 @@ export default function SearchPage() {
 			false,
 			false,
 			false
-		]
+		],
+		"dTime": "",
+		"aTime": "",
 	};
 	const [destForm, setDestForm] = useState(searchDate);
 
@@ -73,6 +75,9 @@ export default function SearchPage() {
 					|| (destForm.arrTime[3] === true ? (((d.arrivalTime).split(" "))[1] >= "18:00" && ((d.arrivalTime).split(" "))[1] <= "23:59") : false)
 				) : true;
 			});
+			const filteredTicketByFilterTime2 = filteredTicketByFilterTime.filter(d => {
+				return destForm.dTime != "" ? d.outTime >= destForm.dTime : true
+			});
 
 			const filterCountOutTime1 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "00:00" && d.outTime <= "05:59") });
 			const filterCountOutTime2 = filteredTicketByFilterPrice.filter(d => { return (d.outTime >= "06:00" && d.outTime <= "11:59") });
@@ -86,19 +91,19 @@ export default function SearchPage() {
 			const filterCount = [filterCountOutTime1.length, filterCountOutTime2.length, filterCountOutTime3.length, filterCountOutTime4.length, filterCountArrTime1.length, filterCountArrTime2.length, filterCountArrTime3.length, filterCountArrTime4.length];
 			setFilterCount(filterCount);
 			// find min price
-			setMinPrice((isFilterTime ? Math.min(...filteredTicketByFilterTime.map(d => d.price)) : Math.min(...filteredTicket[0].ticket.map(d => d.price))));
+			setMinPrice((isFilterTime ? Math.min(...filteredTicketByFilterTime2.map(d => d.price)) : Math.min(...filteredTicket[0].ticket.map(d => d.price))));
 
 			if (sort === "best") {
-				setDisplayItem(filteredTicketByFilterTime.sort((a, b) => (a.price - b.price) > 0 ? 1 : -1 + ((new Date(a.arrivalTime)) - (new Date(date + " " + a.outTime))) - ((new Date(b.arrivalTime)) - (new Date(date + " " + b.outTime))) > 0 ? -1 : 1 + (a.stop - b.stop) > 0 ? -1 : 1));
+				setDisplayItem(filteredTicketByFilterTime2.sort((a, b) => (a.price - b.price) > 0 ? 1 : -1 + ((new Date(a.arrivalTime)) - (new Date(date + " " + a.outTime))) - ((new Date(b.arrivalTime)) - (new Date(date + " " + b.outTime))) > 0 ? -1 : 1 + (a.stop - b.stop) > 0 ? -1 : 1));
 			} else if (sort === "cheapest") {
-				setDisplayItem(filteredTicketByFilterTime.sort((a, b) => a.price - b.price));
+				setDisplayItem(filteredTicketByFilterTime2.sort((a, b) => a.price - b.price));
 			} else if (sort === "quickest") {
 				console.log("quickest");
-				setDisplayItem(filteredTicketByFilterTime.sort((a, b) =>
+				setDisplayItem(filteredTicketByFilterTime2.sort((a, b) =>
 					((new Date(a.arrivalTime)) - (new Date(date + " " + a.outTime))) - ((new Date(b.arrivalTime)) - (new Date(date + " " + b.outTime)))
 				));
 			} else {
-				setDisplayItem(filteredTicketByFilterTime);
+				setDisplayItem(filteredTicketByFilterTime2);
 			}
 		} else {
 			setMaxPrice(0);
@@ -111,7 +116,7 @@ export default function SearchPage() {
 
 	return (
 		<div className="w-full h-full bg-gray-100">
-			{isShowDetail ? <div className="fixed z-50 w-full bg-black h-full" style={{"backgroundColor":"rgba(0,0,0,0.5)"}}><TicketDetail showDetail={isShowDetail} setIsShowDetail={setIsShowDetail} selectInfo={selectInfo} /></div> : " "}
+			{isShowDetail ? <div className="fixed z-50 w-full bg-black h-full" style={{ "backgroundColor": "rgba(0,0,0,0.5)" }}><TicketDetail showDetail={isShowDetail} setIsShowDetail={setIsShowDetail} selectInfo={selectInfo} /></div> : " "}
 			<Nav />
 			<div className="flex flex-row w-4/5 mx-auto mt-3">
 				<Breadcrumb data={{ date, dest }} page={'search'} />

@@ -121,7 +121,7 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 					</svg>
 				</div>
 				<input type="text" onClick={(e) => { setShowDepartPicker(!showDepartPicker); }} readOnly value={departTime} className="w-full h-30 border-4 border-blue-300 bg-gray-50" />
-				{showDepartPicker ? <FlightTimePicker setTime={setDepartTime} setShow={setShowDepartPicker} title={"Departure Time from HKG"} /> : null}
+				{showDepartPicker ? <FlightTimePicker depart={true} setDestForm={setDestForm} destForm={destForm} setTime={setDepartTime} setShow={setShowDepartPicker} title={"Departure Time from HKG"} /> : null}
 			</div>
 			<label htmlFor="" className="text-sm">Arrival Time to {dest}</label>
 			<div className="relative mb-8" ref={arrivepicker}>
@@ -132,7 +132,7 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 					</svg>
 				</div>
 				<input type="text" onClick={(e) => { setShowArrivePicker(!showArrivePicker); }} readOnly value={arriveTime} className="w-full h-30 border-4 border-blue-300 bg-gray-50" />
-				{showArrivePicker ? <FlightTimePicker setTime={setArriveTime} setShow={setShowArrivePicker} title={`Arrival Time to ${dest}`} /> : null}
+				{showArrivePicker ? <FlightTimePicker arrive={true} setDestForm={setDestForm} destForm={destForm} setTime={setArriveTime} setShow={setShowArrivePicker} title={`Arrival Time to ${dest}`} /> : null}
 			</div>
 			<div className="flex">
 				<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,20 +184,20 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 					{['Airbus A320neo', 'Boeing 757', 'Airbus A220', 'Other'].map((value, index) => {
 						return (
 							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-								<CheckBox context={value} disabled={index+1} id={index} />
-								<label className="grow text-end text-xs">{index+1}</label>
+								<CheckBox context={value} disabled={index + 1} id={index} />
+								<label className="grow text-end text-xs">{index + 1}</label>
 							</div>
 						);
 					})}
 				</>} />
 
-				<FilterAcordion title={`Wide-body jet`} children={
+			<FilterAcordion title={`Wide-body jet`} children={
 				<>
 					{['Airbus A350', 'Boeing 777', 'Boeing 787', 'Other'].map((value, index) => {
 						return (
 							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-								<CheckBox context={value} disabled={index+1} id={index} />
-								<label className="grow text-end text-xs">{index+1}</label>
+								<CheckBox context={value} disabled={index + 1} id={index} />
+								<label className="grow text-end text-xs">{index + 1}</label>
 							</div>
 						);
 					})}
@@ -228,7 +228,7 @@ export function CheckBox({ id, context, disabled }) {
 		</div>
 	);
 }
-export function FlightTimePicker({ h, m, setTime, setShow, title }) {
+export function FlightTimePicker({ depart, arrive, destForm, setDestForm, setTime, setShow, title }) {
 	const [hour, setHour] = useState("00");
 	const [minute, setMinute] = useState("00");
 	const timeHandler = (h, m) => {
@@ -238,8 +238,16 @@ export function FlightTimePicker({ h, m, setTime, setShow, title }) {
 	}
 
 	const setFlightTime = (e) => {
-		setTime(hour + ":" + minute);
 		setShow(false);
+		let subData = JSON.parse(JSON.stringify(destForm));
+		if (depart) {
+			subData.dTime = hour + ":" + minute;
+		} else if (arrive) {
+			subData.aTime = hour + ":" + minute;
+		}
+		setTime(hour + ":" + minute);
+
+		setDestForm(subData);
 	}
 
 	return (
