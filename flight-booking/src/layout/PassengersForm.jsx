@@ -13,14 +13,47 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 		);
 	}, []);
 
-	const addPassenger = () => {
-		setPassengerBoxs([...passengerBoxs, <PassengerInfo index={passengerBoxs.length + 1} />]);
-	}
-
 	const setFormHandler = (e) => {
 		form.passenger = [];
 		setForm(form);
 		setStep(step + 1);
+	}
+
+	const vPhoneCode = (e) => {
+		let value = e.target.value;
+		if(value in phonecodes.phoneCode) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
+
+	const vEmail = (e) => {
+		let email = e.target.value;
+		if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
+
+	const vPhone = (e) => {
+		let phone = e.target.value;
+		if (phone.match(/^[0-9]{8}$/g)) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
+
+	const addPassenger = () => {
+		setPassengerBoxs([...passengerBoxs, <PassengerInfo index={passengerBoxs.length + 1}/>]);
 	}
 
 	return (
@@ -39,7 +72,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
 						</div>
-						<input type="email" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@domain.com" />
+						<input type="email" onBlur={vEmail} required id="input-group-1" className="border p-3 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@domain.com" />
 					</div>
 				</div>
 				<br />
@@ -51,7 +84,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-500 dark:text-gray-400 feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
 						</div>
-						<input type="text" list="areacode" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectArea} onChange={(e) => setSelectArea(e.target.value)} />
+						<input type="text" list="areacode" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectArea} onChange={(e) => {setSelectArea(e.target.value); vPhoneCode(e);}} />
 						<datalist id="areacode" hidden>
 							{
 								phonecodes.map((code) => (
@@ -64,7 +97,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<svg className="w-5 h-5 text-gray-500 dark:text-gray-400 feather feather-phone" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
 						</div>
-						<input type="tel" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Phone No." />
+						<input type="tel" onBlur={vPhone} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Phone No." />
 					</div>
 				</div>
 			</div>
@@ -85,12 +118,34 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 	);
 }
 
-function PassengerInfo({ index }) {
+function PassengerInfo({ index}) {
 	const [selectedAge, setSelectedAge] = useState(1);
 	const [selectedSex, setSelectedSex] = useState('');
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [year, setYear] = useState("");
+
+	const vName = (e) => {
+		let name = e.target.value;
+		if (name.match(/^[a-zA-Z ]{2,30}$/g)) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
+
+	const vDate = (e) => {
+		let date = e.target.value;
+		if (date.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/g)) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
 
 	const gender = ["Mr", "Mrs", "Miss", "Mdm", "Ms", "Mstr", "Dr", "Prof", "Others"]
 	useEffect(() => {
@@ -128,8 +183,8 @@ function PassengerInfo({ index }) {
 								))
 							}
 						</select>
-						<input onChange={onChangeFirstName} type="text" className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="First Name" required />
-						<input onChange={onChangeLastName} type="text" className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="Last Name" required />
+						<input onChange={onChangeFirstName} type="text" onBlur={vName} className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="First Name" required />
+						<input onChange={onChangeLastName} type="text" onBlur={vName} className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="Last Name" required />
 					</div>
 				</div>
 				<br />
@@ -180,7 +235,7 @@ function PassengerInfo({ index }) {
 											))
 										}
 									</select>}
-								<input className='grow ml-2 text-sm' required pattern="\d{4}-\d{2}-\d{2}" type="date" min={year + "-01-01"} max={year === "2022" ? new Date().toISOString().split('T')[0] : year + "-12-31"} />
+								<input className='grow ml-2 text-sm' onBlur={vDate} required pattern="\d{4}-\d{2}-\d{2}" type="date" min={year + "-01-01"} max={year === "2022" ? new Date().toISOString().split('T')[0] : year + "-12-31"} />
 							</div>
 						</div> : ""
 				}
