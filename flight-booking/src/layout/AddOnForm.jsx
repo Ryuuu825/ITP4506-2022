@@ -4,6 +4,7 @@ import car from "../asserts/carservice.jpg";
 import React, { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import phonecodes from '../db/phonecodes.json';
 
 export default function AddOnForm({ passengers, setPassengers, setForm, form, setStep, step }) {
 	const [showMeal, setShowMeal] = useState(false);
@@ -80,7 +81,8 @@ export default function AddOnForm({ passengers, setPassengers, setForm, form, se
 
 export function ShuttleService({ setShowShuttle, showShuttle }) {
 	const [totalPrice, setTotalPrice] = useState(0);
-	const [selectCount, setSelectCount] = useState(0);
+	const [selectArea, setSelectArea] = useState(0);
+	const [selectDistrict, setSelectDistrict] = useState(0);
 	const menuBox = useRef();
 	useEffect(() => {
 		// close dropdown when click outside
@@ -102,19 +104,68 @@ export function ShuttleService({ setShowShuttle, showShuttle }) {
 		setShowShuttle(false)
 	}
 
+	const area = [
+		["Select District"],
+		["Select District", "Central and Western", "Eastern", "Southern", "Wan Chai"],
+		["Select District", "Kowloon City", "Kwun Tong", "Sham Shui Po", "Wong Tai Sin", "Yau Tsim Mong"],
+		["Select District", "Islands", "Kwai Tsing", "North", "Sai Kung", "Sha Tin", "Tai Po", "Tsuen Wan", "Tuen Mun", "Yuen Long"]
+	]
+
 	return (
-		<div style={{ "backgroundColor": "rgba(0,0,0,0.5)" }} className="flex fixed top-0 left-0 w-full h-full p-8 justify-center items-center z-50 overflow-auto">
-			<div ref={menuBox} className="w-10/12 flex flex-col bg-white m-auto p-4 rounded-md">
+		<div style={{ "backgroundColor": "rgba(0,0,0,0.5)" }} className="flex fixed top-0 left-0 w-full h-full p-8 justify-center items-center z-50 overflow-auto" >
+			<div ref={menuBox} className="w-1/2 flex flex-col bg-white m-auto p-4 rounded-md">
 				<div className="py-4 flex border-b">
 					<label className="text-2xl font-bold flex-1">Airport Shuttle Service</label>
 					<button onClick={() => setShowShuttle(false)}>
 						<svg width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g data-name="Layer 2"><g data-name="close"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0" /><path d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z" /></g></g></svg>
 					</button>
 				</div>
-				<div className="m-4">
-					<div className="w-full flex flex-row items-center">
-						<label className="text-xl font-bold mr-2">Standard Meal</label><br />
-						<label className="text-base font-bold">(You can only choose a maximum of 2 standard meals)</label><br />
+				<div className="p-4 w-full">
+					<label className="text-2xl my-2 font-bold text-blue-900">Pick up location</label><br />
+					<label className="text-sm mb-4"><label className="text-red-600">*</label> Required</label>
+					<div className="flex flex-row mt-4 items-center">
+						<label className="flex flex-row w-1/4">
+							Region&nbsp;<label className="text-red-600">*</label>
+						</label>
+						<div className="relative mr-4">
+							<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-500 dark:text-gray-400 feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+							</div>
+							<select type="text" className="border p-3 pr-8 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectArea} onChange={(e) => setSelectArea(e.target.value)} >
+								<option value={0}>Select Region</option>
+								<option value={1}>Hong Kong Island</option>
+								<option value={2}>Kowloon</option>
+								<option value={3}>New Territories</option>
+							</select>
+						</div>
+						<div className="grow relative mr-4">
+							<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-500 dark:text-gray-400 feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+							</div>
+							<select type="text" className="border w-full p-3 pr-8 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectDistrict} onChange={(e) => { setSelectDistrict(e.target.value); e.target.value==="Select District" ? setTotalPrice(0) : setTotalPrice(Math.floor((Math.random() + 0.5) * 300)) }} >
+								{area[selectArea].map((item, index) => {
+									return (
+										<option key={index} value={item}>{item}</option>
+									)
+								})}
+							</select>
+						</div>
+					</div>
+					<div className="flex flex-row mt-4 items-center">
+						<label className="flex flex-row w-1/4">
+							Street&nbsp;<label className="text-red-600">*</label>
+						</label>
+						<div className="grow relative">
+							<input type="text" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+						</div>
+					</div>
+					<div className="flex flex-row mt-4 items-center">
+						<label className="flex flex-row w-1/4">
+							Building&nbsp;<label className="text-red-600">*</label>
+						</label>
+						<div className="grow relative">
+							<input type="text" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+						</div>
 					</div>
 				</div>
 				<div className="border-t p-4 flex justify-between">
@@ -125,7 +176,7 @@ export function ShuttleService({ setShowShuttle, showShuttle }) {
 					<button onClick={addShuttleHandler} className="bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 rounded w-fit">Confirm</button>
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 }
 
