@@ -98,7 +98,7 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 									<label className="font-bold w-1/2">Name:&nbsp;</label><label className="ml-10 underline">Mr Kee Lee</label>
 								</div>
 								<div className="flex w-full px-4 py-2">
-									<label className="font-bold w-1/2">Date of Birth:&nbsp;</label><label className="ml-10 underline">2011 - 01 - 02</label>
+									<label className="font-bold w-1/2">Date of Birth:&nbsp;</label><label className="ml-10 underline">2011-01-02</label>
 								</div>
 								<div className="flex w-full px-4 pb-4 pt-2">
 									<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">10B</label>

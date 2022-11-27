@@ -24,7 +24,14 @@ export default function TranscationPage() {
 	const date = selectInfo.date;
 	const dest = selectInfo.dest;
 	const [passengers, setPassengers] = useState({
-		"adults": [], "children": [], "infants": []
+		"adult": [], "child": [], "infant": []
+	});
+	const [formData, setFormData] = useState({
+		"passengers": {
+			"adult": [{}], "child": [], "infant": []
+		},
+		"seats": [],
+		"addOns": []
 	});
 	const topbox = useRef();
 	useEffect(() => {
@@ -32,7 +39,7 @@ export default function TranscationPage() {
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 		}
-	}, []);
+	}, [formData]);
 
 	const handleScroll = () => {
 		if (window.scrollY >= 200) {
@@ -45,23 +52,18 @@ export default function TranscationPage() {
 	return (
 		<div className="w-full h-full bg-gray-100 pb-2">
 			<Breadcrumb data={{ date, dest }} page={'search'} />
-			{showTop ? topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox refs={topbox} data={selectInfo} /></div> : <TopBox data={selectInfo} /> : ""}
+			{showTop ? topFixed ? <div className="fixed w-full z-50 top-0 left-0"><TopBox formData={formData} refs={topbox} data={selectInfo} /></div> : <TopBox formData={formData} data={selectInfo} /> : ""}
 			<div style={{ "marginTop": topFixed ? "189px" : "0px" }}></div>
 			<div className={"flex flex-row w-4/5 mx-auto my-4"}>
-				<TranscationBox setShowTop={setShowTop} data={selectInfo} passengers={passengers} setPassengers={setPassengers} />
+				<TranscationBox formData={formData} setFormData={setFormData} setShowTop={setShowTop} data={selectInfo} passengers={passengers} setPassengers={setPassengers} />
 			</div>
 		</div>
 	);
 }
 
-function TranscationBox({ setShowTop, data, passengers, setPassengers }) {
+function TranscationBox({ setShowTop, formData, setFormData, data, passengers, setPassengers }) {
 	const [step, setStep] = useState(1);
 	const [form, setForm] = useState(null);
-	const [formData, setFormData] = useState({
-		"passengers": [],
-		"seats": [],
-		"addOns": []
-	});
 
 	useEffect(() => {
 		if (step === 1) {
@@ -71,6 +73,8 @@ function TranscationBox({ setShowTop, data, passengers, setPassengers }) {
 		} else if (step === 2) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 			setShowTop(true);
+			formData.passengers = { "adult": [{ "name": "Ben Poon", "title": "Mr" }], "child": [{ "name": "Ken Lee", "title": "Mr", "dob": "2011-01-02" }], "infant":[] };
+			setFormData(formData);
 			setForm(<SeatForm data={data} form={formData} setForm={setFormData} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		} else if (step === 3) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -265,7 +269,7 @@ function ProgressNav({ setStep, step }) {
 						}}
 					></div>
 					<div className="flex items-center text-gray-500 relative">
-						<div onClick={()=>setStep(4)}
+						<div onClick={() => setStep(4)}
 							className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
 							style={{
 								backgroundColor:
@@ -317,15 +321,16 @@ function ProgressNav({ setStep, step }) {
 	)
 }
 
-function TopBox({ data }) {
+function TopBox({ data, formData }) {
 	const fullOutTime = new Date(data.date + " " + data.ticket.outTime);
 	const duration = moment(data.ticket.arrivalTime).diff(fullOutTime, "hours") + "h " + moment(data.ticket.arrivalTime).diff(fullOutTime, "minutes") % 60 + "m";
 	const [showDetail, setShowDetail] = useState(false);
-
 	const showDetailHandler = () => {
 		setShowDetail(!showDetail);
 		setHeight(showDetail ? 135 : 370);
 	}
+
+	const totalPassenger = formData.passengers.adult.length + formData.passengers.child.length + formData.passengers.infant.length;
 
 	const [height, setHeight] = useState(135);
 
@@ -458,12 +463,12 @@ function TopBox({ data }) {
 					</div>
 					<div className="flex flex-col flex-1 justify-start">
 						<p>ECONOMY</p>
-						<p className="text-3xl font-bold">HK$ {data.ticket.price.toLocaleString()}</p>
+						<p className="text-3xl font-bold">HK$ {parseInt(data.ticket.price * formData.passengers.adult.length + data.ticket.price * formData.passengers.child.length * 0.7).toLocaleString()}</p>
 						<p className="text-sm mb-4">Total price for all travelers</p>
 						{showDetail ? <div className="h-auto flex flex-col animate-fade-in">
-							<p className="flex flex-row"><label className="font-bold grow">Ticket (1 adult)</label> <label htmlFor="">HK$ {data.ticket.price.toLocaleString()}</label></p>
-							<p className="flex flex-row"><label className="font-bold grow">Flight fare</label>	<label htmlFor="">HK$ {(data.ticket.price - 582).toLocaleString()}</label></p>
-							<p className="flex flex-row"><label className="font-bold grow">Taxes and fees</label> <label htmlFor="">HK$ 582</label></p>
+							<p className="flex flex-row"><label className="font-bold grow">Ticket ({formData.passengers.adult.length > 0 ? formData.passengers.adult.length + " adult" : ""}{formData.passengers.child.length > 0 ? ", " + formData.passengers.child.length + " child" : ""})</label> <label htmlFor="">HK$ {parseInt((data.ticket.price * formData.passengers.adult.length) + (data.ticket.price * formData.passengers.child.length * 0.7)).toLocaleString()}</label></p>
+							<p className="flex flex-row"><label className="font-bold grow">Flight fare</label>	<label htmlFor="">HK$ {parseInt((data.ticket.price - 582) * formData.passengers.adult.length + (data.ticket.price * 0.7 - 582) * formData.passengers.child.length).toLocaleString()}</label></p>
+							<p className="flex flex-row"><label className="font-bold grow">Taxes and fees</label> <label htmlFor="">HK$ {582 * totalPassenger}</label></p>
 						</div> : null}
 					</div>
 				</div>
