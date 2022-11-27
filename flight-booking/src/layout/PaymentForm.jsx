@@ -239,8 +239,7 @@ function Result({ showResult, setShowResult }) {
 					>
 						<Spinner name="pacman" />
 						<span className="text-xl font-bold mt-5 text-gray-500">
-							Please wait while we are creating your
-							account
+							Waiting result from payment gateway
 						</span>
 					</div>
 					<div
