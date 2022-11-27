@@ -39,7 +39,7 @@ export default function TranscationPage() {
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 		}
-	}, [formData]);
+	}, []);
 
 	const handleScroll = () => {
 		if (window.scrollY >= 200) {
@@ -85,7 +85,7 @@ function TranscationBox({ setShowTop, formData, setFormData, data, passengers, s
 			setShowTop(false);
 			setForm(<PaymentForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		}
-	}, [step]);
+	}, [step, formData]);
 
 	return (
 		<div className="flex flex-col p-4 pb-8 bg-white rounded-lg shadow-lg mb-3 w-full h-full">

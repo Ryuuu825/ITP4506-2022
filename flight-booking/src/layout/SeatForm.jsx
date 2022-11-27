@@ -5,10 +5,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function SeatForm({ passengers, setPassengers, setForm, form, setStep, step }) {
 	const [seatCount, setSeatCount] = useState(2);
-	const [selectedSeat, setSelectedSeat] = useState(["", ""]);
+	const [selectedSeat, setSelectedSeat] = useState(form.seats);
 	const [unAvailSeat, setUnAvailSeat] = useState([]);
 	const [selectState, setSelectState] = useState(1);
-	const [selectElement, setSelectElement] = useState([{ "state": 1, "element": null }, { "state": 2, "element": null }]);
+	const [selectElement, setSelectElement] = useState([{ "state": 1, "element": null, "seat": "" }, { "state": 2, "element": null, "seat": "" }]);
+
 	useEffect(() => {
 		for (let i = 10; i < document.getElementsByTagName('input').length; i++) {
 			if (i === 18 || i === 24) continue;
@@ -25,57 +26,46 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 	}, [])
 
 	const selectSeat = (e) => {
-		let choose = "text-sm text-white text-center w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
-		let avail = "text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600";
-		let unavail = "text-sm text-center w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
+		const choose = "text-sm text-white text-center w-8 h-8 bg-green-800 cursor-pointer border-2 rounded border-green-600";
+		const avail = "text-sm text-white text-center bg-blue-800 w-8 h-8 border-2 cursor-pointer rounded border-blue-600";
+		const unavail = "text-sm text-center w-8 h-8 bg-gray-200 cursor-pointer border-2 rounded border-gray-600";
 		if (e.target.className === choose) {
 			toast.warning("You have already selected this seat");
 			return;
 		}
 
-		if (e.target.className === avail && seatCount > 0) {
+		else if (e.target.className === avail && seatCount >= 0 && selectState > 0) {
 			e.target.className = choose;
 			let count = seatCount;
 			if (selectElement[selectState - 1].element !== null) {
 				count += 1;
 				console.log(selectElement[selectState - 1].element);
 				selectElement[selectState - 1].element.className = avail;
+				selectElement[selectState - 1].element = e.target;
 			}
-			setSeatCount(count - 1);
-			selectElement[selectState - 1].element = e.target;
-			setSelectElement(selectElement);
 			selectedSeat[selectState - 1] = e.target.value;
 			setSelectedSeat(selectedSeat);
+			if(selectState === 1 && selectedSeat[1] === undefined) setSelectState(2);
+			else setSelectState(0);
+			selectElement[selectState - 1].element = e.target;
+			selectElement[selectState - 1].seat = e.target.value;
+			setSelectElement(selectElement);
+			setSeatCount(count - 1);
+			form.seats = selectedSeat;
+			setForm(form);
 		} else if (e.target.className === unavail) {
 			toast.error("This seat has be reserved");
-		} else if (seatCount === 0 && e.target.className === avail) {
-			e.target.className = choose;
-			selectedSeat[selectState - 1] = e.target.value;
-			setSelectedSeat(selectedSeat);
-			let count = seatCount;
-			if (selectElement[selectState - 1].element !== null) {
-				count += 1;
-				console.log(selectElement[selectState - 1].element);
-				selectElement[selectState - 1].element.className = avail;
-			}
-			setSeatCount(count - 1);
-			selectElement[selectState - 1].element = e.target;
-			setSelectElement(selectElement);
 		} else {
-			toast.error("You have selected all your seats");
+			toast.error("Please choose a passenger first if you want to change the seat for a passenger");
 		}
 	}
 
 	const setNextFormHandler = (e) => {
 		setStep(step + 1);
-		form.seats = selectedSeat;
-		setForm(form);
 	}
 
 	const setPreFormHandler = (e) => {
 		setStep(step - 1);
-		form.seats = selectedSeat;
-		setForm(form);
 	}
 
 	return (
@@ -103,7 +93,7 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 							<label className="font-bold w-1/2">Name:&nbsp;</label><label className="ml-10 underline">Mr Ben Poon</label>
 						</div>
 						<div className={selectState === 1 ? "flex w-full px-4 py-2 border-x border-b-2 rounded-b-lg border-blue-800" : "flex w-full px-4 py-2"}>
-							<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">{selectedSeat[0]}</label>
+							<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">{selectElement[0].seat}</label>
 						</div>
 					</div>
 					<div onClick={() => setSelectState(2)} className="flex flex-col mr-4 w-1/2 shadow-md rounded-md">
@@ -115,7 +105,7 @@ export default function SeatForm({ passengers, setPassengers, setForm, form, set
 							<label className="font-bold w-1/2">Name:&nbsp;</label><label className="ml-10 underline">Mr Kee Lee</label>
 						</div>
 						<div className={selectState === 2 ? "flex w-full px-4 py-2 border-x border-b-2 rounded-b-lg border-blue-800" : "flex w-full px-4 py-2"}>
-							<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">{selectedSeat[1]}</label>
+							<label className="font-bold w-1/2">Seat:&nbsp;</label><label className="ml-10 underline">{selectElement[1].seat}</label>
 						</div>
 					</div>
 				</div>
