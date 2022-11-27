@@ -776,8 +776,11 @@ export function BookingDetails() {
                                                     <td className="p-3">
                                                         <div className="flex flex-row justify-center items-center">
                                                             <img src={mc} alt="" className="mr-2" />
+                                                            <span className="cursor-pointer mr-1">
+                                                                **** **** ****  
+                                                            </span>
                                                             <span>
-                                                            1234 5678 **** ****
+                                                                {" "}5678
                                                             </span>
                                                         </div>
                                                     </td>

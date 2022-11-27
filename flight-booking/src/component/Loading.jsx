@@ -20,7 +20,7 @@ function Spin({size_  })
     
         const className_with_size = "animate-spin rounded-full border-b-3 border-black-900" + " w-" + size_num[0] + " h-" + size_num[1] ; 
         return (
-            <div className="flex justify-center items-center bg-white ">
+            <div className="flex justify-center items-center bg-gray-50 ">
                 <svg className={className_with_size} viewBox="0 0 24 24"></svg>
             </div>
         )

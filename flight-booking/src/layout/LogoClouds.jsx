@@ -12,36 +12,29 @@ export default function LogoClouds() {
                 </p>
             </div>
             <div className="overflow-hidden">
-                <div className="py-16 flex justify-center overflow-hidden w-fit -ml-36">
-                    <div className="rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center">
+                <div className="py-16 flex justify-center overflow-hidden w-fit">
+                    <div className="rounded-lg shadow-xl w-60 flex justify-center border-gray-200  items-center">
                         <img
                             src={ive_logo}
                             style={{ height: "72px", width: "110px" }}
                             className="my-8"
                         />
                     </div>
-                    <div className="  rounded-lg shadow-xl w-72 flex justify-center  border-gray-200  items-center ">
+                    <div className="  rounded-lg shadow-xl w-60 flex justify-center  border-gray-200  items-center ">
                         <img
                             src={ive_logo}
                             style={{ height: "72px", width: "110px" }}
                             className="my-8"
                         />
                     </div>
-                    <div className=" rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
+                    <div className=" rounded-lg shadow-xl w-60 flex justify-center border-gray-200  items-center ">
                         <img
                             src={ive_logo}
                             style={{ height: "72px", width: "110px" }}
                             className="my-8"
                         />
                     </div>
-                    <div className="  rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
-                        <img
-                            src={ive_logo}
-                            style={{ height: "72px", width: "110px" }}
-                            className="my-8"
-                        />
-                    </div>
-                    <div className="  rounded-lg shadow-xl w-72 flex justify-center border-gray-200  items-center ">
+                    <div className="  rounded-lg shadow-xl w-60 flex justify-center border-gray-200  items-center ">
                         <img
                             src={ive_logo}
                             style={{ height: "72px", width: "110px" }}

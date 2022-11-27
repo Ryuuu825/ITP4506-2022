@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo.svg";
 import { CheckBox, DatePicker, FloatingLabel } from "../component/Form";
-import {  LoadingButton } from "../component/Button";
+import { LoadingButton } from "../component/Button";
 import { Link } from "react-router-dom";
 import { LoadPage } from "../component/Loading";
 import { useApp } from "../hook/Main";
@@ -22,47 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/Button.css";
 import Select from "react-select";
 import "../styles/registerform.css";
-import { Modal , Button } from "flowbite-react";
+import { Modal, Button } from "flowbite-react";
 import ReactStars from "react-rating-stars-component";
-
-const validatePassword = (password) => {
-    let pw_err_msg = "";
-    if (password === "") {
-        pw_err_msg = "Password is required";
-        return pw_err_msg;
-    }
-
-    if (password.length < 8) {
-        pw_err_msg = "Password must be at least 8 characters";
-        return pw_err_msg;
-    }
-
-    let temp_str = "Password must contain at least one of the following: ";
-
-    if (!/[A-Z]/.test(password)) {
-        temp_str += "uppercase letter, ";
-        pw_err_msg = temp_str;
-    }
-    if (!/[a-z]/.test(password)) {
-        temp_str += "lowercase letter, ";
-        pw_err_msg = temp_str;
-    }
-    if (!/[0-9]/.test(password)) {
-        temp_str += "number, ";
-        pw_err_msg = temp_str;
-    }
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-        temp_str += "special character, ";
-        pw_err_msg = temp_str;
-    }
-
-    if (pw_err_msg !== "") {
-        pw_err_msg = pw_err_msg.slice(0, -2);
-        pw_err_msg += ".";
-    }
-
-    return pw_err_msg;
-};
 
 function Header({ noback }) {
     const navigate = useNavigate();
@@ -243,6 +204,9 @@ export function LoginForm({ box }) {
                             app.setUserName(potential_user.username);
                             if (potential_user.name === "operator") {
                                 navigate("/operator/reset-pw");
+                                toast.error("Please reset your password");
+                            } else if (potential_user.name === "admin") {
+                                navigate("/admin");
                             } else {
                                 navigate("/index");
                             }
@@ -338,6 +302,10 @@ export function SignUp() {
             }
         };
         window.addEventListener("click", onMouseClickOnOther);
+
+        return () => {
+            window.removeEventListener("click", onMouseClickOnOther);
+        };
     }, []);
 
     // step button state
@@ -587,7 +555,6 @@ export function SignUp() {
     const loader = useRef(null);
     const stepFive = useRef(null);
 
-
     const [canEditRating, setCanEditRating] = useState(true);
 
     return (
@@ -620,8 +587,7 @@ export function SignUp() {
                                                     ? "white"
                                                     : "rgb(48 88 210)",
                                             borderColor:
-                                  
-                                            step >= 1
+                                                step >= 1
                                                     ? "rgb(48 88 210)"
                                                     : "rgb(209 213 219)",
                                         }}
@@ -1605,14 +1571,13 @@ export function SignUp() {
                         >
                             <div className="w-full flex flex-col justify-center items-center align-middle bg-white z-[101]">
                                 <div className="mt-5 w-6/12 flex flex-col justify-items-start align-middle ">
-                                    
                                     <div className="flex flex-col">
                                         <div className="z-[100]">
                                             <label className="text-gray-700 text-sm font-bold mb-2 ">
                                                 How did you find out about us?
                                             </label>
                                             <div className="relative">
-                                            <Select
+                                                <Select
                                                     isMulti
                                                     options={[
                                                         {
@@ -1643,7 +1608,6 @@ export function SignUp() {
                                                             value: "Other",
                                                             label: "Other",
                                                         },
-                                                        
                                                     ]}
                                                     className="basic-multi-select w-full focus:ring-0 "
                                                     classNamePrefix="ive"
@@ -1699,13 +1663,32 @@ export function SignUp() {
                                         </div>
                                         <div className="mt-4">
                                             <label className="text-gray-700 text-sm font-bold mb-2">
-                                                Is the registration process clear?
+                                                Is the registration process
+                                                clear?
                                             </label>
                                             <div className="relative">
-                                                <input type="radio" name="rcq" id="rcq-yes" /> 
-                                                <label htmlFor="rcq-yes" className="mr-5 select-none mx-1">Yes</label>
-                                                <input type="radio" name="rcq" id="rcq-no" /> 
-                                                <label htmlFor="rcq-no"  className="select-none mx-1">No</label>
+                                                <input
+                                                    type="radio"
+                                                    name="rcq"
+                                                    id="rcq-yes"
+                                                />
+                                                <label
+                                                    htmlFor="rcq-yes"
+                                                    className="mr-5 select-none mx-1"
+                                                >
+                                                    Yes
+                                                </label>
+                                                <input
+                                                    type="radio"
+                                                    name="rcq"
+                                                    id="rcq-no"
+                                                />
+                                                <label
+                                                    htmlFor="rcq-no"
+                                                    className="select-none mx-1"
+                                                >
+                                                    No
+                                                </label>
                                             </div>
                                         </div>
                                         <div className="mt-4">
@@ -1719,8 +1702,7 @@ export function SignUp() {
                                                 ></textarea>
                                             </div>
                                         </div>
-
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1732,7 +1714,8 @@ export function SignUp() {
                             >
                                 <Spinner name="pacman" />
                                 <span className="text-xl font-bold mt-5 text-gray-500">
-                                    Please wait while we are creating your account
+                                    Please wait while we are creating your
+                                    account
                                 </span>
                             </div>
                             <div
@@ -1769,7 +1752,6 @@ export function SignUp() {
                                         After receiving the email please click
                                         on the link to verify your account.
                                     </span>
-                                    
                                 </div>
                                 <div className="border-t w-1/2 mt-4 mb-6 text-center"></div>
                                 <div className=" text-gray-500">
@@ -1783,20 +1765,22 @@ export function SignUp() {
                                 </div>
 
                                 <div className="text-base text-gray-500 flex flex-row items-center">
-                                        Please rate your experience
-                                        <div className="underline inline-block text-primary cursor-pointer"
-                                        onClick={ () => {
+                                    Please rate your experience
+                                    <div
+                                        className="underline inline-block text-primary cursor-pointer"
+                                        onClick={() => {
                                             toast.success(
                                                 "Thank you for your feedback"
                                             );
                                             setCanEditRating(false);
-                                        }}>
-                                            <ReactStars
-                                                count={5}
-                                                size={24}
-                                                edit={canEditRating}
-                                            />
-                                        </div>
+                                        }}
+                                    >
+                                        <ReactStars
+                                            count={5}
+                                            size={24}
+                                            edit={canEditRating}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1831,8 +1815,7 @@ export function SignUp() {
                                     }, 1000);
 
                                     setStep(1);
-                                } else if (step === 3 ) {
-
+                                } else if (step === 3) {
                                     stepThree.current.classList.add(
                                         "animate-fade-out-right"
                                     );
@@ -1859,13 +1842,13 @@ export function SignUp() {
 
                                     setStep(2);
                                 } else if (step === 4) {
-
-
                                     stepFour.current.classList.add(
                                         "animate-fade-out-right"
                                     );
                                     setTimeout(() => {
-                                        stepFour.current.classList.add("hidden");
+                                        stepFour.current.classList.add(
+                                            "hidden"
+                                        );
                                         stepFour.current.classList.remove(
                                             "animate-fade-out-right"
                                         );
@@ -1884,8 +1867,7 @@ export function SignUp() {
                                     }, 1000);
 
                                     setStep(3);
-                                } 
-                                else if (step === 5) {
+                                } else if (step === 5) {
                                     // stepFour.current.classList.add(
                                     //     "animate-fade-out-right"
                                     // );
@@ -1971,7 +1953,6 @@ export function SignUp() {
                                             stepThree.current.classList.add(
                                                 "animate-fade-in-right"
                                             );
-                                            
                                         }, 500);
 
                                         setTimeout(() => {
@@ -1983,39 +1964,34 @@ export function SignUp() {
                                         setCanNext(false);
                                     }
                                 } else if (step === 3) {
-                                        nextBtn.current.innerHTML =
-                                                "Create";
+                                    nextBtn.current.innerHTML = "Create";
+                                    stepThree.current.classList.add(
+                                        "animate-fade-out-left"
+                                    );
+                                    setTimeout(() => {
                                         stepThree.current.classList.add(
+                                            "hidden"
+                                        );
+                                        stepThree.current.classList.remove(
                                             "animate-fade-out-left"
                                         );
-                                        setTimeout(() => {
-                                            stepThree.current.classList.add(
-                                                "hidden"
-                                            );
-                                            stepThree.current.classList.remove(
-                                                "animate-fade-out-left"
-                                            );
-                                            stepFour.current.classList.remove(
-                                                "hidden"
-                                            );
-                                            stepFour.current.classList.add(
-                                                "flex"
-                                            );
-                                            stepFour.current.classList.add(
-                                                "animate-fade-in-right"
-                                            );
-                                        }, 500);
+                                        stepFour.current.classList.remove(
+                                            "hidden"
+                                        );
+                                        stepFour.current.classList.add("flex");
+                                        stepFour.current.classList.add(
+                                            "animate-fade-in-right"
+                                        );
+                                    }, 500);
 
-                                        setTimeout(() => {
-                                            stepFour.current.classList.remove(
-                                                "animate-fade-in-right"
-                                            );
-                                        }, 1000);
-                                        setStep(4);
-                                        setCanNext(false);
-
-                                }
-                                else if (step === 4) {
+                                    setTimeout(() => {
+                                        stepFour.current.classList.remove(
+                                            "animate-fade-in-right"
+                                        );
+                                    }, 1000);
+                                    setStep(4);
+                                    setCanNext(false);
+                                } else if (step === 4) {
                                     stepThree.current.classList.add(
                                         "animate-fade-out-left"
                                     );
@@ -2041,7 +2017,6 @@ export function SignUp() {
                                         );
                                         stepFive.current.classList.add("flex");
                                         loader.current.classList.add("hidden");
-                                        
                                     }, 6500);
 
                                     setStep(5);
@@ -2149,11 +2124,6 @@ export function ForgotPassword() {
                                 />
 
                                 <Button
-                                    content="Continue"
-                                    color={"primary"}
-                                    disable={!inputed_all}
-                                    style="w-full mt-5"
-                                    id="sign_up_btn"
                                     onClick={() => {
                                         if (
                                             email === "" ||
@@ -2165,7 +2135,10 @@ export function ForgotPassword() {
                                             set_sucess(true);
                                         }
                                     }}
-                                ></Button>
+                                    className="w-full mt-5"
+                                    >
+                                    Continue
+                                    </Button>
 
                                 <div className="text-center text-xs text-black-500 mt-5 font-light ">
                                     <span className="cursor-pointer text-blue-600">
@@ -2181,11 +2154,11 @@ export function ForgotPassword() {
                         </div>
                     </div>
                 ) : (
-                    <div className="h-full p-12 overflow-hidden ">
+                    <div className="h-full p-12 overflow-hidden">
                         <LoadPage
                             page={<ResetPwSuccess box={box} />}
-                            Preloaded={<Header noback />}
                             loading_time={3}
+                            Preloaded={<Header noback />}
                         />
                     </div>
                 )}
@@ -2194,15 +2167,13 @@ export function ForgotPassword() {
     );
 }
 
-
 function ResetPwSuccess({ box }) {
     const navigate = useNavigate();
     const [time, set_time] = useState(5);
 
     if (box.current) {
-        box.current.classList.remove("h-3/4");
-        box.current.classList.add("h-1/2");
-        box.current.style.width = "20%";
+        box.current.style.width = "25%";
+        box.current.style.height = "50%";
     }
 
     useEffect(() => {
@@ -2220,7 +2191,6 @@ function ResetPwSuccess({ box }) {
 
     return (
         <div className="flex flex-col sm-auto mt-8 h-full ">
-            <Header noback />
             <div className="flex flex-col justify-center align-middle text-center items-center my-auto">
                 <h1 className="font-semibold text-3xl mt-5">Password Reset</h1>
                 <div className="text-sm text-black-500 mt-5">
@@ -2241,139 +2211,169 @@ function ResetPwSuccess({ box }) {
     );
 }
 
-export function OperatorResetPw({ name = "Lee" }) {
+export function OperatorResetPw({  }) {
     const app = useApp();
     app.setDisableFooter(true);
 
-    const [showForm, setShowForm] = useState(false);
-    const password = useRef();
-    const r_password = useRef();
-    const [pwValid, setPwValid] = useState(true);
-    const [r_pwValid, setR_PwValid] = useState(true);
-    const [password_error_msgs, set_password_error_msgs] = useState([]);
-    const [success, set_success] = useState(false);
-
-    const navigate = useNavigate();
-
     document.title = "Reset Password";
+
+    let [success, set_success] = useState(false);
+    let ratebar = useRef(null);
+    let box = useRef(null);
 
     if (!success) {
         return (
-            <div>
+            <div className="overflow-hidden  h-screen">
                 <Header noback />
-                <div className="flex flex-col justify-center sm-auto mt-10 text-center h-screen">
-                    <h1 className="font-semibold text-5xl mt-5">
-                        Welcome, {name}
-                    </h1>
-                    <div className="text-black-500 mt-5 text-3xl pt-3">
-                        We noticed that this is your first time logging in.
-                        <br />
-                        Please click
-                        <div
-                            className="font-semibold text-primary cursor-pointer inline"
-                            onClick={() => {
-                                setShowForm(true);
-                            }}
+                <div className="flex flex-col mt-24 sm-auto  text-center overflow-hidden">
+                    <div  className="flex flex-col justify-center sm-auto w-7/12 h-[70%] mx-auto border rounded-2xl shadow-xl overflow-hidden"
                         >
-                            {" "}
-                            HERE{" "}
-                        </div>
-                        reset your password.
-                    </div>
+                        <div className="">
+                            <div className="flex flex-col bg-gray-50 p-5 w-full">
+                                <div className="text-2xl font-bold">
+                                    Please reset your password below
+                                </div>
+                                <div className="text-sm text-black-500 mt-5">
+                                    This is the first time you login to the
+                                    system. Please reset your password to
+                                    continue.
+                                </div>
+                                <div className="flex flex-row flex-wrap mt-5 w-full items-center justify-center align-middle">
+                                    <div className="flex flex-col mr-5 w-5/12">
+                                        <div className="text-gray-500">
+                                            New Password
+                                        </div>
+                                        <FloatingLabel
+                                            placeholder={"Password"}
+                                            type="password"
+                                            id={"r_password"}
+                                            bg={"bg-gray-100"}
+                                            handler={(e) => {
+                                                // rate the password strength , from 0 to 4, 0 being the weakest, starting to 1 when the password is 8 characters long
+                                                let passwordStrength = 0;
 
-                    {showForm ? (
-                        <div className="flex flex-col justify-center sm-auto mt-10 w-1/2 mx-auto">
-                            <div className="text-sm text-black-500 mt-5">
-                                Enter your new password below.
-                                <FloatingLabel
-                                    placeholder={"New Password"}
-                                    type="password"
-                                    id={"r_password"}
-                                    handler={(e) => {
-                                        password.current = e.target.value;
-                                        document.getElementById(
-                                            "r_confirm_password"
-                                        ).value = "";
-                                    }}
-                                    validate={pwValid}
-                                    error_message={password_error_msgs}
-                                    preventCopy
-                                />
-                                <FloatingLabel
-                                    placeholder={"Confirm Password"}
-                                    type="password"
-                                    id={"r_confirm_password"}
-                                    handler={(e) => {
-                                        r_password.current = e.target.value;
-                                    }}
-                                    validate={r_pwValid}
-                                    error_message="Password does not match"
-                                />
+                                                // check if the password contains a number
+                                                if (
+                                                    e.target.value.match(/\d/)
+                                                ) {
+                                                    passwordStrength++;
+                                                }
+
+                                                // check if the password contains a lowercase letter
+                                                if (
+                                                    e.target.value.match(
+                                                        /[a-z]/
+                                                    )
+                                                ) {
+                                                    passwordStrength++;
+                                                }
+
+                                                // check if the password contains an uppercase letter
+                                                if (
+                                                    e.target.value.match(
+                                                        /[A-Z]/
+                                                    )
+                                                ) {
+                                                    passwordStrength++;
+                                                }
+
+                                                // check if the password contains a special character
+                                                if (
+                                                    e.target.value.match(
+                                                        /[^a-zA-Z\d]/
+                                                    )
+                                                ) {
+                                                    passwordStrength++;
+                                                }
+
+                                                if (
+                                                    e.target.value.length <= 8
+                                                ) {
+                                                    passwordStrength = 0;
+                                                }
+
+                                                ratebar.current.value =
+                                                    passwordStrength;
+                                            }}
+                                            validate={true}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col mr-5 w-5/12">
+                                        <div className="text-gray-500">
+                                            Comfirm Password
+                                        </div>
+                                        <FloatingLabel
+                                            placeholder={"Confirm Password"}
+                                            type="password"
+                                            id={"r_password"}
+                                            bg={"bg-gray-100"}
+                                            validate={true}
+                                        />
+                                    </div>
+                                </div>
+                                {/* password requirements */}
+                                <meter
+                                    value="0"
+                                    min="0"
+                                    max="4"
+                                    className="w-5/12 ml-12 mt-1"
+                                    ref={ratebar}
+                                    high="3"
+                                    low="2"
+                                    optimum="4"
+                                ></meter>
+                                    <div className="bg-blue-50 my-5 rounded-md border mx-12 text-left text-gray-600 text-sm p-5">
+                                        <div className="ml-5">
+                                            Passwords must be at least 8 characters that cannot be easily guessed
+                                            and must adhere to the following requirements:
+                                        </div>
+
+                                        <ul className="text-start list-disc ml-14">
+                                            <li>
+                                                <p>
+                                                    Password must contain at least one character from 
+                                                    each of the following groups:
+                                                </p>
+                                                <ul className="list-decimal ml-14">
+                                                    <li>At least 1 uppercase letter</li>
+                                                    <li>At least 1 lowercase letter</li>
+                                                    <li>At least 1 number</li>
+                                                    <li>At least 1 special character</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                Password cannot contain your name or email address
+                                            </li>
+                                        </ul>
+
+                                    </div>
                                 <Button
-                                    content="Continue"
-                                    color={"primary"}
-                                    disable={false}
-                                    style="w-full mt-5"
-                                    id="sign_up_btn"
+                                    className="mt-5 w-fit mx-auto"
                                     onClick={() => {
-                                        let haveError = false;
-
-                                        if (
-                                            password.current === undefined ||
-                                            password.current === ""
-                                        ) {
-                                            set_password_error_msgs([
-                                                "Bruh, you didn't even enter a character",
-                                            ]);
-                                            setPwValid(false);
-                                        } else {
-                                            setPwValid(true);
-                                        }
-
-                                        if (
-                                            r_password.current === "" ||
-                                            r_password.current !==
-                                                password.current
-                                        ) {
-                                            setR_PwValid(false);
-                                            haveError = true;
-                                        } else {
-                                            setR_PwValid(true);
-                                        }
-
-                                        const pw_err_msg = validatePassword(
-                                            password.current
-                                        );
-
-                                        console.log(pw_err_msg);
-
-                                        if (
-                                            pw_err_msg.length > 0 ||
-                                            haveError
-                                        ) {
-                                            set_password_error_msgs(pw_err_msg);
-                                            setPwValid(false);
-                                        } else {
-                                            // forward user to sign in page
-                                            set_success(true);
-                                        }
+                                        set_success(true);
                                     }}
-                                />
+                                >
+                                    Save Changes
+                                </Button>
                             </div>
                         </div>
-                    ) : null}
+                    </div>
                 </div>
             </div>
         );
     } else {
         return (
             <div className="flex justify-center items-center h-screen">
-                <div className="w-96 bg-white rounded-lg p-8 shadow-xl">
-                    <LoadPage
-                        page={<ResetPwSuccess />}
-                        Preloaded={<Header noback />}
-                        loading_time={1}
-                    />
+
+                <div ref={box} className="animate-fade-in flex flex-col justify-center sm-auto w-7/12 h-[70%] mx-auto border rounded-2xl shadow-xl overflow-hidden"
+                        style={{ transition: "all 0.5s ease-in-out", width: "60%" }}>
+                        <div className="h-full p-12 overflow-hidden">
+                        <LoadPage
+                            page={<ResetPwSuccess box={box} />}
+                            loading_time={3}
+                            Preloaded={<Header noback />}
+                        />
+                    </div>
                 </div>
             </div>
         );
