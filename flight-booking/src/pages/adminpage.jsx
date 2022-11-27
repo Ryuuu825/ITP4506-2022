@@ -2037,7 +2037,11 @@ export function AdminPageSetting() {
                                         </div>
                                         <Button
                                             className="mt-5 w-fit"
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                                toast.success(
+                                                    "Settings Updated Successfully"
+                                                );
+                                            }}
                                         >
                                             Save Changes
                                         </Button>
@@ -2059,7 +2063,7 @@ export function AdminPageSetting() {
                                                 <FloatingLabel
                                                     placeholder={"Password"}
                                                     type="password"
-                                                    id={"r_password"}
+                                                    id={"o_password"}
                                                     bg={"bg-gray-100"}
                                                     validate={true}
                                                 />
@@ -2071,7 +2075,7 @@ export function AdminPageSetting() {
                                                 <FloatingLabel
                                                     placeholder={"Password"}
                                                     type="password"
-                                                    id={"r_password"}
+                                                    id={"n_password"}
                                                     bg={"bg-gray-100"}
                                                     handler={(e) => {
                                                         // rate the password strength , from 0 to 4, 0 being the weakest, starting to 1 when the password is 8 characters long
