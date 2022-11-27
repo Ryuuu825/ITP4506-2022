@@ -23,6 +23,7 @@ import "../styles/Button.css";
 import Select from "react-select";
 import "../styles/registerform.css";
 import { Modal , Button } from "flowbite-react";
+import ReactStars from "react-rating-stars-component";
 
 const validatePassword = (password) => {
     let pw_err_msg = "";
@@ -394,6 +395,8 @@ export function SignUp() {
         setEmailValid(true);
         setPassword2Valid(true);
         setCanNext(true);
+
+        return true;
     };
 
     // pwCheckListItem
@@ -504,7 +507,7 @@ export function SignUp() {
         if (firstName.current.length == 0 || firstName.current == "") {
             toast.error("Please enter your first name");
             setFirstNameValid(false);
-            return;
+            return false;
         }
         setFirstNameValid(true);
 
@@ -512,14 +515,14 @@ export function SignUp() {
         if (lastName.current.length == 0 || lastName.current == "") {
             toast.error("Please enter your last name");
             setLastNameValid(false);
-            return;
+            return false;
         }
         setLastNameValid(true);
 
         // test sexual
         if (sexual.current.length == 0 || sexual.current == "") {
             toast.error("Please enter your sexual");
-            return;
+            return false;
         }
 
         // test dob
@@ -534,7 +537,7 @@ export function SignUp() {
             setTimeout(() => {
                 dobInput.current.classList.remove("animate-shake");
             }, 500);
-            return;
+            return false;
         }
 
         if (job == null || job == "") {
@@ -544,7 +547,7 @@ export function SignUp() {
                 jobInput.current.classList.remove("animate-shake");
             }, 500);
 
-            return;
+            return false;
         }
 
         // test phone
@@ -555,7 +558,7 @@ export function SignUp() {
                 phoneInput.current.classList.remove("animate-shake");
             }, 500);
 
-            return;
+            return false;
         }
 
         if (phone.current.length != 8) {
@@ -565,10 +568,12 @@ export function SignUp() {
                 phoneInput.current.classList.remove("animate-shake");
             }, 500);
 
-            return;
+            return false;
         }
 
         setCanNext(true);
+
+        return true;
     };
 
     // step 3
@@ -576,11 +581,14 @@ export function SignUp() {
     var Spinner = require("react-spinkit");
 
     // step 4
-    const loader = useRef(null);
     const stepFour = useRef(null);
 
+    // step 5
+    const loader = useRef(null);
+    const stepFive = useRef(null);
 
-    const [showSurvey, setShowSurvey] = useState(false);
+
+    const [canEditRating, setCanEditRating] = useState(true);
 
     return (
         <div className="h-screen overflow-hidden flex flex-col bg-blue-100">
@@ -612,7 +620,8 @@ export function SignUp() {
                                                     ? "white"
                                                     : "rgb(48 88 210)",
                                             borderColor:
-                                                step >= 1
+                                  
+                                            step >= 1
                                                     ? "rgb(48 88 210)"
                                                     : "rgb(209 213 219)",
                                         }}
@@ -723,11 +732,11 @@ export function SignUp() {
                                         class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 "
                                         style={{
                                             backgroundColor:
-                                                step === 3
+                                                step === 3 || step === 4
                                                     ? "rgb(48 88 210)"
                                                     : "white",
                                             color:
-                                                step === 3
+                                                step === 3 || step === 4
                                                     ? "white"
                                                     : step >= 3
                                                     ? "rgb(48 88 210)"
@@ -1590,104 +1599,16 @@ export function SignUp() {
                             </div>
                         </div>
                         {/* Form 4 */}
-                        <div className="step4 w-full h-full flex flex-col items-center justify-center">
-                            <div
-                                className="hidden flex-col justify-center align-middle items-center "
-                                ref={loader}
-                            >
-                                <Spinner name="pacman" />
-                                <span className="text-xl font-bold mt-5 text-gray-500">
-                                    Please wait while we are processing your
-                                    request
-                                </span>
-                            </div>
-                            <div
-                                ref={stepFour}
-                                className="w-full hidden flex-col justify-center items-center align-middle"
-                            >
-                                <div className=" text-green-700">
-                                    <svg
-                                        class="w-16 h-16"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <div className="text-2xl font-bold text-center">
-                                    You Have Successfully Signed Up!
-                                </div>
-                                <div className=" whitespace-pre-wrap w-1/2 text-center mt-5 text-lg">
-                                    <span>
-                                        We have sent you an email to
-                                        <span className="text-primary">
-                                            {" "}
-                                            {email}{" "}
-                                        </span>
-                                        with a link to verify your account.
-                                        After receiving the email please click
-                                        on the link to verify your account.
-                                    </span>
+                        <div
+                            ref={stepFour}
+                            className="step4 hidden h-full w-full justify-center items-center align-middle "
+                        >
+                            <div className="w-full flex flex-col justify-center items-center align-middle bg-white z-[101]">
+                                <div className="mt-5 w-6/12 flex flex-col justify-items-start align-middle ">
                                     
-                                </div>
-                                <div className="border-t w-1/2 mt-4 mb-6 text-center"></div>
-                                <div className=" text-gray-500">
-                                    Go back to
-                                    <Link to="/login">
-                                        <a className="text-primary ml-1">
-                                            Login
-                                        </a>
-                                    </Link>{" "}
-                                    page
-                                </div>
-
-                                <div>
-                                    or 
-                                </div>
-
-                                <div className="text-base text-gray-500">
-                                        Take a{" "}
-                                        <div className="underline inline-block text-primary cursor-pointer"
-                                        onClick={
-                                            () => {
-                                                setShowSurvey(true)
-                                            }}>
-                                            survery
-                                        </div>
-                                        {" "}to earn a  
-                                        <span className="text-gray-600 font-semibold">
-                                        {" "}10%{" "}
-                                        </span>
-                                        discount on your first booking
-                                    </div>
-
-                                <Modal
-                                    show={showSurvey}
-                                    className="modal animate-fade-in"
-                                    onHide={setShowSurvey}
-                                >
-                                <Modal.Header>
-                                    <div class="text-xl pt-3 leading-6 font-bold text-gray-900">
-                                        Please help us to improve our service
-                                    </div>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    {/* 
-                                        請問您是通過哪些途径得知我們網站？
-                                        注冊流程是否清晰？
-                                        有何改進？
-                                    */
-                                    }
                                     <div className="flex flex-col">
-                                        <div>
-                                            <label className="text-gray-700 text-sm font-bold mb-2">
+                                        <div className="z-[100]">
+                                            <label className="text-gray-700 text-sm font-bold mb-2 ">
                                                 How did you find out about us?
                                             </label>
                                             <div className="relative">
@@ -1743,6 +1664,7 @@ export function SignUp() {
                                                             position:
                                                                 "relative",
                                                             padding: "2px",
+                                                            zIndex: "200",
                                                         }),
                                                         option: (
                                                             base,
@@ -1798,20 +1720,84 @@ export function SignUp() {
                                             </div>
                                         </div>
 
-                                    </div>  
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button
-                                        className="bg-primary hover:bg-primary text-white select-none mx-auto"
-                                        onClick={() => {
-                                            setShowSurvey(false);
-                                            toast.success("Thank you for your feedback!");
-                                        }}
-                                        >
-                                            Send
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        {/* Form 5 */}
+                        <div className="step5 w-full h-full flex flex-col items-center justify-center">
+                            <div
+                                className="hidden flex-col justify-center align-middle items-center "
+                                ref={loader}
+                            >
+                                <Spinner name="pacman" />
+                                <span className="text-xl font-bold mt-5 text-gray-500">
+                                    Please wait while we are creating your account
+                                </span>
+                            </div>
+                            <div
+                                ref={stepFive}
+                                className="w-full hidden flex-col justify-center items-center align-middle"
+                            >
+                                <div className=" text-green-700">
+                                    <svg
+                                        class="w-16 h-16"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div className="text-2xl font-bold text-center">
+                                    You Have Successfully Signed Up!
+                                </div>
+                                <div className=" whitespace-pre-wrap w-1/2 text-center mt-5 text-lg">
+                                    <span>
+                                        We have sent you an email to
+                                        <span className="text-primary">
+                                            {" "}
+                                            {email}{" "}
+                                        </span>
+                                        with a link to verify your account.
+                                        After receiving the email please click
+                                        on the link to verify your account.
+                                    </span>
+                                    
+                                </div>
+                                <div className="border-t w-1/2 mt-4 mb-6 text-center"></div>
+                                <div className=" text-gray-500">
+                                    Go back to
+                                    <Link to="/login">
+                                        <a className="text-primary ml-1">
+                                            Login
+                                        </a>
+                                    </Link>{" "}
+                                    page
+                                </div>
+
+                                <div className="text-base text-gray-500 flex flex-row items-center">
+                                        Please rate your experience
+                                        <div className="underline inline-block text-primary cursor-pointer"
+                                        onClick={ () => {
+                                            toast.success(
+                                                "Thank you for your feedback"
+                                            );
+                                            setCanEditRating(false);
+                                        }}>
+                                            <ReactStars
+                                                count={5}
+                                                size={24}
+                                                edit={canEditRating}
+                                            />
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1845,7 +1831,8 @@ export function SignUp() {
                                     }, 1000);
 
                                     setStep(1);
-                                } else if (step === 3) {
+                                } else if (step === 3 ) {
+
                                     stepThree.current.classList.add(
                                         "animate-fade-out-right"
                                     );
@@ -1872,6 +1859,33 @@ export function SignUp() {
 
                                     setStep(2);
                                 } else if (step === 4) {
+
+
+                                    stepFour.current.classList.add(
+                                        "animate-fade-out-right"
+                                    );
+                                    setTimeout(() => {
+                                        stepFour.current.classList.add("hidden");
+                                        stepFour.current.classList.remove(
+                                            "animate-fade-out-right"
+                                        );
+                                        stepThree.current.classList.remove(
+                                            "hidden"
+                                        );
+                                        stepThree.current.classList.add(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 500);
+
+                                    setTimeout(() => {
+                                        stepThree.current.classList.remove(
+                                            "animate-fade-in-left"
+                                        );
+                                    }, 1000);
+
+                                    setStep(3);
+                                } 
+                                else if (step === 5) {
                                     // stepFour.current.classList.add(
                                     //     "animate-fade-out-right"
                                     // );
@@ -1906,8 +1920,7 @@ export function SignUp() {
                             ref={nextBtn}
                             onClick={() => {
                                 if (step === 1) {
-                                    validStepOne();
-                                    if (canNext) {
+                                    if (validStepOne()) {
                                         stepOne.current.classList.add(
                                             "animate-fade-out-left"
                                         );
@@ -1938,8 +1951,7 @@ export function SignUp() {
                                         setCanNext(false);
                                     }
                                 } else if (step === 2) {
-                                    validStepTwo();
-                                    if (canNext) {
+                                    if (validStepTwo()) {
                                         stepTwo.current.classList.add(
                                             "animate-fade-out-left"
                                         );
@@ -1959,8 +1971,7 @@ export function SignUp() {
                                             stepThree.current.classList.add(
                                                 "animate-fade-in-right"
                                             );
-                                            nextBtn.current.innerHTML =
-                                                "Create";
+                                            
                                         }, 500);
 
                                         setTimeout(() => {
@@ -1972,16 +1983,48 @@ export function SignUp() {
                                         setCanNext(false);
                                     }
                                 } else if (step === 3) {
-                                    // validStepThree();
+                                        nextBtn.current.innerHTML =
+                                                "Create";
+                                        stepThree.current.classList.add(
+                                            "animate-fade-out-left"
+                                        );
+                                        setTimeout(() => {
+                                            stepThree.current.classList.add(
+                                                "hidden"
+                                            );
+                                            stepThree.current.classList.remove(
+                                                "animate-fade-out-left"
+                                            );
+                                            stepFour.current.classList.remove(
+                                                "hidden"
+                                            );
+                                            stepFour.current.classList.add(
+                                                "flex"
+                                            );
+                                            stepFour.current.classList.add(
+                                                "animate-fade-in-right"
+                                            );
+                                        }, 500);
+
+                                        setTimeout(() => {
+                                            stepFour.current.classList.remove(
+                                                "animate-fade-in-right"
+                                            );
+                                        }, 1000);
+                                        setStep(4);
+                                        setCanNext(false);
+
+                                }
+                                else if (step === 4) {
                                     stepThree.current.classList.add(
                                         "animate-fade-out-left"
                                     );
 
                                     setTimeout(() => {
-                                        stepThree.current.classList.add(
+                                        stepFour.current.classList.add(
                                             "hidden"
                                         );
-                                        stepThree.current.classList.remove(
+                                        stepFour.current.classList.remove(
                                             "animate-fade-out-left"
                                         );
                                         loader.current.classList.remove(
@@ -1993,15 +2036,15 @@ export function SignUp() {
                                     }, 500);
 
                                     setTimeout(() => {
-                                        stepFour.current.classList.remove(
+                                        stepFive.current.classList.remove(
                                             "hidden"
                                         );
-                                        stepFour.current.classList.add("flex");
+                                        stepFive.current.classList.add("flex");
                                         loader.current.classList.add("hidden");
                                         
                                     }, 6500);
 
-                                    setStep(4);
+                                    setStep(5);
                                     setCanNext(false);
                                 }
                             }}
