@@ -35,6 +35,7 @@ export default function Nav({ name }) {
                                 style={({ isActive }) => {
                                     return isActive ? { color: "#1E429F" } : {};
                                 }}
+                                to="/my/trip"
                             >
                                 My trips
                             </NavLink>

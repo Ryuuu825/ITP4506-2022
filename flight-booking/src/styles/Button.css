@@ -3,6 +3,8 @@
     transition: 1s all ease;
     position: relative;
 }
+
+
 .btn::after {
     background: rgb(48 88 210);
     content: "";
@@ -20,5 +22,4 @@
 
 .btn:hover::after {
     width: 100%;
-
 }
