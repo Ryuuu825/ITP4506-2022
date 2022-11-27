@@ -161,10 +161,10 @@ export function ShuttleService({ setShowShuttle, showShuttle }) {
 					</div>
 					<div className="flex flex-row mt-4 items-center">
 						<label className="flex flex-row w-1/4">
-							Building&nbsp;<label className="text-red-600">*</label>
+							Building&nbsp;<label className="text-red-600"></label>
 						</label>
 						<div className="grow relative">
-							<input type="text" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+							<input type="text" required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 						</div>
 					</div>
 				</div>

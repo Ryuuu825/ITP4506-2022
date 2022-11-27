@@ -1,5 +1,6 @@
 import { Paragraph } from "../component/Text";
 import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Moment from "react-moment";
 import moment from 'moment';
 import airports from "../db/airport.json";
@@ -10,14 +11,13 @@ import tp from "../asserts/tp.png";
 import vi from "../asserts/vi.png";
 import paypal from "../asserts/card-paypal.png";
 import union from "../asserts/card-unionpay.png";
+import { Modal, Spinner } from "flowbite-react";
 
 export default function PaymentForm({ data, payment, setPayment, setStep, step }) {
 	const fullOutTime = new Date(data.date + " " + data.ticket.outTime);
 	const duration = moment(data.ticket.arrivalTime).diff(fullOutTime, "hours") + "h " + moment(data.ticket.arrivalTime).diff(fullOutTime, "minutes") % 60 + "m";
 	const [selectMethod, setSelectMethod] = useState(1);
-	const setNextFormHandler = (e) => {
-		setStep(step + 1);
-	}
+	const [showResult, setShowResult] = useState(false);
 
 	const setPreFormHandler = (e) => {
 		setStep(step - 1);
@@ -195,15 +195,113 @@ export default function PaymentForm({ data, payment, setPayment, setStep, step }
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="mr-4 feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</button>
 				</div>
 				<div className="flex grow flex-row justify-end mt-8">
-					<button onClick={setNextFormHandler} className="flex flex-row ml-2 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 rounded">
+					<button onClick={() => setShowResult(true)} className="flex flex-row ml-2 bg-blue-800 shadow-md hover:bg-blue-700 text-white font-bold p-4 rounded">
 						Make Payment
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="ml-4 feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 					</button>
 				</div>
 			</div>
+			{showResult ? <Result showResult={showResult} setShowResult={setShowResult} /> : null}
 		</div>
 	);
 }
+
+function Result({ showResult, setShowResult }) {
+	const [seconds, setSeconds] = useState(7);
+	const loader = useRef();
+	const result = useRef();
+	const navigate = useNavigate();
+	useEffect(() => {
+		setTimeout(() => {
+			loader.current.classList.add("hidden");
+			result.current.classList.remove("hidden");
+		}, 2000);
+		const interval = setInterval(() => {
+			setSeconds(seconds => seconds - 1);
+		}, 1000);
+
+		if (seconds === 0) {
+			navigate("/index");
+			document.documentElement.scrollTop = 0;
+		}
+		return () => clearInterval(interval);
+	}, [seconds]);
+
+	return (
+		<Modal
+			show={showResult}
+		>
+			<Modal.Body>
+				<div className="space-y-6">
+					<div
+						className="flex flex-col justify-center items-center "
+						ref={loader}
+					>
+						<Spinner name="pacman" />
+						<span className="text-xl font-bold mt-5 text-gray-500">
+							Please wait while we are creating your
+							account
+						</span>
+					</div>
+					<div
+						ref={result}
+						className="hidden w-full flex-col justify-center items-center align-middle"
+					>
+						<div className="text-green-700 flex justify-center">
+							<svg
+								class="w-16 h-16"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+								></path>
+							</svg>
+						</div>
+						<div className="text-2xl font-bold text-center">
+							You have successfully reserved your ticket(s)!
+						</div>
+						<div className=" whitespace-pre-wrap text-center mt-5 text-lg">
+							<span>
+								Automatically return to the home page after
+								<span className="text-primary">
+									{" "}
+									{seconds}{" "}
+								</span>
+								seconds.
+							</span>
+						</div>
+						<div className="border-t mt-4 mb-6 text-center"></div>
+						<div className=" text-gray-500">
+							Go back to
+							<Link to="/index">
+								<a className="text-primary ml-1">
+									Home
+								</a>
+							</Link>{" "}
+							page
+						</div>
+						<div className=" text-gray-500">
+							Go to
+							<Link to="/my/trip">
+								<a className="text-primary ml-1">
+									My trips
+								</a>
+							</Link>{" "}
+							page
+						</div>
+					</div>
+				</div>
+			</Modal.Body>
+		</Modal>
+	);
+}
+
 
 function CreditCard() {
 	return (
@@ -239,7 +337,7 @@ function CreditCard() {
 						Expiry Date&nbsp;<label className="text-red-600">*</label>
 					</label>
 					<div className="relative">
-						<input type="month" max={new Date().getMonth > 10 ? new Date().getFullYear() + "-0" + (new Date().getMonth()+1) : new Date().getFullYear() + "-" + (new Date().getMonth()+1)} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
+						<input type="month" max={new Date().getMonth > 10 ? new Date().getFullYear() + "-0" + (new Date().getMonth() + 1) : new Date().getFullYear() + "-" + (new Date().getMonth() + 1)} required id="input-group-1" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" />
 					</div>
 				</div>
 				<div className="flex flex-col w-1/3">

@@ -67,21 +67,25 @@ function TranscationBox({ setShowTop, formData, setFormData, data, passengers, s
 
 	useEffect(() => {
 		if (step === 1) {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
+			// window.scrollTo({ top: 0, behavior: 'smooth' });
+			document.documentElement.scrollTop = 0;
 			setShowTop(true);
 			setForm(<PassengersForm form={formData} setForm={setFormData} setStep={setStep} step={step} data={data} setPassengers={setPassengers} passengers={passengers} />);
 		} else if (step === 2) {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
+			// window.scrollTo({ top: 0, behavior: 'smooth' });
+			document.documentElement.scrollTop = 0;
 			setShowTop(true);
 			formData.passengers = { "adult": [{ "name": "Ben Poon", "title": "Mr" }], "child": [{ "name": "Ken Lee", "title": "Mr", "dob": "2011-01-02" }], "infant":[] };
 			setFormData(formData);
 			setForm(<SeatForm data={data} form={formData} setForm={setFormData} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		} else if (step === 3) {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
+			// window.scrollTo({ top: 0, behavior: 'smooth' });
+			document.documentElement.scrollTop = 0;
 			setShowTop(true);
 			setForm(<AddOnForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		} else if (step === 4) {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
+			// window.scrollTo({ top: 0, behavior: 'smooth' });
+			document.documentElement.scrollTop = 0;
 			setShowTop(false);
 			setForm(<PaymentForm data={data} passengers={passengers} setPassengers={setPassengers} setStep={setStep} step={step} />);
 		}

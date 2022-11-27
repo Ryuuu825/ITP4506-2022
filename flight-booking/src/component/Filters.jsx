@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { useState, useEffect } from "react"
 import { Timepicker } from 'react-timepicker';
 import 'react-timepicker/timepicker.css';
-import Accordion from "./Accordion";
 
 export function PriceFilter({ setIsFilterPrice, setCurrentPage, min, max, setDestForm, destForm, setParams, params }) {
 	const [price, setPrice] = useState(max);
@@ -185,8 +184,8 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 					{['Airbus A320neo', 'Boeing 757', 'Airbus A220', 'Other'].map((value, index) => {
 						return (
 							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-								<CheckBox context={value} disabled={6} id={index} />
-								<label className="grow text-end text-xs">{6}</label>
+								<CheckBox context={value} disabled={index+1} id={index} />
+								<label className="grow text-end text-xs">{index+1}</label>
 							</div>
 						);
 					})}
@@ -197,8 +196,8 @@ export function FlightTime({ setIsFilterTime, setCurrentPage, dest, locCount, de
 					{['Airbus A350', 'Boeing 777', 'Boeing 787', 'Other'].map((value, index) => {
 						return (
 							<div className="flex items-center" key={index} onChange={arrTimeHandler}>
-								<CheckBox context={value} disabled={6} id={index} />
-								<label className="grow text-end text-xs">{6}</label>
+								<CheckBox context={value} disabled={index+1} id={index} />
+								<label className="grow text-end text-xs">{index+1}</label>
 							</div>
 						);
 					})}
