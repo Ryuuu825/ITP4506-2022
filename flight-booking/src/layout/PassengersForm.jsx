@@ -6,7 +6,9 @@ import { useEffect } from 'react';
 export default function PassengersForm({ setForm, form, setStep, step, setPassengers }) {
 	const [selectArea, setSelectArea] = useState("+852");
 	const [passengerBoxs, setPassengerBoxs] = useState([]);
-
+	const [selectedSex, setSelectedSex] = useState('');
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	useEffect(() => {
 		setPassengerBoxs([
 			<PassengerInfo index={1} />]
@@ -18,10 +20,17 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 		setForm(form);
 		setStep(step + 1);
 	}
+	const onChangeFirstName = (e) => {
+		setFirstName(e.target.value);
+	}
+
+	const onChangeLastName = (e) => {
+		setLastName(e.target.value);
+	}
 
 	const vPhoneCode = (e) => {
 		let value = e.target.value;
-		if(value in phonecodes.phoneCode) {
+		if (value in phonecodes.phoneCode) {
 			e.target.classList.remove("border-red-600");
 			e.target.classList.add("border-green-600");
 		} else {
@@ -51,9 +60,19 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 			e.target.classList.add("border-red-600");
 		}
 	}
-
+	const vName = (e) => {
+		let name = e.target.value;
+		if (name.match(/^[a-zA-Z ]{2,30}$/g)) {
+			e.target.classList.remove("border-red-600");
+			e.target.classList.add("border-green-600");
+		} else {
+			e.target.classList.remove("border-green-600");
+			e.target.classList.add("border-red-600");
+		}
+	}
+	const gender = ["Mr", "Mrs", "Miss", "Mdm", "Ms", "Mstr", "Dr", "Prof", "Others"]
 	const addPassenger = () => {
-		setPassengerBoxs([...passengerBoxs, <PassengerInfo index={passengerBoxs.length + 1}/>]);
+		setPassengerBoxs([...passengerBoxs, <PassengerInfo index={passengerBoxs.length + 1} />]);
 	}
 
 	return (
@@ -63,7 +82,23 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 					<svg className="mx-2 feather feather-phone" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
 					Contact Details</label>
 				<label className="text-sm mb-4"><label className="text-red-600">*</label> Required</label>
-
+				<div className="flex flex-row items-center">
+					<label className="flex flex-row w-1/4">
+						Name&nbsp;<label className="text-red-600">*</label>
+					</label>
+					<div className="w-3/4 flex flex-row">
+						<select required onChange={(e) => setSelectedSex(e.target.value)} value={selectedSex} className="border p-3 pr-8 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+							{
+								gender.map((v, k) => (
+									<option key={k} value={v}>{v}</option>
+								))
+							}
+						</select>
+						<input onChange={onChangeFirstName} type="text" onBlur={vName} className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="First Name" required />
+						<input onChange={onChangeLastName} type="text" onBlur={vName} className="ml-2 text-sm grow border p-3 rounded-sm" placeholder="Last Name" required />
+					</div>
+				</div>
+				<br />
 				<div className="flex flex-row items-center">
 					<label className="flex flex-row w-1/4">
 						Contact Email&nbsp;<label className="text-red-600">*</label>
@@ -84,7 +119,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-500 dark:text-gray-400 feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
 						</div>
-						<input type="text" list="areacode" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectArea} onChange={(e) => {setSelectArea(e.target.value); vPhoneCode(e);}} />
+						<input type="text" list="areacode" className="border p-3 border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block pl-10" value={selectArea} onChange={(e) => { setSelectArea(e.target.value); vPhoneCode(e); }} />
 						<datalist id="areacode" hidden>
 							{
 								phonecodes.map((code) => (
@@ -118,7 +153,7 @@ export default function PassengersForm({ setForm, form, setStep, step, setPassen
 	);
 }
 
-function PassengerInfo({ index}) {
+function PassengerInfo({ index }) {
 	const [selectedAge, setSelectedAge] = useState(1);
 	const [selectedSex, setSelectedSex] = useState('');
 	const [firstName, setFirstName] = useState("");
