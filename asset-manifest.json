@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/ITP4915M-2022/static/css/main.afd0a700.css",
+    "main.js": "/ITP4915M-2022/static/js/main.d3cce594.js",
+    "static/js/787.2589662e.chunk.js": "/ITP4915M-2022/static/js/787.2589662e.chunk.js",
+    "static/media/login-bg.jpg": "/ITP4915M-2022/static/media/login-bg.aff8aa39402219a0cc7b.jpg",
+    "static/media/login-bg3.jpg": "/ITP4915M-2022/static/media/login-bg3.37105118d44ec72dbb01.jpg",
+    "static/media/tw.jpg": "/ITP4915M-2022/static/media/tw.987ac8e7626dd37e2006.jpg",
+    "static/media/login-bg2.jpg": "/ITP4915M-2022/static/media/login-bg2.228d03ab7a34e52f1d9c.jpg",
+    "static/media/korea.jpg": "/ITP4915M-2022/static/media/korea.f37d30fcd94e5298de9c.jpg",
+    "static/media/food.jpg": "/ITP4915M-2022/static/media/food.a18a4db3cdefc2a9a892.jpg",
+    "static/media/uk.jpg": "/ITP4915M-2022/static/media/uk.1040c37533af5a54ab9c.jpg",
+    "static/media/jp.jpg": "/ITP4915M-2022/static/media/jp.6bef3b5642679174d640.jpg",
+    "static/media/forgot-pw-img.png": "/ITP4915M-2022/static/media/forgot-pw-img.a7d6c9276dfe90dc7042.png",
+    "static/media/ive-logo.png": "/ITP4915M-2022/static/media/ive-logo.776d9ef067ad3ae19ee4.png",
+    "static/media/carservice.jpg": "/ITP4915M-2022/static/media/carservice.d6ebc1256fc56bf9300a.jpg",
+    "static/media/foot.png": "/ITP4915M-2022/static/media/foot.27bfcc64446ae2618c0d.png",
+    "static/media/image-border.png": "/ITP4915M-2022/static/media/image-border.699e9a9f4202eadf11a3.png",
+    "static/media/logo.svg": "/ITP4915M-2022/static/media/logo.d75733aff71d3fd5305bb98205a5deab.svg",
+    "index.html": "/ITP4915M-2022/index.html",
+    "main.afd0a700.css.map": "/ITP4915M-2022/static/css/main.afd0a700.css.map",
+    "main.d3cce594.js.map": "/ITP4915M-2022/static/js/main.d3cce594.js.map",
+    "787.2589662e.chunk.js.map": "/ITP4915M-2022/static/js/787.2589662e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.afd0a700.css",
+    "static/js/main.d3cce594.js"
+  ]
+}
