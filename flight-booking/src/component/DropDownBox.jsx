@@ -26,7 +26,7 @@ export default function DropDownBox({ dest, show, onChange, setDest, setText }) 
 
 	return (
 		<div className="w-full scale-110 z-50 absolute bg-white border rounded-lg shadow-md p-4 text-gray-600">
-			<input type="text" ref={inputRef} onChange={handleInput} defaultValue={dest} className="text-sm w-full p-2 rounded border-2 focus:border-blue-300 focus:ring-blue-300 border-blue-600" placeholder="Where to?" name="" id="" />
+			<input type="text" ref={inputRef} onChange={handleInput} defaultValue={dest} className="text-sm w-full p-2 rounded border-2 focus:border-blue-600 focus:ring-blue-600 border-blue-300" placeholder="Where to?" name="" id="" />
 			<p className="text-sm pt-2 pb-4">Select airport</p>
 			<div className="">
 				{isOpen && filteredData.length > 0 ?
