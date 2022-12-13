@@ -2246,7 +2246,7 @@ export function OperatorResetPw({  }) {
                                         <FloatingLabel
                                             placeholder={"Password"}
                                             type="password"
-                                            id={"r_password"}
+                                            id={"password"}
                                             bg={"bg-gray-100"}
                                             handler={(e) => {
                                                 // rate the password strength , from 0 to 4, 0 being the weakest, starting to 1 when the password is 8 characters long
